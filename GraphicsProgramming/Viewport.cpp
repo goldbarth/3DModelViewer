@@ -1,75 +1,73 @@
-﻿#include <iostream>
-
+﻿#include "ErrorHandler.h"
 #include "Viewport.h"
 #include "Color.h"
 
-// Global constants
-
-const int OFFSET_X = 0;
-const int OFFSET_Y = 0;
-
 // Callback
 
-void framebufferSizeCallback(GLFWwindow* window, int width, int height)
+// Set the framebuffer size callback using a lambda, because it is a static function and cannot access member variables.
+// It needs to be static because it is one way to set the offset from the viewport @ the constructor initialization.
+void Viewport::FramebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
-    glViewport(OFFSET_X, OFFSET_Y, width, height);
+    // Access member variables using the captured lambda
+    const auto* viewport = static_cast<Viewport*>(glfwGetWindowUserPointer(window));
+    glViewport(viewport->windowOffsetX, viewport->windowOffsetY, width, height);
 }
 
-// Helper functions
-
-/// <summary>Prints an red error message to the console.</summary>
-void Viewport::printLogError(const std::string& message)
-{
-    fprintf(stderr, "\x1b[31mError: %s\x1b[0m\n", message.c_str());
-}
+// Helper function
 
 /// <summary>Handles the window closing.</summary>
-void Viewport::processInput() const
+void Viewport::ProcessInput() const
 {
     if (glfwGetKey(pWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    {
-        // Close window
         glfwSetWindowShouldClose(pWindow, true);
-    }
 }
 
-int Viewport::initialize()
+// Viewport functions
+
+int Viewport::Initialize()
 {
     // Initialize GLFW
     if (pWindow == nullptr)
     {
-        printLogError("GLFW initialization failed");
+        errorType = ErrorType::GLFW_WINDOW_INIT_FAILED;
+        ErrorHandler::LogError(errorType);
         glfwTerminate();
-        return -1;
+        return static_cast<int>(errorType);
     }
 
     glfwMakeContextCurrent(pWindow);
-    glfwSetFramebufferSizeCallback(pWindow, framebufferSizeCallback);
+
+    glfwSetWindowUserPointer(pWindow, this);
+    glfwSetFramebufferSizeCallback(pWindow, [](GLFWwindow* window, int width, int height)
+    {
+        const auto* viewport = static_cast<Viewport*>(glfwGetWindowUserPointer(window));
+        viewport->FramebufferSizeCallback(window, width, height);
+    });
 
     // GLAD: Load all OpenGL function pointers
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        printLogError("Failed to initialize GLAD");
-        return -2;
+        errorType = ErrorType::GLAD_INIT_FAILED;
+        ErrorHandler::LogError(errorType);
+        return static_cast<int>(errorType);
     }
 
-    return 0;
+    return static_cast<int>(errorType);
 }
 
-void Viewport::finalize()
+void Viewport::Finalize()
 {
     glfwTerminate();
 }
 
-int Viewport::update()
+int Viewport::Update()
 {
-    processInput();
+    ProcessInput();
     return 0;
 }
 
-int Viewport::draw()
+int Viewport::Draw()
 {
-
     glClearColor(windowColor.red, windowColor.green, windowColor.blue, windowColor.alpha);
     glClear(GL_COLOR_BUFFER_BIT);
 

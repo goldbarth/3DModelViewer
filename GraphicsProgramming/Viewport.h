@@ -5,15 +5,18 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
+#include "ErrorHandler.h"
 #include "IObject.h"
 #include "Color.h"
 
 class Viewport : public IObject
 {
 public:
-    Viewport(int majorVersion, int minorVersion, int width, int height, std::string title, Color color) :
-        glfwMajorVersion(majorVersion), glfwMinorVersion(minorVersion),
-        windowWidth(width), windowHeight(height), windowTitle(title), windowColor(color)
+    virtual ~Viewport() = default;
+
+    Viewport(int majorVersion, int minorVersion, int width, int height, int offsetX, int offsetY, std::string title, Color color) :
+        glfwMajorVersion(majorVersion), glfwMinorVersion(minorVersion), windowWidth(width), windowHeight(height), windowOffsetX(offsetX),
+        windowOffsetY(offsetY), windowTitle(std::move(title)), windowColor(color)
     {
         // Config
         glfwInit();
@@ -24,29 +27,32 @@ public:
         // Window
         pWindow = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), nullptr, nullptr);
     }
-    
+
     [[nodiscard]] GLFWwindow* getWindow() const { return pWindow; }
     
     // IObject functions
     
-    int initialize() override;
-    void finalize() override;
-    int update() override;
-    int draw() override;
+    int Initialize() override;
+    void Finalize() override;
+    int Update() override;
+    int Draw() override;
 
 private:
 
     GLFWwindow* pWindow = nullptr;
+    ErrorType errorType = ErrorType::SUCCESS;
     
     // GLFW values (versions)
 
     int glfwMajorVersion;
-    int glfwMinorVersion = 3;
+    int glfwMinorVersion;
 
     // Window values
 
     int windowWidth;
     int windowHeight;
+    int windowOffsetX;
+    int windowOffsetY;
     std::string windowTitle;
 
     // Color
@@ -55,8 +61,8 @@ private:
     
     // Helper functions
 
-    static void printLogError(const std::string& message);
-    void processInput() const;
+    static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
+    void ProcessInput() const;
 };
 
 #endif // !VIEWPORT_H

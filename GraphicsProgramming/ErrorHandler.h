@@ -7,11 +7,14 @@
 enum class ErrorType : char
 {
     SUCCESS = 0,
-    GLFW_WINDOW_INIT_FAILED,
     GLAD_INIT_FAILED,
     RUN_VIEWPORT_FAILED,
     CREATE_ENGINE_FAILED,
-    COUNT
+    GLFW_WINDOW_INIT_FAILED,
+    VERTEX_SHADER_COMPILATION_FAILED,
+    FRAGMENT_SHADER_COMPILATION_FAILED,
+    SHADER_PROGRAM_LINK_FAILED,
+    COUNT,
 };
 
 class ErrorHandler
@@ -29,7 +32,9 @@ private:
         {ErrorType::GLFW_WINDOW_INIT_FAILED, "GLFW window initialization failed."},
         {ErrorType::GLAD_INIT_FAILED, "Failed to initialize GLAD."},
         {ErrorType::RUN_VIEWPORT_FAILED, "Failed to run viewport."},
-        {ErrorType::CREATE_ENGINE_FAILED, "Failed to create engine."}
+        {ErrorType::CREATE_ENGINE_FAILED, "Failed to create engine."},
+        {ErrorType::VERTEX_SHADER_COMPILATION_FAILED, "Failed to compile vertex shader."},
+        {ErrorType::SHADER_PROGRAM_LINK_FAILED, "Failed to link shader program."}
     };
 };
 

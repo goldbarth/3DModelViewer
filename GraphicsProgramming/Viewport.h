@@ -36,6 +36,7 @@ public:
     void Finalize() override;
     int Update() override;
     int Draw() override;
+    int LateDraw();
 
 private:
 

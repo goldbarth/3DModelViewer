@@ -3,8 +3,10 @@
 
 int main(int argc, char* argv[])
 {
+    auto errorType = ErrorType::SUCCESS;
+    
     auto* pEngine = new Engine();
-    if (pEngine == nullptr)
+    if (pEngine != nullptr)
     {
         PROVE_RESULT(pEngine->Initialize())
         PROVE_RESULT(pEngine->Run())
@@ -12,9 +14,10 @@ int main(int argc, char* argv[])
     }
     else
     {
-        ErrorHandler::LogError("Cannot create engine. Engine is null. ", ErrorType::CREATE_ENGINE_FAILED);
-        return static_cast<int>(ErrorType::CREATE_ENGINE_FAILED);
+        errorType = ErrorType::CREATE_ENGINE_FAILED;
+        ErrorHandler::LogError("Cannot create engine. Engine is null. ", errorType);
+        return static_cast<int>(errorType);
     }
     
-    return static_cast<int>(ErrorType::SUCCESS);
+    return static_cast<int>(errorType);
 }

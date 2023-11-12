@@ -1,6 +1,8 @@
 ﻿#ifndef ENGINE_H
 #define ENGINE_H
 
+#include "Material.h"
+#include "Mesh.h"
 #include "Viewport.h"
 
 class Engine
@@ -9,9 +11,14 @@ public:
     int Initialize();
     int Run();
     void Finalize();
+    
+    static void CreateMesh();
 
 private:
     Viewport* pViewport = nullptr;
+    Material* pMaterial = nullptr;
+    Mesh* pMesh = nullptr;
+    
     ErrorType errorType = ErrorType::SUCCESS;
     
     // GLFW values (versions)
@@ -26,14 +33,13 @@ private:
     const int WINDOW_OFFSET_X = 0;
     const int WINDOW_OFFSET_Y = 0;
 
-    const std::string WINDOW_TITLE = "Glodbarth Engine 1.0";
+    static const std::string WINDOW_TITLE;
 
     // Colors
-
-    const Color BLACK = Color(0.0f, 0.0f, 0.0f, 1.0f);
-    const Color TURQUOISE = Color(0.0f, 0.5f, 0.5f, 1.0f);
-    const Color DARK_GRAY = Color(0.25f, 0.25f, 0.25f, 1.0f);
-    const Color LIGHT_GRAY = Color(0.75f, 0.75f, 0.75f, 1.0f);
+    static const Color BLACK;
+    static const Color TURQUOISE; 
+    static const Color DARK_GRAY;
+    static const Color LIGHT_GRAY; 
 
 };
 

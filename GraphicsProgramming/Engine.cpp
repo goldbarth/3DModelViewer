@@ -2,10 +2,27 @@
 #include "Defines.h"
 #include "Engine.h"
 
+const std::string Engine::WINDOW_TITLE = "Glodbarth Engine 1.0";
+
+const Color Engine::BLACK(0.0f, 0.0f, 0.0f, 1.0f);
+const Color Engine::TURQUOISE(0.0f, 0.5f, 0.5f, 1.0f);
+const Color Engine::DARK_GRAY(0.25f, 0.25f, 0.25f, 1.0f);
+const Color Engine::LIGHT_GRAY(0.75f, 0.75f, 0.75f, 1.0f);
+
 int Engine::Initialize()
 {
+    // Create viewport (Window)
     INIT_VIEWPORT(pViewport)
     if(pViewport != nullptr) PROVE_RESULT(pViewport->Initialize())
+
+    // Create material (Shaders)
+    INIT_MATERIAL(pMaterial)
+    if(pMaterial != nullptr) PROVE_RESULT(pMaterial->Initialize())
+
+    // Create mesh (Geometry)
+    INIT_MESH(pMesh)
+    if(pMesh != nullptr) PROVE_RESULT(pMesh->Initialize())
+    
     return static_cast<int>(errorType);
 }
 
@@ -15,8 +32,15 @@ int Engine::Run()
     {
         while (!glfwWindowShouldClose(pViewport->getWindow()))
         {
-            PROVE_RESULT(pViewport->Update())
-            PROVE_RESULT(pViewport->Draw())
+            if (pViewport != nullptr) PROVE_RESULT(pViewport->Update())
+            if (pMaterial != nullptr) PROVE_RESULT(pMaterial->Update())
+            if (pMesh != nullptr) PROVE_RESULT(pMesh->Update())
+            
+            if (pViewport != nullptr) PROVE_RESULT(pViewport->Draw())
+            if (pMaterial != nullptr) PROVE_RESULT(pMaterial->Draw())
+            if (pMesh != nullptr) PROVE_RESULT(pMesh->Draw())
+            
+            if (pViewport != nullptr) PROVE_RESULT(pViewport->LateDraw())
        }
     }
     else
@@ -32,4 +56,6 @@ int Engine::Run()
 void Engine::Finalize()
 {
     FINALIZE_DELETE(pViewport)
+    FINALIZE_DELETE(pMaterial)
+    FINALIZE_DELETE(pMesh)
 }

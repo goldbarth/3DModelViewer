@@ -2,4 +2,6 @@ E:\GitFork\3DModelViewer\GraphicsProgramming\Engine.cpp;E:\GitFork\3DModelViewer
 E:\GitFork\3DModelViewer\GraphicsProgramming\ErrorHandler.cpp;E:\GitFork\3DModelViewer\GraphicsProgramming\x64\Debug\ErrorHandler.obj
 E:\GitFork\3DModelViewer\GraphicsProgramming\glad.c;E:\GitFork\3DModelViewer\GraphicsProgramming\x64\Debug\glad.obj
 E:\GitFork\3DModelViewer\GraphicsProgramming\Main.cpp;E:\GitFork\3DModelViewer\GraphicsProgramming\x64\Debug\Main.obj
+E:\GitFork\3DModelViewer\GraphicsProgramming\Material.cpp;E:\GitFork\3DModelViewer\GraphicsProgramming\x64\Debug\Material.obj
+E:\GitFork\3DModelViewer\GraphicsProgramming\Mesh.cpp;E:\GitFork\3DModelViewer\GraphicsProgramming\x64\Debug\Mesh.obj
 E:\GitFork\3DModelViewer\GraphicsProgramming\Viewport.cpp;E:\GitFork\3DModelViewer\GraphicsProgramming\x64\Debug\Viewport.obj

@@ -11,21 +11,26 @@ const Color Engine::LIGHT_GRAY(0.75f, 0.75f, 0.75f, 1.0f);
 
 int Engine::Initialize()
 {
+    // Set shader sources. Read from files.
     if(pData == nullptr) return static_cast<int>(ErrorType::DATA_MANAGER_INIT_FAILED);
     const std::string vertexShaderSource = pData->ReadFile("Resource Files/Shader/DefaultVertex.glsl");
     if(pData == nullptr) return static_cast<int>(ErrorType::DATA_MANAGER_INIT_FAILED);
     const std::string fragmentShaderSource = pData->ReadFile("Resource Files/Shader/DefaultFragment.glsl");
+    if(pData == nullptr) return static_cast<int>(ErrorType::DATA_MANAGER_INIT_FAILED);
+    const std::string ambientVertexShaderSource = pData->ReadFile("Resource Files/Shader/AmbientVertex.glsl");
+    if(pData == nullptr) return static_cast<int>(ErrorType::DATA_MANAGER_INIT_FAILED);
+    const std::string ambientFragmentShaderSource = pData->ReadFile("Resource Files/Shader/AmbientFragment.glsl");
     
-    // Create viewport (Window)
+    // Create viewport (Window), material (Shaders), mesh (Geometry)
     INIT_VIEWPORT(pViewport)
-    if(pViewport != nullptr) PROVE_RESULT(pViewport->Initialize())
-
-    // Create material (Shaders)
-    INIT_MATERIAL(pMaterial, vertexShaderSource.c_str(), fragmentShaderSource.c_str())
-    if(pMaterial != nullptr) PROVE_RESULT(pMaterial->Initialize())
-
-    // Create mesh (Geometry)
+    // INIT_MATERIAL(pMaterial, vertexShaderSource.c_str(), fragmentShaderSource.c_str())
+    INIT_AMBIENT(pAmbient, ambientVertexShaderSource.c_str(), ambientFragmentShaderSource.c_str())
     INIT_MESH(pMesh, pVertices)
+    
+    if(pViewport != nullptr) PROVE_RESULT(pViewport->Initialize())
+    // if(pMaterial != nullptr) PROVE_RESULT(pMaterial->Initialize())
+    if (pAmbient != nullptr) pAmbient->SetLightColor(glm::vec3(0.5f, 0.5f, 0.5f));
+    if(pAmbient != nullptr) PROVE_RESULT(pAmbient->Initialize())
     if(pMesh != nullptr) PROVE_RESULT(pMesh->Initialize())
     
     return static_cast<int>(errorType);
@@ -38,11 +43,13 @@ int Engine::Run()
         while (!glfwWindowShouldClose(pViewport->getWindow()))
         {
             if (pViewport != nullptr) PROVE_RESULT(pViewport->Update())
-            if (pMaterial != nullptr) PROVE_RESULT(pMaterial->Update())
+            // if (pMaterial != nullptr) PROVE_RESULT(pMaterial->Update())
+            if(pAmbient != nullptr) PROVE_RESULT(pAmbient->Update())
             if (pMesh != nullptr) PROVE_RESULT(pMesh->Update())
             
             if (pViewport != nullptr) PROVE_RESULT(pViewport->Draw())
-            if (pMaterial != nullptr) PROVE_RESULT(pMaterial->Draw())
+            // if (pMaterial != nullptr) PROVE_RESULT(pMaterial->Draw())
+            if(pAmbient != nullptr) PROVE_RESULT(pAmbient->Draw())
             if (pMesh != nullptr) PROVE_RESULT(pMesh->Draw())
             
             if (pViewport != nullptr) PROVE_RESULT(pViewport->LateDraw())
@@ -60,7 +67,8 @@ int Engine::Run()
 
 void Engine::Finalize()
 {
-    FINALIZE_DELETE(pViewport)
-    FINALIZE_DELETE(pMaterial)
     FINALIZE_DELETE(pMesh)
+    FINALIZE_DELETE(pAmbient)
+    // FINALIZE_DELETE(pMaterial)
+    FINALIZE_DELETE(pViewport)
 }

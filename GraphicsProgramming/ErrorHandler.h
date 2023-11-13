@@ -10,6 +10,7 @@ enum class ErrorType : char
     SUCCESS = 0,
     GLAD_INIT_FAILED,
     RUN_VIEWPORT_FAILED,
+    DRAW_AMBIENT_FAILED,
     CREATE_ENGINE_FAILED,
     GLFW_WINDOW_INIT_FAILED,
     VERTEX_SHADER_COMPILATION_FAILED,
@@ -46,6 +47,7 @@ private:
         {ErrorType::READ_FILE_FAILED, "File to read was not found."},
         {ErrorType::FILESTREAM_STILL_OPEN, "Filestream is still open."},
         {ErrorType::DATA_MANAGER_INIT_FAILED, "Data manager is null."},
+        {ErrorType::DRAW_AMBIENT_FAILED, "Failed to draw ambient. The uniform variable could not be found."},
     };
 };
 

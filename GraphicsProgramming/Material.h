@@ -9,12 +9,15 @@ class Material : public IObject
 public:
     Material(const char* pVertexShader, const char* pFragmentShader)
             : pVertexShaderSource(pVertexShader), pFragmentShaderSource(pFragmentShader),
-                pShaderProgram(new unsigned int(EMPTY)) {  }
+                pShaderProgram(new unsigned int(EMPTY)) { }
     
     int Initialize() override;
     void Finalize() override;
     int Update() override;
     int Draw() override;
+
+protected:
+    [[nodiscard]] unsigned int GetShaderProgram() const { return *pShaderProgram; }
 
 private:
     const int EMPTY = 0;

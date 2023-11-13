@@ -169,6 +169,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FileDataHandler.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="ErrorHandler.cpp" />
     <ClCompile Include="glad.c" />
@@ -179,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h" />
+    <ClInclude Include="FileDataHandler.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="ErrorHandler.h" />
@@ -186,6 +188,10 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Viewport.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resource Files\Shader\DefaultFragment.glsl" />
+    <Content Include="Resource Files\Shader\DefaultVertex.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,30 +2,13 @@
 
 #include "Material.h"
 
-
-const char* vertexShaderSource = "#version 330 core\n"
-                                 "layout (location = 0) in vec3 aPos;\n"
-                                 "void main()\n"
-                                 "{\n"
-                                 "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-                                 "}\n\0";
-
-const char* fragmentShaderSource = "#version 330 core\n"
-                                   "out vec4 FragColor;\n"
-                                   "void main()\n"
-                                   "{\n"
-                                   "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-                                   "}\n\0";
-
-
-
 int Material::Initialize()
 {
     // Build and compile vertex shader
     
     const unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     
-    glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
+    glShaderSource(vertexShader, 1, &pVertexShaderSource, nullptr);
     glCompileShader(vertexShader);
 
     int success = 0;
@@ -47,7 +30,7 @@ int Material::Initialize()
     
     const unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
+    glShaderSource(fragmentShader, 1, &pFragmentShaderSource, nullptr);
     glCompileShader(fragmentShader);
 
     if(!success)
@@ -61,15 +44,15 @@ int Material::Initialize()
 
     // Link shaders
 
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    *pShaderProgram = glCreateProgram();
+    glAttachShader(*pShaderProgram, vertexShader);
+    glAttachShader(*pShaderProgram, fragmentShader);
+    glLinkProgram(*pShaderProgram);
+    glGetProgramiv(*pShaderProgram, GL_LINK_STATUS, &success);
 
     if(!success)
     {
-        glGetProgramInfoLog(shaderProgram, bufferSize, nullptr, infoLog);
+        glGetProgramInfoLog(*pShaderProgram, bufferSize, nullptr, infoLog);
         errorType = ErrorType::SHADER_PROGRAM_LINK_FAILED;
         ErrorHandler::LogError(errorType);
         
@@ -89,13 +72,11 @@ int Material::Update()
 
 int Material::Draw()
 {
-    glUseProgram(shaderProgram);
+    glUseProgram(*pShaderProgram);
     return static_cast<int>(ErrorType::SUCCESS);
 }
 
 void Material::Finalize()
 {
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteProgram(shaderProgram);
+    glDeleteProgram(*pShaderProgram);
 }

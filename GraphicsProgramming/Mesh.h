@@ -7,6 +7,8 @@
 class Mesh : public IObject
 {
 public:
+    explicit Mesh(float* pVertices) : pVAO(new unsigned int(0)), pVBO(new unsigned int(0)), pVertices(pVertices) {  }
+    
     int Initialize() override;
     void Finalize() override;
     int Update() override;
@@ -15,8 +17,10 @@ public:
 private:
     ErrorType errorType = ErrorType::SUCCESS;
     
-    unsigned int VAO = 0;
-    unsigned int VBO = 0;
+    unsigned int* pVAO = nullptr;
+    unsigned int* pVBO = nullptr;
+
+    float* pVertices = nullptr;
 };
 
 #endif // !MESH_H

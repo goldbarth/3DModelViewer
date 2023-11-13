@@ -1,32 +1,19 @@
 ﻿#include <glad/glad.h>
 
+#include "Defines.h"
 #include "Mesh.h"
 
 
 int Mesh::Initialize()
 {
-    float vertices[] =
-    {
-        -0.9f, -0.5f, 0.0f, // left
-        0.0f, -0.5f, 0.0f, // right
-        -0.45f,  0.5f, 0.0f, // top
+    glGenVertexArrays(1, pVAO);
+    glGenBuffers(1, pVBO);
 
-        // 2. Triangle
-        0.0f, -0.5f, 0.0f, // left
-        0.9f, -0.5f, 0.0f, // right
-        0.45f,  0.5f, 0.0f, // top
-        
-    };
+    glBindVertexArray(*pVAO);
 
-    VBO = 0;
-
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, *pVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(pVertices) * (sizeof(float) * GET_ARRAY_PTR_LENGHT(pVertices, float)), &pVertices[0], GL_STATIC_DRAW);
+    // glBufferData(GL_ARRAY_BUFFER, sizeof(pVertices) * (sizeof(float) * 18), &pVertices[0], GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));
     glEnableVertexAttribArray(0);
@@ -40,13 +27,13 @@ int Mesh::Initialize()
 
 void Mesh::Finalize()
 {
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
+    glDeleteVertexArrays(1, pVAO);
+    glDeleteBuffers(1, pVBO);
 }
 
 int Mesh::Update()
 {
-    glBindVertexArray(VAO);
+    glBindVertexArray(*pVAO);
     
     return static_cast<int>(errorType);
 }

@@ -2,6 +2,7 @@
 #define ERROR_HANDLER_H
 
 #include <unordered_map>
+#include <iostream>
 #include <string>
 
 enum class ErrorType : char
@@ -14,14 +15,21 @@ enum class ErrorType : char
     VERTEX_SHADER_COMPILATION_FAILED,
     FRAGMENT_SHADER_COMPILATION_FAILED,
     SHADER_PROGRAM_LINK_FAILED,
+    DATA_MANAGER_INIT_FAILED,
+    FILESTREAM_STILL_OPEN,
+    READ_FILE_FAILED,
     COUNT,
 };
 
 class ErrorHandler
 {
 public:
+    template <typename T>
+    static void Log(const T& message);
+    static void LogWarning(const std::string& message);
     static void LogError(const ErrorType& errorType);
     static void LogError(const std::string& message, const ErrorType& errorType);
+    static void LogError(const ErrorType& errorType, const std::string& message);
     static void LogError(const std::string& message);
     
 private:
@@ -34,8 +42,18 @@ private:
         {ErrorType::RUN_VIEWPORT_FAILED, "Failed to run viewport."},
         {ErrorType::CREATE_ENGINE_FAILED, "Failed to create engine."},
         {ErrorType::VERTEX_SHADER_COMPILATION_FAILED, "Failed to compile vertex shader."},
-        {ErrorType::SHADER_PROGRAM_LINK_FAILED, "Failed to link shader program."}
+        {ErrorType::SHADER_PROGRAM_LINK_FAILED, "Failed to link shader program."},
+        {ErrorType::READ_FILE_FAILED, "File to read was not found."},
+        {ErrorType::FILESTREAM_STILL_OPEN, "Filestream is still open."},
+        {ErrorType::DATA_MANAGER_INIT_FAILED, "Data manager is null."},
     };
 };
+
+/// <summary>Prints a white message to the console.</summary>
+template <typename T>
+void ErrorHandler::Log(const T& message)
+{
+    std::cout << message << "\n";
+}
 
 #endif // !ERROR_HANDLER_H

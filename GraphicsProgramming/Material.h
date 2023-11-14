@@ -1,15 +1,28 @@
 ﻿#ifndef MATERIAL_H
 #define MATERIAL_H
 
+// Just playing around with the preprocessor directives.
+// Map strdup to _strdup in Windows with a macro.
+// Just for fun and in case of cross-platform in the future.
+// strdup to _strdup: returns a pointer to the storage location for the copied string.
+#ifdef _MSC_VER 
+#define strdup _strdup
+#endif
+
+#include "FileDataHandler.h"
 #include "ErrorHandler.h"
 #include "IObject.h"
 
 class Material : public IObject
 {
 public:
-    Material(const char* pVertexShader, const char* pFragmentShader)
-            : pVertexShaderSource(pVertexShader), pFragmentShaderSource(pFragmentShader),
-                pShaderProgram(new unsigned int(EMPTY)) { }
+    Material(DataManager* pData, const char* pVertexShader, const char* pFragmentShader)
+            : pShaderProgram(new unsigned int(EMPTY)) // pData(pData),
+    {
+        if(pData == nullptr) return;
+        pVertexShaderSource = strdup(pData->ReadFile(pVertexShader).c_str());
+        pFragmentShaderSource = strdup(pData->ReadFile(pFragmentShader).c_str());
+    }
     
     int Initialize() override;
     void Finalize() override;
@@ -21,24 +34,19 @@ protected:
 
 private:
     const int EMPTY = 0;
-
-    const char* pVertexShaderSource = "#version 330 core\n"
-                                     "layout (location = 0) in vec3 aPos;\n"
-                                     "void main()\n"
-                                     "{\n"
-                                     "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-                                     "}\n\0";
-
-    const char* pFragmentShaderSource = "#version 330 core\n"
-                                       "out vec4 FragColor;\n"
-                                       "void main()\n"
-                                       "{\n"
-                                       "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-                                       "}\n\0";
-
-    ErrorType errorType = ErrorType::SUCCESS;
-
+    
+    //DataManager* pData = nullptr;
+    
+    const char* pVertexShaderSource = nullptr;
+    const char* pFragmentShaderSource = nullptr;
+    
     unsigned int* pShaderProgram = nullptr;
+    
+    ErrorType errorType = ErrorType::SUCCESS;
 };
+
+#ifdef _MSC_VER
+#undef strdup
+#endif
 
 #endif // !MATERIAL_H

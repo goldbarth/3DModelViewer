@@ -5,41 +5,55 @@
 
 int Mesh::Initialize()
 {
-    glGenVertexArrays(1, pVAO);
-    glGenBuffers(1, pVBO);
-
+    // Generate and bind the Vertex Array Object (VAO)
+    glGenVertexArrays(BUFFER_SIZE, pVAO);
     glBindVertexArray(*pVAO);
-
+    
+    // Generate and bind the Vertex Buffer Object (VBO)
+    glGenBuffers(BUFFER_SIZE, pVBO);
     glBindBuffer(GL_ARRAY_BUFFER, *pVBO);
-    const GLsizeiptr vectorSizeInBytes = sizeof(pVertices) * (sizeof(glm::vec3) * pVertices.size());
-    glBufferData(GL_ARRAY_BUFFER, vectorSizeInBytes, pVertices.data(), GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));
-    glEnableVertexAttribArray(0);
+    // Generate and bind the Element Buffer Object (EBO)
+    glGenBuffers(BUFFER_SIZE, pEBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *pEBO);
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    // Copy our vertices array in a buffer for OpenGL to use (Vertex list)
+    const GLsizeiptr vectorSizeInBytes = sizeof(vertices) * (sizeof(Vertex) * vertices.size());
+    glBufferData(GL_ARRAY_BUFFER, vectorSizeInBytes, vertices.data(), GL_STATIC_DRAW);
 
-    glBindVertexArray(0);
+    // Copy our indices array in a buffer for OpenGL to use (Index list)
+    const GLsizeiptr indexSizeInBytes = sizeof(unsigned int) * indices.size();
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSizeInBytes, indices.data(), GL_STATIC_DRAW);
 
+    // Position attribute (Vertex)
+    glVertexAttribPointer(VERTEX_ATTRIBUTE_INDEX, GetPositionNumber(), GL_FLOAT, GL_FALSE, sizeof(Vertex), static_cast<void*>(nullptr));
+    glEnableVertexAttribArray(VERTEX_ATTRIBUTE_INDEX);
+
+    // Color attribute (Vertex)
+    glVertexAttribPointer(COLOR_ATTRIBUTE_INDEX, GetColorNumber(), GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(GetPositionSize()));
+    glEnableVertexAttribArray(COLOR_ATTRIBUTE_INDEX);
+    
     return static_cast<int>(errorType);
 }
 
 void Mesh::Finalize()
 {
-    glDeleteVertexArrays(1, pVAO);
-    glDeleteBuffers(1, pVBO);
+    if(pEBO != nullptr) glDeleteBuffers(BUFFER_SIZE, pEBO);
+    if(pVAO != nullptr) glDeleteVertexArrays(BUFFER_SIZE, pVAO);
+    if(pVBO != nullptr) glDeleteBuffers(BUFFER_SIZE, pVBO);
 }
 
 int Mesh::Update()
 {
-    glBindVertexArray(*pVAO);
-    
     return static_cast<int>(errorType);
 }
 
 int Mesh::Draw()
 {
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glBindVertexArray(*pVAO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *pEBO);
+    glDrawArrays(GL_TRIANGLES, VERTEX_ATTRIBUTE_INDEX, static_cast<int>(vertices.size()));
+    glDrawElements(GL_TRIANGLES, static_cast<int>(indices.size()), GL_UNSIGNED_INT, reinterpret_cast<void*>(EMPTY));
     
     return static_cast<int>(errorType);
 }

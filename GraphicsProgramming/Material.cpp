@@ -78,5 +78,7 @@ int Material::Draw()
 
 void Material::Finalize()
 {
+    free(const_cast<char*>(pVertexShaderSource));
+    free(const_cast<char*>(pFragmentShaderSource));
     glDeleteProgram(*pShaderProgram);
 }

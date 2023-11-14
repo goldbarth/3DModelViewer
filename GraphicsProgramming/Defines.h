@@ -13,11 +13,11 @@
 #define INIT_VIEWPORT(x) \
 if ((x) == nullptr) \
 (x) = new Viewport(GLFW_MAJOR_VERSION, GLFW_MINOR_VERSION, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_OFFSET_X, WINDOW_OFFSET_Y, WINDOW_TITLE, TURQUOISE);
-#define INIT_MATERIAL(x, y, z) \
-if((x) == nullptr) (x) = new Material(y, z);
-#define INIT_AMBIENT(x, y, z) \
-if((x) == nullptr) (x) = new Ambient(y, z);
-#define INIT_MESH(x, y) \
-if((x) == nullptr) (x) = new Mesh(y);
+#define INIT_MATERIAL(i, j, k, n) \
+if((i) == nullptr) (i) = new Material(j, k, n);
+#define INIT_AMBIENT(i, j, k, n) \
+if((i) == nullptr) (i) = new Ambient(j, k, n);
+#define INIT_MESH(x, y, z) \
+if((x) == nullptr) (x) = new Mesh(y, z);
 
 #endif // !DEFINES_H

@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "FileDataHandler.h"
+//#include "Variables.h"
 #include "Viewport.h"
 #include "Material.h"
 #include "Ambient.h"
@@ -19,14 +20,6 @@ public:
     void Finalize();
 
 private:
-    DataManager* pData = nullptr;
-    Viewport* pViewport = nullptr;
-    // Material* pMaterial = nullptr;
-    Ambient* pAmbient = nullptr;
-    Mesh* pMesh = nullptr;
-    
-    ErrorType errorType = ErrorType::SUCCESS;
-    
     // GLFW values (versions)
 
     const int GLFW_MAJOR_VERSION = 3;
@@ -42,37 +35,43 @@ private:
     static const std::string WINDOW_TITLE;
 
     // Colors
+    
+    static const Color GOLD;
     static const Color BLACK;
     static const Color TURQUOISE; 
     static const Color DARK_GRAY;
     static const Color LIGHT_GRAY;
 
+    // Pointers
+    
+    DataManager* pData = nullptr;
+    Viewport* pViewport = nullptr;
+    Material* pMaterial = nullptr;
+    // Ambient* pAmbient = nullptr;
+    Mesh* pMesh = nullptr;
+
+    // Error handling
+    
+    ErrorType errorType = ErrorType::SUCCESS;
+    
     // Shader values
 
-    const char* pVertexShaderSource = "#version 330 core\n"
-                                     "layout (location = 0) in vec3 aPos;\n"
-                                     "void main()\n"
-                                     "{\n"
-                                     "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-                                     "}\n\0";
-
-    const char* pFragmentShaderSource = "#version 330 core\n"
-                                       "out vec4 FragColor;\n"
-                                       "void main()\n"
-                                       "{\n"
-                                       "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-                                       "}\n\0";
-
-    std::vector<glm::vec3> pVertices = std::vector
+    std::vector<Vertex> vertices = std::vector
     {
-        glm::vec3(-0.9f, -0.5f, 0.0f), // left
-        glm::vec3(0.0f, -0.5f, 0.0f), // right
-        glm::vec3(-0.45f, 0.5f, 0.0f), // top
-
+        Vertex{glm::vec3(-0.9f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // left
+        Vertex{glm::vec3( 0.0f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // right
+        Vertex{glm::vec3(-0.45f, 0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // top
+        
         // 2. Triangle
-        glm::vec3(0.0f, -0.5f, 0.0f), // left
-        glm::vec3(0.9f, -0.5f, 0.0f), // right
-        glm::vec3(0.45f, 0.5f, 0.0f) // top
+        Vertex{glm::vec3(0.0f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // left
+        Vertex{glm::vec3(0.9f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // right
+        Vertex{glm::vec3(0.45f, 0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)} // top
+    };
+
+    std::vector<unsigned int> indices = std::vector<unsigned int>
+    {
+        0, 1, 2, // first triangle face
+        2, 1, 3 // second triangle face
     };
 };
 

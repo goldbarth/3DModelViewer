@@ -8,12 +8,11 @@
 class Ambient : public Material
 {
 public:
-    Ambient(const char* pVertexShader, const char* pFragmentShader)
-            : Material(pVertexShader, pFragmentShader) { }
+    Ambient(DataManager* pData, const char* pVertexShader, const char* pFragmentShader)
+            : Material(pData, pVertexShader, pFragmentShader) { }
 
     [[nodiscard]] glm::vec3 GetLightColor() const { return lightColor; }
     void SetLightColor(const glm::vec3& color) { this->lightColor = color; }
-    
     
     int Initialize() override;
     void Finalize() override;

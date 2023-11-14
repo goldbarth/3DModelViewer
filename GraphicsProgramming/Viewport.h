@@ -12,8 +12,6 @@
 class Viewport : public IObject
 {
 public:
-    virtual ~Viewport() = default;
-
     Viewport(int majorVersion, int minorVersion, int width, int height, int offsetX, int offsetY, std::string title, Color color) :
         glfwMajorVersion(majorVersion), glfwMinorVersion(minorVersion), windowWidth(width), windowHeight(height), windowOffsetX(offsetX),
         windowOffsetY(offsetY), windowTitle(std::move(title)), windowColor(color)
@@ -27,8 +25,14 @@ public:
         // Window
         pWindow = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), nullptr, nullptr);
     }
+private:
+    // Helper functions
 
-    [[nodiscard]] GLFWwindow* getWindow() const { return pWindow; }
+    static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
+    void ProcessInput() const;
+
+public:
+    [[nodiscard]] GLFWwindow* GetWindow() const { return pWindow; }
     
     // IObject functions
     
@@ -59,11 +63,6 @@ private:
     // Color
     
     Color windowColor;
-    
-    // Helper functions
-
-    static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
-    void ProcessInput() const;
 };
 
 #endif // !VIEWPORT_H

@@ -5,11 +5,9 @@
 
 int Mesh::Initialize()
 {
-    // Generate and bind the Vertex Array Object (VAO)
-    glGenVertexArrays(BUFFER_SIZE, pVAO);
-    glBindVertexArray(*pVAO);
-    
-    // Generate and bind the Vertex Buffer Object (VBO)
+    // Generate and bind the Vertex Array and Vertex Buffer Objects (VBO)
+    glGenVertexArrays(BUFFER_SIZE, pVBO);
+    glBindVertexArray(*pVBO);
     glGenBuffers(BUFFER_SIZE, pVBO);
     glBindBuffer(GL_ARRAY_BUFFER, *pVBO);
 
@@ -39,8 +37,7 @@ int Mesh::Initialize()
 void Mesh::Finalize()
 {
     if(pEBO != nullptr) glDeleteBuffers(BUFFER_SIZE, pEBO);
-    if(pVAO != nullptr) glDeleteVertexArrays(BUFFER_SIZE, pVAO);
-    if(pVBO != nullptr) glDeleteBuffers(BUFFER_SIZE, pVBO);
+    if(pVBO != nullptr) glDeleteVertexArrays(BUFFER_SIZE, pVBO);
 }
 
 int Mesh::Update()
@@ -50,9 +47,10 @@ int Mesh::Update()
 
 int Mesh::Draw()
 {
-    glBindVertexArray(*pVAO);
+    glBindVertexArray(*pVBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *pEBO);
     glDrawArrays(GL_TRIANGLES, VERTEX_ATTRIBUTE_INDEX, static_cast<int>(vertices.size()));
+    
     glDrawElements(GL_TRIANGLES, static_cast<int>(indices.size()), GL_UNSIGNED_INT, reinterpret_cast<void*>(EMPTY));
     
     return static_cast<int>(errorType);

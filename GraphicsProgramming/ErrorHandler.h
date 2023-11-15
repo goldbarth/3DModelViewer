@@ -1,4 +1,6 @@
-﻿#ifndef ERROR_HANDLER_H
+﻿// Added by me to handle errors and warnings in a more organized and convenient way.
+
+#ifndef ERROR_HANDLER_H
 #define ERROR_HANDLER_H
 
 #include <unordered_map>
@@ -28,11 +30,16 @@ public:
     template <typename T>
     static void Log(const T& message);
     static void LogWarning(const std::string& message);
-    static void LogError(const ErrorType& errorType);
-    static void LogError(const std::string& message, const ErrorType& errorType);
-    static void LogError(const ErrorType& errorType, const std::string& message);
+    static void LogWarning(const std::string& message, const char* file, int line);
     static void LogError(const std::string& message);
-    
+    static void LogError(const std::string& message, const char* file, int line);
+    static void LogError(const ErrorType& errorType);
+    static void LogError(const ErrorType& errorType, const char* file, int line);
+    static void LogError(const std::string& message, const ErrorType& errorType);
+    static void LogError(const std::string& message, const ErrorType& errorType, const char* file, int line);
+    static void LogError(const ErrorType& errorType, const std::string& message);
+    static void LogError(const ErrorType& errorType, const std::string& message, const char* file, int line);
+
 private:
     // This is a map of ErrorType enum members and their corresponding error messages.
     // Hash tables(unsorted map) is preferable used for fast lookups instead of binary search trees(map).

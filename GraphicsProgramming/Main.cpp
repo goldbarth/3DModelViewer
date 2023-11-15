@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     else
     {
         errorType = ErrorType::CREATE_ENGINE_FAILED;
-        ErrorHandler::LogError("Cannot create engine. Engine is null. ", errorType);
+        ErrorHandler::LogError("Cannot create engine. Engine is null. ", errorType, __FILE__, __LINE__);
         
         return static_cast<int>(errorType);
     }

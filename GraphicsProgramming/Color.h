@@ -15,6 +15,17 @@ public:
     GLfloat green;
     GLfloat blue;
     GLfloat alpha;
+
+    // Color getters/setters
+    GLfloat GetRed() const { return red; }
+    GLfloat GetGreen() const { return green; }
+    GLfloat GetBlue() const { return blue; }
+    GLfloat GetAlpha() const { return alpha; }
+
+    void SetRed(const GLfloat r) { red = r; }
+    void SetGreen(const GLfloat g) { green = g; }
+    void SetBlue(const GLfloat b) { blue = b; }
+    void SetAlpha(const GLfloat a) { alpha = a; }
 };
 
 #endif // !COLOR_H

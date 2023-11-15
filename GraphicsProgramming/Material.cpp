@@ -21,7 +21,7 @@ int Material::Initialize()
     {
         glGetShaderInfoLog(vertexShader, bufferSize, nullptr, infoLog);
         errorType = ErrorType::VERTEX_SHADER_COMPILATION_FAILED;
-        ErrorHandler::LogError(errorType);
+        ErrorHandler::LogError(errorType, __FILE__, __LINE__);
         
         return static_cast<int>(errorType);
     }
@@ -37,7 +37,7 @@ int Material::Initialize()
     {
         glGetShaderInfoLog(fragmentShader, bufferSize, nullptr, infoLog);
         errorType = ErrorType::FRAGMENT_SHADER_COMPILATION_FAILED;
-        ErrorHandler::LogError(errorType);
+        ErrorHandler::LogError(errorType, __FILE__, __LINE__);
         
         return static_cast<int>(errorType);
     }
@@ -54,7 +54,7 @@ int Material::Initialize()
     {
         glGetProgramInfoLog(*pShaderProgram, bufferSize, nullptr, infoLog);
         errorType = ErrorType::SHADER_PROGRAM_LINK_FAILED;
-        ErrorHandler::LogError(errorType);
+        ErrorHandler::LogError(errorType, __FILE__, __LINE__);
         
         return static_cast<int>(errorType);
     }

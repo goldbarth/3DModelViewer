@@ -11,8 +11,8 @@ public:
     std::string ReadFile(const char* pFilePath);
     void WriteFile(const char* pFilePath, const char* pData);
 
-    [[nodiscard]] const char* GetShaderFolderPath() { return "Resource Files/Shader/"; }
-    [[nodiscard]] ErrorType GetErrorType() const { return errorType; }
+    const char* GetShaderFolderPath() { return "Resource Files/Shader/"; }
+    ErrorType GetErrorType() const { return errorType; }
 
 private:
     ErrorType errorType = ErrorType::SUCCESS;

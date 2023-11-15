@@ -15,4 +15,15 @@ struct Vertex
         : position(pos), color(col) {}
 };
 
+struct CameraData
+{
+    float fovDegree;
+    float nearPlane;
+    float farPlane;
+    
+    unsigned int* pShaderID;
+    const char* pUniformName;
+    
+};
+
 #endif //!VARIABLES_H

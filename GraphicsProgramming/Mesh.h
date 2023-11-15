@@ -11,14 +11,14 @@ class Mesh : public IObject
 {
 public:
     explicit Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices) : vertices(vertices), indices(indices),
-                    pVAO(new unsigned int(EMPTY)), pVBO(new unsigned int(EMPTY)), pEBO(new unsigned int(EMPTY)) {  }
+                    pVBO(new unsigned int(EMPTY)), pEBO(new unsigned int(EMPTY)) { }
 private:
     // Bytes
-    [[nodiscard]] constexpr int GetPositionSize() const { return sizeof(glm::vec3); }
+    constexpr int GetPositionSize() const { return sizeof(glm::vec3); }
 
     // Numbers
-    [[nodiscard]] constexpr int GetPositionNumber() const { return sizeof(glm::vec3) / sizeof(float); }
-    [[nodiscard]] constexpr int GetColorNumber() const { return sizeof(glm::vec4) / sizeof(float); }
+    constexpr int GetPositionNumber() const { return sizeof(glm::vec3) / sizeof(float); }
+    constexpr int GetColorNumber() const { return sizeof(glm::vec4) / sizeof(float); }
     
 public:
     int Initialize() override;
@@ -34,11 +34,10 @@ private:
     
     std::vector<Vertex> vertices = {};
     std::vector<unsigned int> indices = {};
-    
-    unsigned int* pVAO = nullptr;
+
+    // Vertex Buffer Object (VBO) and Element Buffer Object (EBO)
     unsigned int* pVBO = nullptr;
     unsigned int* pEBO = nullptr;
-
     
     ErrorType errorType = ErrorType::SUCCESS;
 };

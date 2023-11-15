@@ -4,8 +4,8 @@
 #include <vector>
 
 #include "FileDataHandler.h"
-//#include "Variables.h"
 #include "Viewport.h"
+#include "Camera.h"
 #include "Material.h"
 #include "Ambient.h"
 #include "Mesh.h"
@@ -45,6 +45,7 @@ private:
     // Pointers
     
     DataManager* pData = nullptr;
+    Camera* pCamera = nullptr;
     Viewport* pViewport = nullptr;
     Material* pMaterial = nullptr;
     // Ambient* pAmbient = nullptr;
@@ -58,20 +59,21 @@ private:
 
     std::vector<Vertex> vertices = std::vector
     {
-        Vertex{glm::vec3(-0.9f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // left
-        Vertex{glm::vec3( 0.0f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // right
-        Vertex{glm::vec3(-0.45f, 0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // top
+        Vertex{glm::vec3(-0.5f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // left-bottom
+        Vertex{glm::vec3( 0.5f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // right-bottom
+        Vertex{glm::vec3(-0.5f, 0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // top-left
+        Vertex{glm::vec3(0.5f, 0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // top-right
         
         // 2. Triangle
-        Vertex{glm::vec3(0.0f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // left
-        Vertex{glm::vec3(0.9f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // right
-        Vertex{glm::vec3(0.45f, 0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)} // top
+        // Vertex{glm::vec3(0.0f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // left-bottom
+        // Vertex{glm::vec3(0.9f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // right-bottom
+        // Vertex{glm::vec3(0.45f, 0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)} // top
     };
 
     std::vector<unsigned int> indices = std::vector<unsigned int>
     {
-        0, 1, 2, // first triangle face
-        2, 1, 3 // second triangle face
+        0, 1, 2, // first face
+        2, 1, 3 // second face
     };
 };
 

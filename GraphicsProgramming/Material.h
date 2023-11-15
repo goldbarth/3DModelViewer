@@ -28,9 +28,8 @@ public:
     void Finalize() override;
     int Update() override;
     int Draw() override;
-
-protected:
-    [[nodiscard]] unsigned int GetShaderProgram() const { return *pShaderProgram; }
+    
+    unsigned int* GetShaderProgram() const { return pShaderProgram; }
 
 private:
     const int EMPTY = 0;

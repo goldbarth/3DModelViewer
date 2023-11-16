@@ -29,9 +29,9 @@ struct Texture
 
 struct CameraData
 {
-    float fovDegree;
-    float nearPlane;
-    float farPlane;
+    GLfloat fovDegree;
+    GLfloat nearPlane;
+    GLfloat farPlane;
     
     unsigned int* pShaderID;
     const char* pUniformName;

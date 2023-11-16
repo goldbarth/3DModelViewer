@@ -11,7 +11,7 @@ class Mesh : public IObject
 {
 public:
     explicit Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<Texture>& textures = {}, Transform* transform = nullptr)
-    : vertices(TranslateVertices(vertices, transform)), indices(indices), pTransform(transform), pVBO(new unsigned int(EMPTY)), pEBO(new unsigned int(EMPTY)) { }
+    : vertices(TranslateVertices(vertices, transform)), indices(indices), pTransform(transform), pVertexBufferObject(new unsigned int(EMPTY)), pElementBufferObject(new unsigned int(EMPTY)) { }
     
 private:
     // Bytes
@@ -38,7 +38,11 @@ public:
 
 private:
     const int EMPTY = 0;
+    const int BORDER = 0;
+    const int MIP_LEVEL = 0;
     const int BUFFER_SIZE = 1;
+    const int TEXTURE_COUNT = 1;
+    const int DEFAULT_CHANNELS = 0;
     const int VERTEX_ATTRIBUTE_INDEX = 0;
     const int COLOR_ATTRIBUTE_INDEX = 1;
     const int TEXTURE_ATTRIBUTE_INDEX = 2;
@@ -48,10 +52,9 @@ private:
     std::vector<Texture> textures = {};
 
     Transform* pTransform = nullptr;
-
-    // Vertex Buffer Object (VBO) and Element Buffer Object (EBO)
-    unsigned int* pVBO = nullptr;
-    unsigned int* pEBO = nullptr;
+    
+    unsigned int* pVertexBufferObject = nullptr; 
+    unsigned int* pElementBufferObject = nullptr;
     
     ErrorType errorType = ErrorType::SUCCESS;
 };

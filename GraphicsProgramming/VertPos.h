@@ -14,15 +14,6 @@ public:
     GLfloat x;
     GLfloat y;
     GLfloat z;
-
-    // VertPos getters/setters
-    GLfloat GetXPos() { return x; }
-    GLfloat GetYPos() { return y; }
-    GLfloat GetZPos() { return z; }
-
-    void SetXPos(const GLfloat xPos) { x = xPos; }
-    void SetYPos(const GLfloat yPos) { y = yPos; }
-    void SetZPos(const GLfloat zPos) { z = zPos; }
 };
 
 #endif // !VERT_POS_H

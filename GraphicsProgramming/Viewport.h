@@ -36,8 +36,6 @@ public:
         pWindow = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), nullptr, nullptr);
     }
 private:
-    // Helper functions
-
     void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
     void ProcessInput() const;
 
@@ -51,10 +49,6 @@ public:
     int LateDraw();
 
 private:
-
-    GLFWwindow* pWindow = nullptr;
-    
-    ErrorType errorType = ErrorType::SUCCESS;
     
     // GLFW values (versions)
 
@@ -72,6 +66,12 @@ private:
     // Color
     
     Color windowColor;
+
+    // -----------
+    
+    GLFWwindow* pWindow = nullptr;
+    
+    ErrorType errorType = ErrorType::SUCCESS;
 };
 
 #endif // !VIEWPORT_H

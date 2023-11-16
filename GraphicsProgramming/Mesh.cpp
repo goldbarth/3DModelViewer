@@ -7,14 +7,14 @@
 int Mesh::Initialize()
 {
     // Generate and bind the Vertex Array and Vertex Buffer Objects (VBO)
-    glGenVertexArrays(BUFFER_SIZE, pVBO);
-    glBindVertexArray(*pVBO);
-    glGenBuffers(BUFFER_SIZE, pVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, *pVBO);
-
+    glGenVertexArrays(BUFFER_SIZE, pVertexBufferObject);
+    glBindVertexArray(*pVertexBufferObject);
+    glGenBuffers(BUFFER_SIZE, pVertexBufferObject);
+    glBindBuffer(GL_ARRAY_BUFFER, *pVertexBufferObject);
+    
     // Generate and bind the Element Buffer Object (EBO)
-    glGenBuffers(BUFFER_SIZE, pEBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *pEBO);
+    glGenBuffers(BUFFER_SIZE, pElementBufferObject);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *pElementBufferObject);
 
     // Copy our vertices array in a buffer for OpenGL to use (Vertex list)
     const GLsizeiptr vectorSizeInBytes = sizeof(vertices) * (sizeof(Vertex) * vertices.size());
@@ -46,7 +46,7 @@ int Mesh::Initialize()
     for (auto& texture : textures)
     {
         // Load and create a texture
-        glGenTextures(1, &texture.ID);
+        glGenTextures(TEXTURE_COUNT, &texture.ID);
         glBindTexture(GL_TEXTURE_2D, texture.ID);
 
         // Set the texture wrapping/filtering options (on the currently bound texture object)
@@ -63,11 +63,11 @@ int Mesh::Initialize()
         stbi_set_flip_vertically_on_load(true);
 
         // Load the image
-        unsigned char* pData = stbi_load(texture.path.c_str(), &width, &height, &nrChannels, 0);
+        unsigned char* pData = stbi_load(texture.path.c_str(), &width, &height, &nrChannels, DEFAULT_CHANNELS);
         if (pData)
         {
             // Create the texture
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pData);
+            glTexImage2D(GL_TEXTURE_2D, MIP_LEVEL, GL_RGB, width, height, BORDER, GL_RGB, GL_UNSIGNED_BYTE, pData);
             // Generate the mipmaps
             glGenerateMipmap(GL_TEXTURE_2D);
         }
@@ -86,8 +86,8 @@ int Mesh::Initialize()
 
 void Mesh::Finalize()
 {
-    if(pEBO != nullptr) glDeleteBuffers(BUFFER_SIZE, pEBO);
-    if(pVBO != nullptr) glDeleteVertexArrays(BUFFER_SIZE, pVBO);
+    if(pElementBufferObject != nullptr) glDeleteBuffers(BUFFER_SIZE, pElementBufferObject);
+    if(pVertexBufferObject != nullptr) glDeleteVertexArrays(BUFFER_SIZE, pVertexBufferObject);
 }
 
 int Mesh::Update()
@@ -104,8 +104,8 @@ int Mesh::Draw()
         glBindTexture(GL_TEXTURE_2D, textures[i].ID);
     }
     
-    glBindVertexArray(*pVBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *pEBO);
+    glBindVertexArray(*pVertexBufferObject);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *pElementBufferObject);
     
     glDrawArrays(GL_TRIANGLES, VERTEX_ATTRIBUTE_INDEX, static_cast<int>(vertices.size()));
     glDrawElements(GL_TRIANGLES, static_cast<int>(indices.size()), GL_UNSIGNED_INT, reinterpret_cast<void*>(EMPTY));

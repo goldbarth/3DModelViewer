@@ -3,13 +3,13 @@
 /// <summary>Prints a yellow warning message to the console.</summary>
 void ErrorHandler::LogWarning(const std::string& message)
 {
-    std::cout << "\x1b[33mWarning: " << message << "\x1b[0m\n";
+    std::cerr << "\x1b[33mWarning: " << message << "\x1b[0m\n";
 }
 
 // Print a yellow warning message to the console with file and line information
 void ErrorHandler::LogWarning(const std::string& message, const char* file, int line)
 {
-    std::cout << "\x1b[33mWarning in " << file << "(" << line << "): " << message << "\x1b[0m\n";
+    std::cerr << "\x1b[33mWarning in " << file << "(" << line << "): " << message << "\x1b[0m\n";
 }
 
 /// <summary>Prints a red error message to the console.</summary>
@@ -21,7 +21,7 @@ void ErrorHandler::LogError(const std::string& message)
 /// <summary>Prints a red error message to the console with file and line information.</summary>
 void ErrorHandler::LogError(const std::string& message, const char* file, int line)
 {
-    std::cout << "\x1b[31mError in " << file << "(" << line << "): " << message << "\x1b[0m\n";
+    std::cerr << "\x1b[31mError in " << file << "(" << line << "): " << message << "\x1b[0m\n";
 }
 
 /// <summary>Takes an ErrorType enum member as argument. Prints an red error message to the console.</summary>
@@ -82,4 +82,10 @@ void ErrorHandler::LogError(const ErrorType& errorType, const std::string& messa
         std::cerr << "\x1b[31mError in " << file << "(" << line << "): "<< iterator->second << "" << message << "\x1b[0m\n";
     else
         std::cerr << "\x1b[31mError: Unknown error type.\x1b[0m\n";
+}
+
+/// <summary>Prints a white message to the console.</summary>
+void ErrorHandler::LogInfo(const char* message)
+{
+    std::cout << "LogInfo: " << message << "\n";
 }

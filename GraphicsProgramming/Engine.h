@@ -15,7 +15,7 @@
 class Engine
 {
 public:
-    explicit Engine(DataManager* pData) : pData(pData) {  }
+    explicit Engine(FileDataHandler* pData) : pData(pData) {  }
     
     int Initialize();
     int Run();
@@ -65,7 +65,7 @@ private:
 
     // Pointers
     
-    DataManager* pData = nullptr;
+    FileDataHandler* pData = nullptr;
     Camera* pCamera = nullptr;
     Viewport* pViewport = nullptr;
     Material* pMaterial = nullptr;
@@ -105,12 +105,13 @@ private:
     // Textures
 
     //TODO: Make this a parameter later
-    const std::string textureName = "default_64x64_f1.jpg";
-    const std::string texturePath = std::string(pData->GetTextureFolderPath()) + textureName;
+    unsigned int textureID = 0;
+    std::string textureName = "default_64x64_f1.jpg";
+    std::string texturePath = std::string(pData->GetTextureFolderPath()) + textureName;
 
     std::vector<Texture> textures = std::vector
     {
-        Texture{0, texturePath},
+        Texture{textureID, texturePath},
     };
 };
 

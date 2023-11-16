@@ -5,7 +5,7 @@
 
 #include "ErrorHandler.h"
 
-class DataManager
+class FileDataHandler
 {
 public:
     std::string ReadFile(const char* pFilePath);

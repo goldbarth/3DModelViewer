@@ -1,7 +1,6 @@
 ﻿#ifndef MATERIAL_H
 #define MATERIAL_H
 
-// Just playing around with the preprocessor directives.
 // Map strdup to _strdup in Windows with a macro.
 // Just for fun and in case of cross-platform in the future.
 // strdup to _strdup: returns a pointer to the storage location for the copied string.
@@ -16,7 +15,7 @@
 class Material : public IObject
 {
 public:
-    Material(DataManager* pData, const char* pFolderPath, const char* pVertexShaderName, const char* pFragmentShaderName)
+    Material(FileDataHandler* pData, const char* pFolderPath, const char* pVertexShaderName, const char* pFragmentShaderName)
             : pShaderProgram(new unsigned int(EMPTY)) // pData(pData),
     {
         if (pData == nullptr) return;
@@ -34,8 +33,9 @@ public:
     int Draw() override;
     
     unsigned int* GetShaderProgram() const { return pShaderProgram; }
+    
 private:
-    const GLint SOURCE_COUNT = 1;
+    const int SOURCE_COUNT = 1;
     const int EMPTY = 0;
     
     //DataManager* pData = nullptr;

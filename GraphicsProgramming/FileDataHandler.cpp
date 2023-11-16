@@ -2,7 +2,7 @@
 
 #include "FileDataHandler.h"
 
-std::string DataManager::ReadFile(const char* pFilePath)
+std::string FileDataHandler::ReadFile(const char* pFilePath)
 {
     std::ifstream fileStream(pFilePath, std::ios::in);
 
@@ -33,7 +33,7 @@ std::string DataManager::ReadFile(const char* pFilePath)
     return data;
 }
 
-void DataManager::WriteFile(const char* pFilePath, const char* pData)
+void FileDataHandler::WriteFile(const char* pFilePath, const char* pData)
 {
     
 }

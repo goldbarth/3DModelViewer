@@ -14,13 +14,6 @@ public:
 
     GLfloat uCoord;
     GLfloat vCoord;
-
-    // TexCoords getters/setters
-    GLfloat GetUCoord() const { return uCoord; }
-    GLfloat GetVCoord() const { return vCoord; }
-
-    void SetUCoord(const GLfloat u) { uCoord = u; }
-    void SetVCoord(const GLfloat v) { vCoord = v; }
 };
     
 #endif // !TEX_COORDS_H

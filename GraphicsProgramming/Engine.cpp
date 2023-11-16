@@ -47,10 +47,10 @@ int Engine::Initialize()
 
     if (pViewport != nullptr && pCamera != nullptr)
     {
-        forwardInput = [&]() {pCamera->TranslatePosition(FORWARD_INPUT);};
-        backwardInput = [&]() {pCamera->TranslatePosition(BACKWARD_INPUT);};
-        leftInput = [&]() {pCamera->TranslatePosition(LEFT_INPUT);};
-        rightInput = [&]() {pCamera->TranslatePosition(RIGHT_INPUT);};
+        forwardInput = [&]() { pCamera->TranslatePosition(FORWARD_INPUT); };
+        backwardInput = [&]() { pCamera->TranslatePosition(BACKWARD_INPUT); };
+        leftInput = [&]() { pCamera->TranslatePosition(LEFT_INPUT); };
+        rightInput = [&]() { pCamera->TranslatePosition(RIGHT_INPUT); };
     }
     
     if(pViewport != nullptr) PROVE_RESULT(pViewport->Initialize())

@@ -17,8 +17,8 @@ if ((x) == nullptr) \
 if ((x) == nullptr) new Camera(y, z, w, k, n);
 #define INIT_MATERIAL(x, y, z, w, k) \
 if((x) == nullptr) (x) = new Material(y, z, w, k);
-#define INIT_AMBIENT(x, y, z, w) \
-if((x) == nullptr) (x) = new Ambient(y, z, w);
+#define INIT_AMBIENT(x, y, z, w, k) \
+if((x) == nullptr) (x) = new Ambient(y, z, w, k);
 #define INIT_MESH(x, y, z) \
 if((x) == nullptr) (x) = new Mesh(y, z);
 

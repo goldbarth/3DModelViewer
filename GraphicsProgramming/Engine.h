@@ -76,8 +76,6 @@ private:
     
     // Shader values
 
-    static const char* pFolderPath;
-
     static const char* pAmbientVertexShaderName;
     static const char* pAmbientFragmentShaderName;
     static const char* pDefaultVertexShaderName;

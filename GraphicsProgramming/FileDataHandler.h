@@ -11,10 +11,12 @@ public:
     std::string ReadFile(const char* pFilePath);
     void WriteFile(const char* pFilePath, const char* pData);
 
-    const char* GetShaderFolderPath() { return "Resource Files/Shader/"; }
+    const char* GetShaderFolderPath() const { return pFolderPath.c_str(); }
     ErrorType GetErrorType() const { return errorType; }
 
 private:
+    std::string pFolderPath = "Resource Files/Shader/";
+    
     ErrorType errorType = ErrorType::SUCCESS;
 };
 

@@ -9,8 +9,6 @@ const std::string Engine::WINDOW_TITLE = "Glodbarth Engine 1.0";
 
 // Shader values
 
-const char* Engine::pFolderPath = "Resource Files/Shader/";
-
 const char* Engine::pAmbientVertexShaderName = "AmbientVertex.glsl";
 const char* Engine::pAmbientFragmentShaderName = "AmbientFragment.glsl";
 const char* Engine::pDefaultVertexShaderName = "DefaultVertex.glsl";
@@ -40,17 +38,11 @@ const Color Engine::LIGHT_GRAY(0.75f, 0.75f, 0.75f, 1.0f);
 
 int Engine::Initialize()
 {
-    // Set shader sources. Read from files.
-    // if(pData == nullptr) return static_cast<int>(ErrorType::DATA_MANAGER_INIT_FAILED);
-    // const std::string ambientVertexShaderSource = pData->ReadFile("Resource Files/Shader/AmbientVertex.glsl");
-    // if(pData == nullptr) return static_cast<int>(ErrorType::DATA_MANAGER_INIT_FAILED);
-    // const std::string ambientFragmentShaderSource = pData->ReadFile("Resource Files/Shader/AmbientFragment.glsl");
-    
     // Initialize objects
     INIT_CAMERA(pCamera, WINDOW_WIDTH, WINDOW_HEIGHT, CAMERA_POSITION, CAMERA_ORIENTATION, CAMERA_UP)
     INIT_VIEWPORT(pViewport)
-    INIT_MATERIAL(pMaterial, pData, pFolderPath, pDefaultVertexShaderName, pDefaultFragmentShaderName)
-    // INIT_AMBIENT(pAmbient, pData, "Resource Files/Shader/AmbientVertex.glsl", "Resource Files/Shader/AmbientFragment.glsl")
+    INIT_MATERIAL(pMaterial, pData, pData->GetShaderFolderPath(), pDefaultVertexShaderName, pDefaultFragmentShaderName)
+    // INIT_AMBIENT(pAmbient, pData, pData->GetShaderFolderPath(), pDefaultVertexShaderName, pDefaultFragmentShaderName)
     INIT_MESH(pMesh, vertices, indices)
 
     if (pViewport != nullptr && pCamera != nullptr)
@@ -60,8 +52,6 @@ int Engine::Initialize()
         leftInput = [&]() {pCamera->TranslatePosition(LEFT_INPUT);};
         rightInput = [&]() {pCamera->TranslatePosition(RIGHT_INPUT);};
     }
-    
-        
     
     if(pViewport != nullptr) PROVE_RESULT(pViewport->Initialize())
     if(pMaterial != nullptr) PROVE_RESULT(pMaterial->Initialize())

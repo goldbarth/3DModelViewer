@@ -10,16 +10,15 @@
 #define GET_ARRAY_PTR_LENGHT(ptr, type) (sizeof(&(ptr)[0]) / sizeof(type))
 
 // The macros below hasn't the best use case, but it's here for playing around and internalizing.
-#define INIT_VIEWPORT(x) \
-if ((x) == nullptr) \
-(x) = new Viewport(GLFW_MAJOR_VERSION, GLFW_MINOR_VERSION, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_OFFSET_X, WINDOW_OFFSET_Y, WINDOW_TITLE, TURQUOISE);
+#define INIT_VIEWPORT(x, y, z, w, k, n, i, j, v) \
+if ((x) == nullptr) (x) = new Viewport(y, z, w, k, n, i, j, v);
 #define INIT_CAMERA(x, y, z, w, k, n) \
 if ((x) == nullptr) new Camera(y, z, w, k, n);
 #define INIT_MATERIAL(x, y, z, w, k) \
 if((x) == nullptr) (x) = new Material(y, z, w, k);
 #define INIT_AMBIENT(x, y, z, w, k) \
 if((x) == nullptr) (x) = new Ambient(y, z, w, k);
-#define INIT_MESH(x, y, z) \
-if((x) == nullptr) (x) = new Mesh(y, z);
+#define INIT_MESH(x, y, z, w) \
+if((x) == nullptr) (x) = new Mesh(y, z, w);
 
 #endif // !DEFINES_H

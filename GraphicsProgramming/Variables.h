@@ -1,18 +1,30 @@
 ﻿#ifndef VARIABLES_H
 #define VARIABLES_H
 
+#include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
+#include <string>
 
 #include "Color.h"
+#include "TexCoords.h"
+#include "VertPos.h"
 
 struct Vertex
 {
-    glm::vec3 position;
+    VertPos position;
+    TexCoords texCoords;
     Color color;
 
-    Vertex(const glm::vec3& pos, const Color& col)
-        : position(pos), color(col) {}
+    Vertex(const VertPos& pos, const TexCoords& texC, const Color& col)
+        : position(pos), texCoords(texC), color(col) { }
+};
+
+struct Texture
+{
+    unsigned int ID;
+    // std::string type;
+    std::string path;
 };
 
 struct CameraData

@@ -192,7 +192,9 @@
     <ClInclude Include="IObject.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="TexCoords.h" />
     <ClInclude Include="Variables.h" />
+    <ClInclude Include="VertPos.h" />
     <ClInclude Include="Viewport.h" />
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +202,7 @@
     <Content Include="Resource Files\Shader\AmbientVertex.glsl" />
     <Content Include="Resource Files\Shader\DefaultFragment.glsl" />
     <Content Include="Resource Files\Shader\DefaultVertex.glsl" />
+    <Content Include="Resource Files\Texture\default_64x64_f1.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,6 +9,8 @@
 #include "Material.h"
 #include "Ambient.h"
 #include "Mesh.h"
+#include "TexCoords.h"
+#include "VertPos.h"
 
 class Engine
 {
@@ -80,19 +82,33 @@ private:
     static const char* pAmbientFragmentShaderName;
     static const char* pDefaultVertexShaderName;
     static const char* pDefaultFragmentShaderName;
-
+    
+    Color white = Color(1.0f, 1.0f, 1.0f, 1.0f);
+    Color red = Color(1.0f, 0.0f, 0.0f, 1.0f);
+    Color green = Color(0.0f, 1.0f, 0.0f, 1.0f);
+    Color blue = Color(0.0f, 0.0f, 1.0f, 1.0f);
+    
     std::vector<Vertex> vertices = std::vector
     {
-        Vertex{glm::vec3(-0.5f, -0.5f, 0.0f), Color(1.0f, 1.0f, 1.0f, 1.0f)}, // left-bottom
-        Vertex{glm::vec3( 0.5f, -0.5f, 0.0f), Color(1.0f, 0.0f, 0.0f, 1.0f)}, // right-bottom
-        Vertex{glm::vec3(-0.5f, 0.5f, 0.0f), Color(0.0f, 1.0f, 0.0f, 1.0f)}, // top-left
-        Vertex{glm::vec3(0.5f, 0.5f, 0.0f), Color(0.0f, 0.0f, 1.0f, 1.0f)}, // top-right
+        Vertex{VertPos(-0.5f, -0.5f, 0.0f), TexCoords(0.0f, 0.0f), Color(white)}, // left-bottom
+        Vertex{VertPos( 0.5f, -0.5f, 0.0f), TexCoords(1.0f, 0.0f), Color(red)}, // right-bottom
+        Vertex{VertPos(-0.5f, 0.5f, 0.0f), TexCoords(0.0f, 0.1f),Color(green)}, // top-left
+        Vertex{VertPos(0.5f, 0.5f, 0.0f), TexCoords(1.0f, 1.0f),Color(blue)}, // top-right
     };
 
     std::vector<unsigned int> indices = std::vector<unsigned int>
     {
         0, 1, 2, // first face
         2, 1, 3 // second face
+    };
+
+    // Textures
+
+    const std::string texturePath = std::string(pData->GetTextureFolderPath()) + "default_64x64_f1.jpg";
+
+    std::vector<Texture> textures = std::vector
+    {
+        Texture{0, texturePath},
     };
 };
 

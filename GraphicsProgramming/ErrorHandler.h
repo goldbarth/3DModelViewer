@@ -20,6 +20,7 @@ enum class ErrorType : char
     SHADER_PROGRAM_LINK_FAILED,
     DATA_MANAGER_INIT_FAILED,
     FILESTREAM_STILL_OPEN,
+    FAILED_LOAD_TEXTURE,
     READ_FILE_FAILED,
     COUNT,
 };
@@ -55,6 +56,7 @@ private:
         {ErrorType::FILESTREAM_STILL_OPEN, "Filestream is still open."},
         {ErrorType::DATA_MANAGER_INIT_FAILED, "Data manager is null."},
         {ErrorType::DRAW_AMBIENT_FAILED, "Failed to draw ambient. The uniform variable could not be found."},
+        {ErrorType::FAILED_LOAD_TEXTURE, "Failed to load the texture."},
     };
 };
 

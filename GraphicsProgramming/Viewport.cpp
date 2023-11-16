@@ -21,7 +21,7 @@ int Viewport::Initialize()
     glfwSetWindowUserPointer(pWindow, this);
     glfwSetFramebufferSizeCallback(pWindow, [](GLFWwindow* window, const int width, const int height)
     {
-        const auto* viewport = static_cast<Viewport*>(glfwGetWindowUserPointer(window));
+        auto* viewport = static_cast<Viewport*>(glfwGetWindowUserPointer(window));
         viewport->FramebufferSizeCallback(window, width, height);
     });
 
@@ -86,26 +86,11 @@ void Viewport::ProcessInput() const
         if (rightInput != nullptr) rightInput();
 }
 
-// {
-//     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-//         glfwSetWindowShouldClose(pViewport->GetWindow(), true);
-//     if (key == GLFW_KEY_W && action == GLFW_PRESS)
-//         pCamera->ProcessKeyboard(CameraMovement::FORWARD, deltaTime);
-//     if (key == GLFW_KEY_S && action == GLFW_PRESS)
-//         pCamera->ProcessKeyboard(CameraMovement::BACKWARD, deltaTime);
-//     if (key == GLFW_KEY_A && action == GLFW_PRESS)
-//         pCamera->ProcessKeyboard(CameraMovement::LEFT, deltaTime);
-//     if (key == GLFW_KEY_D && action == GLFW_PRESS)
-//         pCamera->ProcessKeyboard(CameraMovement::RIGHT, deltaTime);
-// };
-
 // Callback
 
-// Set the framebuffer size callback using a lambda, because it is a static function and cannot access member variables.
-// It needs to be static because it is one way to set the offset from the viewport @ the constructor initialization.
 auto Viewport::FramebufferSizeCallback(GLFWwindow* window, const int width, const int height) -> void
 {
-    // Access member variables using the captured lambda
+    // Access member variables (windowOffsetX, windowOffsetY) using the captured lambda expression
     const auto* viewport = static_cast<Viewport*>(glfwGetWindowUserPointer(window));
     glViewport(viewport->windowOffsetX, viewport->windowOffsetY, width, height);
 }

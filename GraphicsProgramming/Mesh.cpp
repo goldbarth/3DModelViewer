@@ -21,10 +21,10 @@ int Mesh::Initialize()
 
     // Copy our indices array in a buffer for OpenGL to use (Index list)
     const GLsizeiptr indexSizeInBytes = sizeof(unsigned int) * indices.size();
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSizeInBytes, indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSizeInBytes, &indices.front(), GL_STATIC_DRAW);
 
     // Position attribute (Vertex)
-    glVertexAttribPointer(VERTEX_ATTRIBUTE_INDEX, GetPositionNumber(), GL_FLOAT, GL_FALSE, sizeof(Vertex), static_cast<void*>(nullptr));
+    glVertexAttribPointer(VERTEX_ATTRIBUTE_INDEX, GetPositionNumber(), GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(EMPTY));
     glEnableVertexAttribArray(VERTEX_ATTRIBUTE_INDEX);
 
     // Color attribute (Vertex)
@@ -49,8 +49,8 @@ int Mesh::Draw()
 {
     glBindVertexArray(*pVBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *pEBO);
-    glDrawArrays(GL_TRIANGLES, VERTEX_ATTRIBUTE_INDEX, static_cast<int>(vertices.size()));
     
+    glDrawArrays(GL_TRIANGLES, VERTEX_ATTRIBUTE_INDEX, static_cast<int>(vertices.size()));
     glDrawElements(GL_TRIANGLES, static_cast<int>(indices.size()), GL_UNSIGNED_INT, reinterpret_cast<void*>(EMPTY));
     
     return static_cast<int>(errorType);

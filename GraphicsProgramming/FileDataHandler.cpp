@@ -10,7 +10,7 @@ std::string DataManager::ReadFile(const char* pFilePath)
     {
         errorType = ErrorType::READ_FILE_FAILED;
         ErrorHandler::LogError(errorType, "File: " + std::string(pFilePath) + " could not be opened.", __FILE__, __LINE__);
-        return "";
+        return {};
     }
 
     std::string data;
@@ -28,7 +28,7 @@ std::string DataManager::ReadFile(const char* pFilePath)
     {
         errorType = ErrorType::FILESTREAM_STILL_OPEN;
         ErrorHandler::LogError(errorType, "File: " + std::string(pFilePath) + " was not closed correctly and is still open.", __FILE__, __LINE__);
-        return "";
+        return {};
     }
     return data;
 }

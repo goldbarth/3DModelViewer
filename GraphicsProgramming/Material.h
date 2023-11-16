@@ -16,12 +16,16 @@
 class Material : public IObject
 {
 public:
-    Material(DataManager* pData, const char* pVertexShader, const char* pFragmentShader)
+    Material(DataManager* pData, const char* pFolderPath, const char* pVertexShaderName, const char* pFragmentShaderName)
             : pShaderProgram(new unsigned int(EMPTY)) // pData(pData),
     {
-        if(pData == nullptr) return;
-        pVertexShaderSource = strdup(pData->ReadFile(pVertexShader).c_str());
-        pFragmentShaderSource = strdup(pData->ReadFile(pFragmentShader).c_str());
+        if (pData == nullptr) return;
+
+        const std::string vertexShaderPath = std::string(pFolderPath) + std::string(pVertexShaderName);
+        const std::string fragmentShaderPath = std::string(pFolderPath) + std::string(pFragmentShaderName);
+
+        pVertexShaderSource = strdup(pData->ReadFile(vertexShaderPath.c_str()).c_str());
+        pFragmentShaderSource = strdup(pData->ReadFile(fragmentShaderPath.c_str()).c_str());
     }
     
     int Initialize() override;
@@ -30,8 +34,8 @@ public:
     int Draw() override;
     
     unsigned int* GetShaderProgram() const { return pShaderProgram; }
-
 private:
+    const GLint SOURCE_COUNT = 1;
     const int EMPTY = 0;
     
     //DataManager* pData = nullptr;

@@ -8,8 +8,8 @@
 class Ambient : public Material
 {
 public:
-    Ambient(DataManager* pData, const char* pVertexShader, const char* pFragmentShader)
-            : Material(pData, pVertexShader, pFragmentShader) { }
+    Ambient(DataManager* pData, const char* pFolderPath, const char* pVertexShader, const char* pFragmentShader)
+            : Material(pData, pFolderPath, pVertexShader, pFragmentShader) { }
 
     glm::vec3 GetLightColor() const { return lightColor; }
     void SetLightColor(const glm::vec3& color) { this->lightColor = color; }

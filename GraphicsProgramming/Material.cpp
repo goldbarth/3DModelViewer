@@ -8,12 +8,12 @@ int Material::Initialize()
     
     const unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     
-    glShaderSource(vertexShader, 1, &pVertexShaderSource, nullptr);
+    glShaderSource(vertexShader, SOURCE_COUNT, &pVertexShaderSource, nullptr);
     glCompileShader(vertexShader);
 
-    int success = 0;
-    char infoLog[512];
     constexpr int bufferSize = 512;
+    char infoLog[bufferSize];
+    int success = 0;
 
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
 
@@ -30,7 +30,7 @@ int Material::Initialize()
     
     const unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     
-    glShaderSource(fragmentShader, 1, &pFragmentShaderSource, nullptr);
+    glShaderSource(fragmentShader, SOURCE_COUNT, &pFragmentShaderSource, nullptr);
     glCompileShader(fragmentShader);
 
     if(!success)

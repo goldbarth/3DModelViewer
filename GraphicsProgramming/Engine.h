@@ -34,6 +34,25 @@ private:
 
     static const std::string WINDOW_TITLE;
 
+    // Camera values
+    
+    static const glm::vec3 CAMERA_POSITION;
+    static const glm::vec3 CAMERA_ORIENTATION;
+    static const glm::vec3 CAMERA_UP;
+    
+    const char* CAMERA_UNIFORM_NAME = "cameraMatrix";
+
+    const float DEFAULT_CAMERA_FOV = 0.45f;
+    const float DEFAULT_CAMERA_NEAR = 0.1f;
+    const float DEFAULT_CAMERA_FAR = 100.0f;
+
+    // Input values
+
+    static const glm::vec3 FORWARD_INPUT;
+    static const glm::vec3 BACKWARD_INPUT;
+    static const glm::vec3 LEFT_INPUT;
+    static const glm::vec3 RIGHT_INPUT;
+
     // Colors
     
     static const Color GOLD;
@@ -57,17 +76,19 @@ private:
     
     // Shader values
 
+    static const char* pFolderPath;
+
+    static const char* pAmbientVertexShaderName;
+    static const char* pAmbientFragmentShaderName;
+    static const char* pDefaultVertexShaderName;
+    static const char* pDefaultFragmentShaderName;
+
     std::vector<Vertex> vertices = std::vector
     {
-        Vertex{glm::vec3(-0.5f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // left-bottom
-        Vertex{glm::vec3( 0.5f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // right-bottom
-        Vertex{glm::vec3(-0.5f, 0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // top-left
-        Vertex{glm::vec3(0.5f, 0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // top-right
-        
-        // 2. Triangle
-        // Vertex{glm::vec3(0.0f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // left-bottom
-        // Vertex{glm::vec3(0.9f, -0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)}, // right-bottom
-        // Vertex{glm::vec3(0.45f, 0.5f, 0.0f), Color(1.0f, 0.84f, 0.0f, 1.0f)} // top
+        Vertex{glm::vec3(-0.5f, -0.5f, 0.0f), Color(1.0f, 1.0f, 1.0f, 1.0f)}, // left-bottom
+        Vertex{glm::vec3( 0.5f, -0.5f, 0.0f), Color(1.0f, 0.0f, 0.0f, 1.0f)}, // right-bottom
+        Vertex{glm::vec3(-0.5f, 0.5f, 0.0f), Color(0.0f, 1.0f, 0.0f, 1.0f)}, // top-left
+        Vertex{glm::vec3(0.5f, 0.5f, 0.0f), Color(0.0f, 0.0f, 1.0f, 1.0f)}, // top-right
     };
 
     std::vector<unsigned int> indices = std::vector<unsigned int>

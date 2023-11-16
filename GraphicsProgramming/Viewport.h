@@ -38,11 +38,11 @@ public:
 private:
     // Helper functions
 
-    static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
+    void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
     void ProcessInput() const;
 
 public:
-    [[nodiscard]] GLFWwindow* GetWindow() const { return pWindow; }
+    GLFWwindow* GetWindow() const { return pWindow; }
     
     int Initialize() override;
     void Finalize() override;

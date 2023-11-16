@@ -7,34 +7,58 @@
 
 const std::string Engine::WINDOW_TITLE = "Glodbarth Engine 1.0";
 
+// Shader values
+
+const char* Engine::pFolderPath = "Resource Files/Shader/";
+
+const char* Engine::pAmbientVertexShaderName = "AmbientVertex.glsl";
+const char* Engine::pAmbientFragmentShaderName = "AmbientFragment.glsl";
+const char* Engine::pDefaultVertexShaderName = "DefaultVertex.glsl";
+const char* Engine::pDefaultFragmentShaderName = "DefaultFragment.glsl";
+
+// Camera values
+
+const glm::vec3 Engine::CAMERA_POSITION = glm::vec3(0.0f, 0.0f, 3.0f);
+const glm::vec3 Engine::CAMERA_ORIENTATION = glm::vec3(0.0f, 0.0f, -0.5f);
+const glm::vec3 Engine::CAMERA_UP = glm::vec3(0.0f, 1.0f, 0.0f);
+
+// Input values
+
+const glm::vec3 Engine::FORWARD_INPUT = glm::vec3(1.0f, 0.0f, 0.0f);
+const glm::vec3 Engine::BACKWARD_INPUT = glm::vec3(-1.0f, 0.0f, 0.0f);
+const glm::vec3 Engine::LEFT_INPUT = glm::vec3(0.0f, 0.0f, 1.0f);
+const glm::vec3 Engine::RIGHT_INPUT = glm::vec3(0.0f, 0.0f, -1.0f);
+
+// Colors
+
 const Color Engine::GOLD(1.0f, 0.84f, 0.0f, 1.0f); //(1.0f, 0.5f, 0.2f, 1.0f)
 const Color Engine::BLACK(0.0f, 0.0f, 0.0f, 1.0f);
 const Color Engine::TURQUOISE(0.0f, 0.5f, 0.5f, 1.0f);
 const Color Engine::DARK_GRAY(0.25f, 0.25f, 0.25f, 1.0f);
 const Color Engine::LIGHT_GRAY(0.75f, 0.75f, 0.75f, 1.0f);
 
+
 int Engine::Initialize()
 {
     // Set shader sources. Read from files.
-    if(pData == nullptr) return static_cast<int>(ErrorType::DATA_MANAGER_INIT_FAILED);
-    const std::string ambientVertexShaderSource = pData->ReadFile("Resource Files/Shader/AmbientVertex.glsl");
-    if(pData == nullptr) return static_cast<int>(ErrorType::DATA_MANAGER_INIT_FAILED);
-    const std::string ambientFragmentShaderSource = pData->ReadFile("Resource Files/Shader/AmbientFragment.glsl");
+    // if(pData == nullptr) return static_cast<int>(ErrorType::DATA_MANAGER_INIT_FAILED);
+    // const std::string ambientVertexShaderSource = pData->ReadFile("Resource Files/Shader/AmbientVertex.glsl");
+    // if(pData == nullptr) return static_cast<int>(ErrorType::DATA_MANAGER_INIT_FAILED);
+    // const std::string ambientFragmentShaderSource = pData->ReadFile("Resource Files/Shader/AmbientFragment.glsl");
     
-        
     // Initialize objects
-    INIT_CAMERA(pCamera, WINDOW_WIDTH, WINDOW_HEIGHT, glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, -0.5f), glm::vec3(0.0f, 1.0f, 0.0f))
+    INIT_CAMERA(pCamera, WINDOW_WIDTH, WINDOW_HEIGHT, CAMERA_POSITION, CAMERA_ORIENTATION, CAMERA_UP)
     INIT_VIEWPORT(pViewport)
-    INIT_MATERIAL(pMaterial, pData, "Resource Files/Shader/DefaultVertex.glsl", "Resource Files/Shader/DefaultFragment.glsl")
+    INIT_MATERIAL(pMaterial, pData, pFolderPath, pDefaultVertexShaderName, pDefaultFragmentShaderName)
     // INIT_AMBIENT(pAmbient, pData, "Resource Files/Shader/AmbientVertex.glsl", "Resource Files/Shader/AmbientFragment.glsl")
     INIT_MESH(pMesh, vertices, indices)
 
     if (pViewport != nullptr && pCamera != nullptr)
     {
-        forwardInput = [&]() {pCamera->TranslatePosition(glm::vec3(1.0f, 0.0f, 0.0f));};
-        backwardInput = [&]() {pCamera->TranslatePosition(glm::vec3(-1.0f, 0.0f, 0.0f));};
-        leftInput = [&]() {pCamera->TranslatePosition(glm::vec3(0.0f, 0.0f, 1.0f));};
-        rightInput = [&]() {pCamera->TranslatePosition(glm::vec3(0.0f, 0.0f, -1.0f));};
+        forwardInput = [&]() {pCamera->TranslatePosition(FORWARD_INPUT);};
+        backwardInput = [&]() {pCamera->TranslatePosition(BACKWARD_INPUT);};
+        leftInput = [&]() {pCamera->TranslatePosition(LEFT_INPUT);};
+        rightInput = [&]() {pCamera->TranslatePosition(RIGHT_INPUT);};
     }
     
         
@@ -59,7 +83,7 @@ int Engine::Run()
             // if(pAmbient != nullptr) PROVE_RESULT(pAmbient->Update())
             if (pMesh != nullptr) PROVE_RESULT(pMesh->Update())
             
-            if (pCamera != nullptr) pCamera->SetCameraData(CameraData{0.45f, 0.1f, 100.0f, pMaterial->GetShaderProgram(), "cameraMatrix"});
+            if (pCamera != nullptr) pCamera->SetCameraData(CameraData{DEFAULT_CAMERA_FOV, DEFAULT_CAMERA_NEAR, DEFAULT_CAMERA_FAR, pMaterial->GetShaderProgram(), CAMERA_UNIFORM_NAME});
             if (pCamera != nullptr) PROVE_RESULT(pCamera->Update())
             
             if (pViewport != nullptr) PROVE_RESULT(pViewport->Draw())

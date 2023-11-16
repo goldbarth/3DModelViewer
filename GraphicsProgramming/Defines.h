@@ -15,8 +15,8 @@ if ((x) == nullptr) \
 (x) = new Viewport(GLFW_MAJOR_VERSION, GLFW_MINOR_VERSION, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_OFFSET_X, WINDOW_OFFSET_Y, WINDOW_TITLE, TURQUOISE);
 #define INIT_CAMERA(x, y, z, w, k, n) \
 if ((x) == nullptr) new Camera(y, z, w, k, n);
-#define INIT_MATERIAL(x, y, z, w) \
-if((x) == nullptr) (x) = new Material(y, z, w);
+#define INIT_MATERIAL(x, y, z, w, k) \
+if((x) == nullptr) (x) = new Material(y, z, w, k);
 #define INIT_AMBIENT(x, y, z, w) \
 if((x) == nullptr) (x) = new Ambient(y, z, w);
 #define INIT_MESH(x, y, z) \

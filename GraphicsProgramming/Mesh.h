@@ -30,7 +30,7 @@ private:
     const int EMPTY = 0;
     const int BUFFER_SIZE = 1;
     const int VERTEX_ATTRIBUTE_INDEX = 0;
-    const int COLOR_ATTRIBUTE_INDEX = 0;
+    const int COLOR_ATTRIBUTE_INDEX = 1;
     
     std::vector<Vertex> vertices = {};
     std::vector<unsigned int> indices = {};

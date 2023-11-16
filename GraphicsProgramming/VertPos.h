@@ -8,21 +8,21 @@
 class VertPos
 {
 public:
-    VertPos(const GLfloat x, const GLfloat y, const GLfloat z)
-        : xPos(x), yPos(y), zPos(z) {}
+    VertPos(const GLfloat xPos, const GLfloat yPos, const GLfloat zPos)
+        : x(xPos), y(yPos), z(zPos) {}
 
-    GLfloat xPos;
-    GLfloat yPos;
-    GLfloat zPos;
+    GLfloat x;
+    GLfloat y;
+    GLfloat z;
 
     // VertPos getters/setters
-    GLfloat GetXPos() const { return xPos; }
-    GLfloat GetYPos() const { return yPos; }
-    GLfloat GetZPos() const { return zPos; }
+    GLfloat GetXPos() { return x; }
+    GLfloat GetYPos() { return y; }
+    GLfloat GetZPos() { return z; }
 
-    void SetXPos(const GLfloat x) { xPos = x; }
-    void SetYPos(const GLfloat y) { yPos = y; }
-    void SetZPos(const GLfloat z) { zPos = z; }
+    void SetXPos(const GLfloat xPos) { x = xPos; }
+    void SetYPos(const GLfloat yPos) { y = yPos; }
+    void SetZPos(const GLfloat zPos) { z = zPos; }
 };
 
 #endif // !VERT_POS_H

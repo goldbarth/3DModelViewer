@@ -104,7 +104,9 @@ private:
 
     // Textures
 
-    const std::string texturePath = std::string(pData->GetTextureFolderPath()) + "default_64x64_f1.jpg";
+    //TODO: Make this a parameter later
+    const std::string textureName = "default_64x64_f1.jpg";
+    const std::string texturePath = std::string(pData->GetTextureFolderPath()) + textureName;
 
     std::vector<Texture> textures = std::vector
     {

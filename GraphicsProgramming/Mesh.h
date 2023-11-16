@@ -10,8 +10,8 @@
 class Mesh : public IObject
 {
 public:
-    explicit Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<Texture>& textures = {})
-    : vertices(vertices), indices(indices), pVBO(new unsigned int(EMPTY)), pEBO(new unsigned int(EMPTY)) { }
+    explicit Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<Texture>& textures = {}, Transform* transform = nullptr)
+    : vertices(TranslateVertices(vertices, transform)), indices(indices), pTransform(transform), pVBO(new unsigned int(EMPTY)), pEBO(new unsigned int(EMPTY)) { }
     
 private:
     // Bytes
@@ -24,8 +24,13 @@ private:
     constexpr int GetPositionNumber() const { return static_cast<int>(GetPositionSize()) / sizeof(float); }
     constexpr int GetColorNumber() const { return static_cast<int>(GetColorSize()) / sizeof(float); }
     constexpr int GetTextureNumber() const { return static_cast<int>(GetTextureSize()) / sizeof(float); }
+
+    static std::vector<Vertex> TranslateVertices(std::vector<Vertex> vertices, const Transform* pTransform);
     
 public:
+    Transform GetTransform() const { return *pTransform; }
+    void SetTransform(Transform& transform) { pTransform = &transform; TranslateVertices(vertices, &transform); }
+    
     int Initialize() override;
     void Finalize() override;
     int Update() override;
@@ -41,6 +46,8 @@ private:
     std::vector<Vertex> vertices = {};
     std::vector<unsigned int> indices = {};
     std::vector<Texture> textures = {};
+
+    Transform* pTransform = nullptr;
 
     // Vertex Buffer Object (VBO) and Element Buffer Object (EBO)
     unsigned int* pVBO = nullptr;

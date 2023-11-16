@@ -112,3 +112,20 @@ int Mesh::Draw()
     
     return static_cast<int>(errorType);
 }
+
+std::vector<Vertex> Mesh::TranslateVertices(std::vector<Vertex> vertices, const Transform* pTransform)
+{
+    if (pTransform == nullptr) return vertices;
+    for (auto&& vertex : vertices)
+    {
+        vertex.position.x += pTransform->position.x;
+        vertex.position.y += pTransform->position.y;
+        vertex.position.z += pTransform->position.z;
+
+        vertex.position.x *= pTransform->scale.x;
+        vertex.position.y *= pTransform->scale.y;
+        vertex.position.z *= pTransform->scale.z;
+    }
+
+    return vertices;
+}

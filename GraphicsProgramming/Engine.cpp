@@ -47,10 +47,10 @@ int Engine::Initialize()
 
     if (pViewport != nullptr && pCamera != nullptr)
     {
-        forwardInput = [&]() { pCamera->TranslatePosition(FORWARD_INPUT); };
-        backwardInput = [&]() { pCamera->TranslatePosition(BACKWARD_INPUT); };
-        leftInput = [&]() { pCamera->TranslatePosition(LEFT_INPUT); };
-        rightInput = [&]() { pCamera->TranslatePosition(RIGHT_INPUT); };
+        pViewport->SetForwardInput([&]() { pCamera->TranslatePosition(FORWARD_INPUT); });
+        pViewport->SetBackwardInput([&]() { pCamera->TranslatePosition(BACKWARD_INPUT); });
+        pViewport->SetLeftInput([&]() { pCamera->TranslatePosition(LEFT_INPUT); });
+        pViewport->SetRightInput([&]() { pCamera->TranslatePosition(RIGHT_INPUT); });
     }
     
     if(pViewport != nullptr) PROVE_RESULT(pViewport->Initialize())
@@ -100,4 +100,5 @@ void Engine::Finalize()
     // FINALIZE_DELETE(pAmbient)
     FINALIZE_DELETE(pMaterial)
     FINALIZE_DELETE(pViewport)
+    FINALIZE_DELETE(pCamera)
 }

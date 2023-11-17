@@ -30,7 +30,11 @@ private:
 public:
     Transform GetTransform() const { return *pTransform; }
     void SetTransform(Transform& transform) { pTransform = &transform; TranslateVertices(vertices, &transform); }
-    
+
+    int LoadTextures();
+    void InitializeVertices() const;
+    int InitializeTextures();
+    void InitializeBuffers() const;
     int Initialize() override;
     void Finalize() override;
     int Update() override;

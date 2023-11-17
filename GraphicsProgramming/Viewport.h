@@ -41,6 +41,11 @@ private:
 
 public:
     GLFWwindow* GetWindow() const { return pWindow; }
+
+    void SetForwardInput(std::function<void()> input) { forwardInput = std::move(input); }
+    void SetBackwardInput(std::function<void()> input) { backwardInput = std::move(input); }
+    void SetLeftInput(std::function<void()> input) { leftInput = std::move(input); }
+    void SetRightInput(std::function<void()> input) { rightInput = std::move(input); }
     
     int Initialize() override;
     void Finalize() override;

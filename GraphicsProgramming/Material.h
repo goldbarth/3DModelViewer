@@ -15,8 +15,8 @@
 class Material : public IObject
 {
 public:
-    Material(FileDataHandler* pData, const char* pFolderPath, const char* pVertexShaderName, const char* pFragmentShaderName)
-            : pShaderProgram(new unsigned int(EMPTY)) // pData(pData),
+    Material(FileDataHandler* pDataHandler, const char* pFolderPath, const char* pVertexShaderName, const char* pFragmentShaderName)
+            : pData(pDataHandler), pShaderProgram(new unsigned int(EMPTY))
     {
         if (pData == nullptr) return;
 
@@ -38,7 +38,7 @@ private:
     const int SOURCE_COUNT = 1;
     const int EMPTY = 0;
     
-    //DataManager* pData = nullptr;
+    FileDataHandler* pData = nullptr;
     
     const char* pVertexShaderSource = nullptr;
     const char* pFragmentShaderSource = nullptr;

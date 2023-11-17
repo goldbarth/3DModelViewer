@@ -9,6 +9,8 @@
 #define GET_ARRAY_LENGHT(x, y) (sizeof(x) / sizeof(y))
 #define GET_ARRAY_PTR_LENGHT(ptr, type) (sizeof(&(ptr)[0]) / sizeof(type))
 
+// Obsolete macros:
+
 // The macros below hasn't the best use case, but it's here for playing around and internalizing.
 #define INIT_VIEWPORT(x, y, z, w, k, n, i, j, v) \
 if ((x) == nullptr) (x) = new Viewport(y, z, w, k, n, i, j, v);

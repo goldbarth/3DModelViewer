@@ -42,11 +42,11 @@ private:
     static const glm::vec3 CAMERA_ORIENTATION;
     static const glm::vec3 CAMERA_UP;
     
-    const char* CAMERA_UNIFORM_NAME = "cameraMatrix";
+    std::string CAMERA_UNIFORM_NAME = "cameraMatrix";
 
     const float DEFAULT_CAMERA_FOV = 0.45f;
     const float DEFAULT_CAMERA_NEAR = 0.1f;
-    const float DEFAULT_CAMERA_FAR = 100.0f;
+    const float DEFAULT_CAMERA_FAR = 1000.0f;
 
     // Input values
 

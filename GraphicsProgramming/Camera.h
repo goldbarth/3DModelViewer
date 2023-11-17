@@ -21,7 +21,7 @@ public:
     int Draw() override;
 
 private:
-    const int COUNT = 0;
+    const int COUNT = 1;
     
     int width = 0;
     int height = 0;

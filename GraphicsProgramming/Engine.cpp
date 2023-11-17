@@ -16,7 +16,7 @@ const char* Engine::pDefaultFragmentShaderName = "DefaultFragment.glsl";
 
 // Camera values
 
-const glm::vec3 Engine::CAMERA_POSITION = glm::vec3(0.0f, 0.0f, 3.0f);
+const glm::vec3 Engine::CAMERA_POSITION = glm::vec3(0.0f, 0.0f, 250.0f);
 const glm::vec3 Engine::CAMERA_ORIENTATION = glm::vec3(0.0f, 0.0f, -0.5f);
 const glm::vec3 Engine::CAMERA_UP = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -39,11 +39,11 @@ const Color Engine::LIGHT_GRAY(0.75f, 0.75f, 0.75f, 1.0f);
 int Engine::Initialize()
 {
     // Initialize objects
-    INIT_CAMERA(pCamera, WINDOW_WIDTH, WINDOW_HEIGHT, CAMERA_POSITION, CAMERA_ORIENTATION, CAMERA_UP)
-    INIT_VIEWPORT(pViewport, GLFW_MAJOR_VERSION, GLFW_MINOR_VERSION, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_OFFSET_X, WINDOW_OFFSET_Y, WINDOW_TITLE, TURQUOISE)
-    INIT_MATERIAL(pMaterial, pData, pData->GetShaderFolderPath(), pDefaultVertexShaderName, pDefaultFragmentShaderName)
-    // INIT_AMBIENT(pAmbient, pData, pData->GetShaderFolderPath(), pDefaultVertexShaderName, pDefaultFragmentShaderName)
-    INIT_MESH(pMesh, vertices, indices, textures)
+    if (pCamera == nullptr) pCamera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT, CAMERA_POSITION, CAMERA_ORIENTATION, CAMERA_UP);
+    if (pViewport == nullptr) pViewport = new Viewport(GLFW_MAJOR_VERSION, GLFW_MINOR_VERSION, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_OFFSET_X, WINDOW_OFFSET_Y, WINDOW_TITLE, TURQUOISE);
+    if (pMaterial == nullptr) pMaterial = new Material(pData, pData->GetShaderFolderPath(), pDefaultVertexShaderName, pDefaultFragmentShaderName);
+    // if (pAmbient == nullptr) pAmbient = new Ambient(pData, pData->GetShaderFolderPath(), pAmbientVertexShaderName, pAmbientFragmentShaderName);
+    if (pMesh == nullptr) pMesh = new Mesh(vertices, indices, textures);
 
     if (pViewport != nullptr && pCamera != nullptr)
     {
@@ -73,7 +73,7 @@ int Engine::Run()
             // if(pAmbient != nullptr) PROVE_RESULT(pAmbient->Update())
             if (pMesh != nullptr) PROVE_RESULT(pMesh->Update())
             
-            if (pCamera != nullptr) pCamera->SetCameraData(CameraData{DEFAULT_CAMERA_FOV, DEFAULT_CAMERA_NEAR, DEFAULT_CAMERA_FAR, pMaterial->GetShaderProgram(), CAMERA_UNIFORM_NAME});
+            if (pCamera != nullptr) pCamera->SetCameraData(CameraData{ DEFAULT_CAMERA_FOV, DEFAULT_CAMERA_NEAR, DEFAULT_CAMERA_FAR, pMaterial->GetShaderProgram(), CAMERA_UNIFORM_NAME.c_str()} );
             if (pCamera != nullptr) PROVE_RESULT(pCamera->Update())
             
             if (pViewport != nullptr) PROVE_RESULT(pViewport->Draw())

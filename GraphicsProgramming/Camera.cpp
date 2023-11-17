@@ -1,5 +1,4 @@
 ﻿#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -16,7 +15,7 @@ void Camera::Finalize()
 
 int Camera::Update()
 {
-    const auto viewMatrix = lookAt(position, orientation + position, up);
+    const auto viewMatrix = lookAt(position, position + orientation, up);
     const auto projectionMatrix = glm::perspective(glm::radians(cameraData.fovDegree), static_cast<float>(width / height), cameraData.nearPlane, cameraData.farPlane);
     
     // Projection matrix to be used in the shader (perspective)

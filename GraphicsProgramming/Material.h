@@ -31,7 +31,7 @@ public:
     void Finalize() override;
     int Update() override;
     int Draw() override;
-    
+
     unsigned int* GetShaderProgram() const { return pShaderProgram; }
     
 private:

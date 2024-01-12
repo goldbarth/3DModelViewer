@@ -1,5 +1,5 @@
-﻿#ifndef VARIABLES_H
-#define VARIABLES_H
+﻿#ifndef CUSTOM_STRUCTS_H
+#define CUSTOM_STRUCTS_H
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
@@ -45,4 +45,4 @@ struct Transform
     // glm::vec3 rotation;
 };
 
-#endif //!VARIABLES_H
+#endif //!CUSTOM_STRUCTS_H

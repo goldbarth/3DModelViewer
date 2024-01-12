@@ -19,10 +19,10 @@ const glm::vec3 Engine::CAMERA_UP = glm::vec3(0.0f, 1.0f, 0.0f);
 
 // Input values
 
-const glm::vec3 Engine::FORWARD_INPUT = glm::vec3(1.0f, 0.0f, 0.0f);
-const glm::vec3 Engine::BACKWARD_INPUT = glm::vec3(-1.0f, 0.0f, 0.0f);
-const glm::vec3 Engine::LEFT_INPUT = glm::vec3(0.0f, 0.0f, 1.0f);
-const glm::vec3 Engine::RIGHT_INPUT = glm::vec3(0.0f, 0.0f, -1.0f);
+const glm::vec3 Engine::FORWARD_INPUT = glm::vec3(0.0f, 0.0f, -1.0f);
+const glm::vec3 Engine::BACKWARD_INPUT = glm::vec3(0.0f, 0.0f, 1.0f);
+const glm::vec3 Engine::LEFT_INPUT = glm::vec3(-1.0f, 0.0f, 0.0f);
+const glm::vec3 Engine::RIGHT_INPUT = glm::vec3(1.0f, 0.0f, 0.0f);
 
 // Colors
 

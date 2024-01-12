@@ -71,19 +71,23 @@ void Mesh::InitializeVertices() const
     glEnableVertexAttribArray(VERTEX_ATTRIBUTE_INDEX);
 
     // Color attribute (Vertex)
-    glVertexAttribPointer(COLOR_ATTRIBUTE_INDEX, GetColorNumber(), GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(GetPositionSize()));
+    glVertexAttribPointer(COLOR_ATTRIBUTE_INDEX, GetColorNumber(), GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(EMPTY + GetPositionSize()));
     glEnableVertexAttribArray(COLOR_ATTRIBUTE_INDEX);
 
     // Texture attribute (Vertex)
-    glVertexAttribPointer(TEXTURE_ATTRIBUTE_INDEX, GetTextureNumber(), GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(GetPositionSize() + GetColorSize()));
+    glVertexAttribPointer(TEXTURE_ATTRIBUTE_INDEX, GetTextureNumber(), GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(EMPTY + GetPositionSize() + GetColorSize()));
     glEnableVertexAttribArray(TEXTURE_ATTRIBUTE_INDEX);
+
+    // Normal attribute (Vertex)
+    glVertexAttribPointer(NORMAL_ATTRIBUTE_INDEX, GetNormalNumber(), GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(EMPTY + GetPositionSize() + GetColorSize() + GetTextureSize()));
+    glEnableVertexAttribArray(NORMAL_ATTRIBUTE_INDEX); 
 }
 
 int Mesh::InitializeTextures()
 {
     if (textures.empty()) return static_cast<int>(errorType);
 
-    int result = LoadTextures();
+    const int result = LoadTextures();
     if (result != static_cast<int>(ErrorType::SUCCESS))
     {
         errorType = ErrorType::FAILED_LOAD_TEXTURE;

@@ -90,6 +90,8 @@ private:
     static const char* pAmbientFragmentShaderName;
     static const char* pDefaultVertexShaderName;
     static const char* pDefaultFragmentShaderName;
+
+	// Vertices
     
     Color white = Color(1.0f, 1.0f, 1.0f, 1.0f);
     Color red = Color(1.0f, 0.0f, 0.0f, 1.0f);
@@ -98,10 +100,56 @@ private:
     
     std::vector<Vertex> vertices = std::vector
     {
-        Vertex{VertPos(-0.5f, -0.5f, 0.0f), TexCoords(0.0f, 0.0f), Color(white)}, // left-bottom
-        Vertex{VertPos( 0.5f, -0.5f, 0.0f), TexCoords(1.0f, 0.0f), Color(red)}, // right-bottom
-        Vertex{VertPos(-0.5f, 0.5f, 0.0f), TexCoords(0.0f, 0.1f),Color(green)}, // top-left
-        Vertex{VertPos(0.5f, 0.5f, 0.0f), TexCoords(1.0f, 1.0f),Color(blue)}, // top-right
+    	// Rectangle:
+    	
+        // Vertex{VertPos(-0.5f, -0.5f, 0.0f), TexCoords(0.0f, 0.0f), Color(white)}, // left-bottom
+        // Vertex{VertPos( 0.5f, -0.5f, 0.0f), TexCoords(1.0f, 0.0f), Color(red)}, // right-bottom
+        // Vertex{VertPos(-0.5f, 0.5f, 0.0f), TexCoords(0.0f, 0.1f),Color(green)}, // top-left
+        // Vertex{VertPos(0.5f, 0.5f, 0.0f), TexCoords(1.0f, 1.0f),Color(blue)}, // top-right
+    	
+    	// Cube:
+        		// x     y     z						            u     v					nx    ny    nz				r      g     b    a
+			Vertex{VertPos(-0.5f, -0.5f, -0.5f), TexCoords(0.0f, 0.0f), Normals(0.0f, 0.0f, -1.0f),Color(white)},
+			Vertex{VertPos( 0.5f, -0.5f, -0.5f), TexCoords(1.0f, 0.0f), Normals(0.0f, 0.0f, -1.0f),Color(red)},
+			Vertex{VertPos( 0.5f,  0.5f, -0.5f), TexCoords(1.0f, 1.0f), Normals(0.0f, 0.0f, -1.0f),Color(green)},
+			Vertex{VertPos( 0.5f,  0.5f, -0.5f), TexCoords(1.0f, 1.0f), Normals(0.0f, 0.0f, -1.0f),Color(blue)},
+			Vertex{VertPos(-0.5f,  0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(0.0f, 0.0f, -1.0f),Color(white)},
+			Vertex{VertPos(-0.5f, -0.5f, -0.5f), TexCoords(0.0f, 0.0f), Normals(0.0f, 0.0f, -1.0f),Color(white)}, //
+    	
+			Vertex{VertPos(-0.5f, -0.5f,  0.5f), TexCoords(0.0f, 0.0f), Normals(0.0f, 0.0f, 1.0f),Color(white)},
+			Vertex{VertPos( 0.5f, -0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(0.0f, 0.0f, 1.0f),Color(red)},
+			Vertex{VertPos( 0.5f,  0.5f,  0.5f), TexCoords(1.0f, 1.0f), Normals(0.0f, 0.0f, 1.0f),Color(green)},
+			Vertex{VertPos( 0.5f,  0.5f,  0.5f), TexCoords(1.0f, 1.0f), Normals(0.0f, 0.0f, 1.0f),Color(blue)},
+			Vertex{VertPos(-0.5f,  0.5f,  0.5f), TexCoords(0.0f, 1.0f), Normals(0.0f, 0.0f, 1.0f),Color(white)},
+			Vertex{VertPos(-0.5f, -0.5f,  0.5f), TexCoords(0.0f, 0.0f), Normals(0.0f, 0.0f, 1.0f),Color(white)}, //
+    	
+			Vertex{VertPos(-0.5f,  0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(-1.0f, 0.0f, 0.0f),Color(white)},
+			Vertex{VertPos(-0.5f,  0.5f, -0.5f), TexCoords(1.0f, 1.0f), Normals(-1.0f, 0.0f, 0.0f),Color(red)},
+			Vertex{VertPos(-0.5f, -0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(-1.0f, 0.0f, 0.0f),Color(green)},
+			Vertex{VertPos(-0.5f, -0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(-1.0f, 0.0f, 0.0f),Color(blue)},
+			Vertex{VertPos(-0.5f, -0.5f,  0.5f), TexCoords(0.0f, 0.0f), Normals(-1.0f, 0.0f, 0.0f),Color(white)},
+			Vertex{VertPos(-0.5f,  0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(-1.0f, 0.0f, 0.0f),Color(white)}, //
+    	
+			Vertex{VertPos( 0.5f,  0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(1.0f, 0.0f, 0.0f),Color(white)},
+			Vertex{VertPos( 0.5f,  0.5f, -0.5f), TexCoords(1.0f, 1.0f), Normals(1.0f, 0.0f, 0.0f),Color(red)},
+			Vertex{VertPos( 0.5f, -0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(1.0f, 0.0f, 0.0f),Color(green)},
+			Vertex{VertPos( 0.5f, -0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(1.0f, 0.0f, 0.0f),Color(blue)},
+			Vertex{VertPos( 0.5f, -0.5f,  0.5f), TexCoords(0.0f, 0.0f), Normals(1.0f, 0.0f, 0.0f),Color(white)},
+			Vertex{VertPos( 0.5f,  0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(1.0f, 0.0f, 0.0f),Color(white)}, //
+    	
+			Vertex{VertPos(-0.5f, -0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(0.0f, -1.0f, 0.0f),Color(white)},
+			Vertex{VertPos( 0.5f, -0.5f, -0.5f), TexCoords(1.0f, 1.0f), Normals(0.0f, -1.0f, 0.0f),Color(red)},
+			Vertex{VertPos( 0.5f, -0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(0.0f, -1.0f, 0.0f),Color(green)},
+			Vertex{VertPos( 0.5f, -0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(0.0f, -1.0f, 0.0f),Color(blue)},
+			Vertex{VertPos(-0.5f, -0.5f,  0.5f), TexCoords(0.0f, 0.0f), Normals(0.0f, -1.0f, 0.0f),Color(white)},
+			Vertex{VertPos(-0.5f, -0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(0.0f, -1.0f, 0.0f),Color(white)}, //
+    	
+			Vertex{VertPos(-0.5f,  0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(0.0f, 1.0f, 0.0f),Color(white)},
+			Vertex{VertPos( 0.5f,  0.5f, -0.5f), TexCoords(1.0f, 1.0f), Normals(0.0f, 1.0f, 0.0f),Color(red)},
+			Vertex{VertPos( 0.5f,  0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(0.0f, 1.0f, 0.0f),Color(green)},
+			Vertex{VertPos( 0.5f,  0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(0.0f, 1.0f, 0.0f),Color(blue)},
+			Vertex{VertPos(-0.5f,  0.5f,  0.5f), TexCoords(0.0f, 0.0f), Normals(0.0f, 1.0f, 0.0f),Color(white)},
+			Vertex{VertPos(-0.5f,  0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(0.0f, 1.0f, 0.0f),Color(white)}
     };
 
     std::vector<unsigned int> indices = std::vector<unsigned int>

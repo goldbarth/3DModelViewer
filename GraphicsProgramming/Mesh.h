@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "ErrorHandler.h"
-#include "Variables.h"
+#include "CustomStructs.h"
 #include "IObject.h"
 
 class Mesh : public IObject
@@ -18,12 +18,14 @@ private:
     constexpr int GetPositionSize() const { return sizeof(glm::vec3); }
     constexpr int GetColorSize() const { return sizeof(glm::vec4); }
     constexpr int GetTextureSize() const { return sizeof(glm::vec2); }
+    constexpr int GetNormalSize() const { return sizeof(glm::vec3); }
 
     // Numbers
     // Using static_cast to suppress narrowing conversion warning
     constexpr int GetPositionNumber() const { return static_cast<int>(GetPositionSize()) / sizeof(float); }
     constexpr int GetColorNumber() const { return static_cast<int>(GetColorSize()) / sizeof(float); }
     constexpr int GetTextureNumber() const { return static_cast<int>(GetTextureSize()) / sizeof(float); }
+    constexpr int GetNormalNumber() const { return static_cast<int>(GetNormalSize()) / sizeof(float); }
 
     static std::vector<Vertex> TranslateVertices(std::vector<Vertex> vertices, const Transform* pTransform);
     
@@ -50,6 +52,7 @@ private:
     const int VERTEX_ATTRIBUTE_INDEX = 0;
     const int COLOR_ATTRIBUTE_INDEX = 1;
     const int TEXTURE_ATTRIBUTE_INDEX = 2;
+    const int NORMAL_ATTRIBUTE_INDEX = 3;
     
     std::vector<Vertex> vertices = {};
     std::vector<unsigned int> indices = {};

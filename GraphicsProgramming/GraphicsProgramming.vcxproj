@@ -196,8 +196,9 @@
     <ClInclude Include="IObject.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Normals.h" />
     <ClInclude Include="TexCoords.h" />
-    <ClInclude Include="Variables.h" />
+    <ClInclude Include="CustomStructs.h" />
     <ClInclude Include="VertPos.h" />
     <ClInclude Include="Viewport.h" />
   </ItemGroup>

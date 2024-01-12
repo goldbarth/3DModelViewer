@@ -17,6 +17,7 @@ class Engine
 public:
     explicit Engine(FileDataHandler* pData) : pData(pData) {  }
 
+    const CameraData& GetDefaultCameraData() const;
     bool InitializeObjects();
     int Initialize();
     int Run();
@@ -30,8 +31,8 @@ private:
 
     // Window values
 
-    const int WINDOW_WIDTH = 640;
-    const int WINDOW_HEIGHT = 360;
+    const int WINDOW_WIDTH = 1920;
+    const int WINDOW_HEIGHT = 1080;
     const int WINDOW_OFFSET_X = 0;
     const int WINDOW_OFFSET_Y = 0;
 
@@ -45,7 +46,7 @@ private:
     
     std::string CAMERA_UNIFORM_NAME = "cameraMatrix";
 
-    const float DEFAULT_CAMERA_FOV = 0.45f;
+    const float DEFAULT_CAMERA_FOV_DEGREE = 0.45f;
     const float DEFAULT_CAMERA_NEAR = 0.1f;
     const float DEFAULT_CAMERA_FAR = 1000.0f;
 

@@ -2,7 +2,6 @@
 #include "Defines.h"
 #include "Engine.h"
 
-
 const std::string Engine::WINDOW_TITLE = "Glodbarth Engine 1.0";
 
 // Shader values
@@ -32,6 +31,18 @@ const Color Engine::BLACK(0.0f, 0.0f, 0.0f, 1.0f);
 const Color Engine::TURQUOISE(0.0f, 0.5f, 0.5f, 1.0f);
 const Color Engine::DARK_GRAY(0.25f, 0.25f, 0.25f, 1.0f);
 const Color Engine::LIGHT_GRAY(0.75f, 0.75f, 0.75f, 1.0f);
+
+const CameraData& Engine::GetDefaultCameraData() const
+{
+    static CameraData defaultCameraData = {
+        DEFAULT_CAMERA_FOV_DEGREE, 
+        DEFAULT_CAMERA_NEAR,
+        DEFAULT_CAMERA_FAR, 
+        pMaterial->GetShaderProgram(),
+        CAMERA_UNIFORM_NAME.c_str()
+    };
+    return defaultCameraData;
+}
 
 /// <summary>
 /// Initialize with std::unique_ptr instead of raw pointers. This ensures automatic memory management and reduces the risk of memory leaks.
@@ -91,10 +102,7 @@ int Engine::Run()
             // PROVE_RESULT(pAmbient->Update())
             PROVE_RESULT(pMesh->Update())
 
-            pCamera->SetCameraData(CameraData{ DEFAULT_CAMERA_FOV, DEFAULT_CAMERA_NEAR,
-                DEFAULT_CAMERA_FAR, pMaterial->GetShaderProgram(),
-                CAMERA_UNIFORM_NAME.c_str()
-            });
+            pCamera->SetCameraData(GetDefaultCameraData());
             PROVE_RESULT(pCamera->Update())
 
             PROVE_RESULT(pViewport->Draw())

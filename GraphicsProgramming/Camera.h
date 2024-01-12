@@ -1,7 +1,7 @@
 ﻿#ifndef CAMERA_H
 #define CAMERA_H
 
-#include "CustomStructs.h"
+#include "Variables.h"
 #include "IObject.h"
 
 

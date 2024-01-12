@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "ErrorHandler.h"
-#include "CustomStructs.h"
+#include "Variables.h"
 #include "IObject.h"
 
 class Mesh : public IObject

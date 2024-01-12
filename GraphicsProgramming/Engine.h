@@ -16,7 +16,8 @@ class Engine
 {
 public:
     explicit Engine(FileDataHandler* pData) : pData(pData) {  }
-    
+
+    bool InitializeObjects();
     int Initialize();
     int Run();
     void Finalize();
@@ -24,15 +25,15 @@ public:
 private:
     // GLFW values (versions)
 
-    static const int GLFW_MAJOR_VERSION;
-    static const int GLFW_MINOR_VERSION;
+    const int GLFW_MAJOR_VERSION = 3;
+    const int GLFW_MINOR_VERSION = 3;
 
     // Window values
 
-    static const int WINDOW_WIDTH;
-    static const int WINDOW_HEIGHT;
-    static const int WINDOW_OFFSET_X;
-    static const int WINDOW_OFFSET_Y;
+    const int WINDOW_WIDTH = 640;
+    const int WINDOW_HEIGHT = 360;
+    const int WINDOW_OFFSET_X = 0;
+    const int WINDOW_OFFSET_Y = 0;
 
     static const std::string WINDOW_TITLE;
 
@@ -42,11 +43,11 @@ private:
     static const glm::vec3 CAMERA_ORIENTATION;
     static const glm::vec3 CAMERA_UP;
     
-    static const std::string CAMERA_UNIFORM_NAME;
+    std::string CAMERA_UNIFORM_NAME = "cameraMatrix";
 
-    static const float DEFAULT_CAMERA_FOV;
-    static const float DEFAULT_CAMERA_NEAR;
-    static const float DEFAULT_CAMERA_FAR;
+    const float DEFAULT_CAMERA_FOV = 0.45f;
+    const float DEFAULT_CAMERA_NEAR = 0.1f;
+    const float DEFAULT_CAMERA_FAR = 1000.0f;
 
     // Input values
 
@@ -66,11 +67,17 @@ private:
     // Pointers
     
     FileDataHandler* pData = nullptr;
-    Camera* pCamera = nullptr;
-    Viewport* pViewport = nullptr;
-    Material* pMaterial = nullptr;
+    // Camera* pCamera = nullptr;
+    // Viewport* pViewport = nullptr;
+    // Material* pMaterial = nullptr;
     // Ambient* pAmbient = nullptr;
-    Mesh* pMesh = nullptr;
+    // Mesh* pMesh = nullptr;
+    
+    std::unique_ptr<Camera> pCamera;
+    std::unique_ptr<Viewport> pViewport;
+    std::unique_ptr<Material> pMaterial;
+    std::unique_ptr<Ambient> pAmbient;
+    std::unique_ptr<Mesh> pMesh;
 
     // Error handling
     

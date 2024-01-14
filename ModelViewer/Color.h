@@ -8,13 +8,13 @@
 class Color
 {
 public:
-    Color(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a = 1.0f)
-        : red(r), green(g), blue(b), alpha(a) {}
-
-    GLfloat red;
-    GLfloat green;
-    GLfloat blue;
-    GLfloat alpha;
+    Color(const GLfloat red, const GLfloat green, const GLfloat blue, const GLfloat alpha = 1.0f)
+        : r(red), g(green), b(blue), a(alpha) {}
+    
+    GLfloat r;
+    GLfloat g;
+    GLfloat b;
+    GLfloat a;
 };
 
 #endif // !COLOR_H

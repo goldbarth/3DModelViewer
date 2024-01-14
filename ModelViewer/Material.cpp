@@ -2,6 +2,14 @@
 
 #include "Material.h"
 
+void Material::AddUniformVector3(const std::string& name, const Color& color) const
+{
+    const GLfloat r = color.r, g = color.g, b = color.b;
+    
+    const GLuint lightColorLocation = glGetUniformLocation(reinterpret_cast<GLuint>(GetShaderProgram()), name.c_str());
+    glUniform3f(static_cast<GLint>(lightColorLocation), r, g, b);
+}
+
 int Material::Initialize()
 {
     // Build and compile vertex shader
@@ -50,13 +58,14 @@ int Material::Initialize()
     glAttachShader(*pShaderProgram, vertexShader);
     glAttachShader(*pShaderProgram, fragmentShader);
     glLinkProgram(*pShaderProgram);
+    
     glGetProgramiv(*pShaderProgram, GL_LINK_STATUS, &success);
 
     if(!success)
     {
         glGetProgramInfoLog(*pShaderProgram, bufferSize, nullptr, infoLog);
         errorType = MessageType::SHADER_PROGRAM_LINK_FAILED;
-        ErrorHandler::LogError(errorType, __FILE__, __LINE__);
+        ErrorHandler::LogError(errorType, infoLog,__FILE__, __LINE__);
         
         return static_cast<int>(errorType);
     }
@@ -80,7 +89,5 @@ int Material::Draw()
 
 void Material::Finalize()
 {
-    // free(const_cast<char*>(pVertexShaderSource));
-    // free(const_cast<char*>(pFragmentShaderSource));
     glDeleteProgram(*pShaderProgram);
 }

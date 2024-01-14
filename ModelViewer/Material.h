@@ -8,6 +8,7 @@
 #define strdup _strdup
 #endif
 
+#include "Color.h"
 #include "FileDataHandler.h"
 #include "ErrorHandler.h"
 #include "IObject.h"
@@ -18,7 +19,7 @@ public:
     Material(std::unique_ptr<FileDataHandler> pDataHandler, const char* pFolderPath, const char* pVertexShaderName, const char* pFragmentShaderName)
             : pData(std::move(pDataHandler)), pShaderProgram(new unsigned int(EMPTY))
     {
-        if (pData == nullptr) return;
+        if (!pData) return;
 
         const std::string vertexShaderPath = std::string(pFolderPath) + std::string(pVertexShaderName);
         const std::string fragmentShaderPath = std::string(pFolderPath) + std::string(pFragmentShaderName);
@@ -31,9 +32,11 @@ public:
     void Finalize() override;
     int Update() override;
     int Draw() override;
+
+    void AddUniformVector3(const std::string& name, const Color& color) const;
     
     GLuint* GetShaderProgram() const { return pShaderProgram.get(); }
-    
+
 private:
     const int SOURCE_COUNT = 1;
     const int EMPTY = 0;

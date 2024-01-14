@@ -171,7 +171,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Ambient.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="FileDataHandler.cpp" />
@@ -185,7 +184,6 @@
     <ClCompile Include="Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Ambient.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Color.h" />
@@ -197,7 +195,7 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Normals.h" />
-    <ClInclude Include="TexCoords.h" />
+    <ClInclude Include="VertexUVs.h" />
     <ClInclude Include="CustomStructs.h" />
     <ClInclude Include="VertPos.h" />
     <ClInclude Include="Viewport.h" />
@@ -207,6 +205,8 @@
     <Content Include="Resource Files\Shader\AmbientVertex.glsl" />
     <Content Include="Resource Files\Shader\DefaultFragment.glsl" />
     <Content Include="Resource Files\Shader\DefaultVertex.glsl" />
+    <Content Include="Resource Files\Shader\PhongFragment.glsl" />
+    <Content Include="Resource Files\Shader\PhongVertex.glsl" />
     <Content Include="Resource Files\Texture\default_64x64_f1.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

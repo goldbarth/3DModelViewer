@@ -18,10 +18,19 @@ const int Engine::WINDOW_OFFSET_Y = 0;
 
 // Shader values
 
+const std::string Engine::AMBIENT_UNIFORM_NAME = "ambientVector";
+const std::string Engine::PHONG_LIGHT_POSITION_UNIFORM_NAME = "lightPosition";
+const std::string Engine::PHONG_LIGHT_VECTOR_UNIFORM_NAME = "lightVector";
+const std::string Engine::PHONG_OBJECT_VECTOR_UNIFORM_NAME = "objectVector";
+
+
+
 const char* Engine::pAmbientVertexShaderName = "AmbientVertex.glsl";
 const char* Engine::pAmbientFragmentShaderName = "AmbientFragment.glsl";
 const char* Engine::pDefaultVertexShaderName = "DefaultVertex.glsl";
 const char* Engine::pDefaultFragmentShaderName = "DefaultFragment.glsl";
+const char* Engine::pPhongVertexShaderName = "PhongVertex.glsl";
+const char* Engine::pPhongFragmentShaderName = "PhongFragment.glsl";
 
 // Camera values
 
@@ -50,13 +59,25 @@ const Color Engine::TURQUOISE(0.0f, 0.5f, 0.5f, 1.0f);
 const Color Engine::DARK_GRAY(0.25f, 0.25f, 0.25f, 1.0f);
 const Color Engine::LIGHT_GRAY(0.75f, 0.75f, 0.75f, 1.0f);
 
+// Light colors
+
+const Color Engine::RED_LIGHT(1.0f, 0.0f, 0.0f);
+const Color Engine::GREEN_LIGHT(0.0f, 1.0f, 0.0f);
+const Color Engine::BLUE_LIGHT(0.0f, 0.0f, 1.0f);
+
+const Color Engine::HIGH_LIGHT(1.0f, 1.0f, 1.0f);
+const Color Engine::MID_LIGHT(0.5f, 0.5f, 0.5f);
+const Color Engine::LOW_LIGHT(0.25f, 0.25f, 0.25f);
+const Color Engine::NO_LIGHT(0.0f, 0.0f, 0.0f);
+
 const CameraData& Engine::GetDefaultCameraData() const
 {
     static CameraData defaultCameraData = {
         DEFAULT_CAMERA_FOV_DEGREE, 
         DEFAULT_CAMERA_NEAR,
         DEFAULT_CAMERA_FAR, 
-        pMaterial->GetShaderProgram(),
+        // pMaterial->GetShaderProgram(),
+        pPhongMaterial->GetShaderProgram(),
         CAMERA_UNIFORM_NAME.c_str()
     };
     return defaultCameraData;
@@ -72,8 +93,8 @@ bool Engine::InitializeObjects()
     {
         pCamera = std::make_unique<Camera>(WINDOW_WIDTH, WINDOW_HEIGHT, CAMERA_POSITION, CAMERA_ORIENTATION, CAMERA_UP);
         pViewport = std::make_unique<Viewport>(GLFW_MAJOR_VERSION, GLFW_MINOR_VERSION, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_OFFSET_X, WINDOW_OFFSET_Y, WINDOW_TITLE, TURQUOISE);
-        pMaterial = std::make_unique<Material>(std::move(pData), pData->GetShaderFolderPath(), pDefaultVertexShaderName, pDefaultFragmentShaderName);
-        //pAmbient = std::make_unique<Ambient>(std::move(pData), pData->GetShaderFolderPath(), pAmbientVertexShaderName, pAmbientFragmentShaderName);
+        // pMaterial = std::make_unique<Material>(std::move(pData), pData->GetShaderFolderPath(), pAmbientVertexShaderName, pAmbientFragmentShaderName);
+        pPhongMaterial = std::make_unique<Material>(std::move(pData), pData->GetShaderFolderPath(), pPhongVertexShaderName, pPhongFragmentShaderName);
         pMesh = std::make_unique<Mesh>(vertices, indices, textures);
         
         return true;
@@ -102,9 +123,12 @@ int Engine::Initialize()
 
     // Initialize objects
     pViewport->Initialize();
-    pMaterial->Initialize();
-    // pAmbient->SetLightColor(glm::vec3(0.5f, 0.5f, 0.5f));
-    // PROVE_RESULT(pAmbient->Initialize())
+    // pMaterial->AddUniformVector3(AMBIENT_UNIFORM_NAME, MID_LIGHT);
+    // pMaterial->Initialize();
+    pPhongMaterial->AddUniformVector3(PHONG_LIGHT_POSITION_UNIFORM_NAME, Color(30.0f, 30.0f, 30.0f));
+    pPhongMaterial->AddUniformVector3(PHONG_LIGHT_VECTOR_UNIFORM_NAME, Color(0.0f, 0.0f, -1.0f));
+    pPhongMaterial->AddUniformVector3(PHONG_OBJECT_VECTOR_UNIFORM_NAME, Color(1.0f, 1.0f, 1.0f));
+    pPhongMaterial->Initialize();
     pMesh->Initialize();
 
     return static_cast<int>(errorType);
@@ -117,16 +141,17 @@ int Engine::Run()
         while (!glfwWindowShouldClose(pViewport->GetWindow()))
         {
             pViewport->Update();
-            pMaterial->Update();
-            // pAmbient->Update();
+            // pMaterial->Update();
+            pPhongMaterial->Update();
             pMesh->Update();
 
             pCamera->SetCameraData(GetDefaultCameraData());
             pCamera->Update();
             
             pViewport->Draw();
-            pMaterial->Draw();
-            // pAmbient->Draw();
+            pCamera->Draw();
+            // pMaterial->Draw();
+            pPhongMaterial->Draw();
             pMesh->Draw();
 
             pViewport->LateDraw();

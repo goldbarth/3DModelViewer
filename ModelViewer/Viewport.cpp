@@ -59,7 +59,7 @@ int Viewport::LateDraw()
 
 int Viewport::Draw()
 {
-    glClearColor(windowColor.red, windowColor.green, windowColor.blue, windowColor.alpha);
+    glClearColor(windowColor.r, windowColor.g, windowColor.b, windowColor.a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     LateDraw();

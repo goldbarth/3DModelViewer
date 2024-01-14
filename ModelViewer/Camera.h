@@ -1,6 +1,8 @@
 ﻿#ifndef CAMERA_H
 #define CAMERA_H
 
+#include <glm/gtc/matrix_transform.hpp>
+
 #include "CustomStructs.h"
 #include "IObject.h"
 
@@ -31,6 +33,9 @@ private:
     glm::vec3 up = {};
     
     CameraData cameraData = {};
+    
+    glm::mat4x4 viewMatrix = {};
+    glm::mat4x4 projectionMatrix = {};
 };
 
 #endif // !CAMERA_H

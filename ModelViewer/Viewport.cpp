@@ -2,22 +2,19 @@
 #include "Viewport.h"
 #include "Color.h"
 
-// Viewport functions
-
 int Viewport::Initialize()
 {
-    // Initialize GLFW
     if (!pWindow)
     {
         glfwTerminate();
-        errorType = ErrorType::GLFW_WINDOW_INIT_FAILED;
-        ErrorHandler::LogError(errorType, __FILE__, __LINE__);
+        message = MessageType::GLFW_WINDOW_INIT_FAILED;
+        ErrorHandler::LogError(message, __FILE__, __LINE__);
         
-        return static_cast<int>(errorType);
+        return static_cast<int>(message);
     }
 
+    // Set the viewport
     glfwMakeContextCurrent(pWindow.get());
-
     glfwSetWindowUserPointer(pWindow.get(), this);
     glfwSetFramebufferSizeCallback(pWindow.get(), [](GLFWwindow* window, const int width, const int height)
     {
@@ -28,13 +25,16 @@ int Viewport::Initialize()
     // GLAD: Load all OpenGL function pointers
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
     {
-        errorType = ErrorType::GLAD_INIT_FAILED;
-        ErrorHandler::LogError(errorType, __FILE__, __LINE__);
+        message = MessageType::GLAD_INIT_FAILED;
+        ErrorHandler::LogError(message, __FILE__, __LINE__);
         
-        return static_cast<int>(errorType);
+        return static_cast<int>(message);
     }
 
-    return static_cast<int>(errorType);
+    // Depth buffer setup
+    glEnable(GL_DEPTH_TEST);
+
+    return static_cast<int>(message);
 }
 
 void Viewport::Finalize()
@@ -46,7 +46,7 @@ int Viewport::Update()
 {
     ProcessInput();
     
-    return static_cast<int>(errorType);
+    return static_cast<int>(message);
 }
 
 int Viewport::LateDraw()
@@ -54,17 +54,17 @@ int Viewport::LateDraw()
     glfwSwapBuffers(pWindow.get());
     glfwPollEvents();
     
-    return static_cast<int>(errorType);
+    return static_cast<int>(message);
 }
 
 int Viewport::Draw()
 {
     glClearColor(windowColor.red, windowColor.green, windowColor.blue, windowColor.alpha);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     LateDraw();
     
-    return static_cast<int>(errorType);
+    return static_cast<int>(message);
 }
 
 // Input system

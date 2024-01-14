@@ -26,7 +26,7 @@ int Ambient::Draw()
         glUniform3f(static_cast<GLint>(lightColorLocation), lightColor.x, lightColor.y, lightColor.z);
     else
     {
-        ErrorHandler::LogError(ErrorType::DRAW_AMBIENT_FAILED, "This could be due to a typo in the uniform variable name "
+        ErrorHandler::LogError(MessageType::DRAW_AMBIENT_FAILED, "This could be due to a typo in the uniform variable name "
                                                                "or the shader program might not be linked correctly.", __FILE__, __LINE__);
     }
     

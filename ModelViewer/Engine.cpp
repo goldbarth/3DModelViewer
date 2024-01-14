@@ -4,6 +4,18 @@
 
 const std::string Engine::WINDOW_TITLE = "Glodbarth Engine 1.0";
 
+// GLFW values (versions)
+
+const int Engine::GLFW_MAJOR_VERSION = 3;
+const int Engine::GLFW_MINOR_VERSION = 3;
+
+// Window values
+
+const int Engine::WINDOW_WIDTH = 1920;
+const int Engine::WINDOW_HEIGHT = 1080;
+const int Engine::WINDOW_OFFSET_X = 0;
+const int Engine::WINDOW_OFFSET_Y = 0;
+
 // Shader values
 
 const char* Engine::pAmbientVertexShaderName = "AmbientVertex.glsl";
@@ -13,9 +25,15 @@ const char* Engine::pDefaultFragmentShaderName = "DefaultFragment.glsl";
 
 // Camera values
 
+const std::string Engine::CAMERA_UNIFORM_NAME = "projectionViewMatrix";
+
 const glm::vec3 Engine::CAMERA_POSITION = glm::vec3(0.0f, 0.0f, 250.0f);
 const glm::vec3 Engine::CAMERA_ORIENTATION = glm::vec3(0.0f, 0.0f, -0.5f);
 const glm::vec3 Engine::CAMERA_UP = glm::vec3(0.0f, 1.0f, 0.0f);
+
+const float Engine::DEFAULT_CAMERA_FOV_DEGREE = 0.45f;
+const float Engine::DEFAULT_CAMERA_NEAR = 0.1f;
+const float Engine::DEFAULT_CAMERA_FAR = 1000.0f;
 
 // Input values
 
@@ -71,7 +89,7 @@ int Engine::Initialize()
 {
     if (!InitializeObjects())
     {
-        errorType = ErrorType::ENGINE_INIT_FAILED;
+        errorType = MessageType::ENGINE_INIT_FAILED;
         ErrorHandler::LogError(errorType, __FILE__, __LINE__);
         return static_cast<int>(errorType);
     }
@@ -98,25 +116,25 @@ int Engine::Run()
     {
         while (!glfwWindowShouldClose(pViewport->GetWindow()))
         {
-            PROVE_RESULT(pViewport->Update())
-            PROVE_RESULT(pMaterial->Update())
-            // PROVE_RESULT(pAmbient->Update())
-            PROVE_RESULT(pMesh->Update())
+            pViewport->Update();
+            pMaterial->Update();
+            // pAmbient->Update();
+            pMesh->Update();
 
             pCamera->SetCameraData(GetDefaultCameraData());
-            PROVE_RESULT(pCamera->Update())
-
-            PROVE_RESULT(pViewport->Draw())
-            PROVE_RESULT(pMaterial->Draw())
-            // PROVE_RESULT(pAmbient->Draw())
-            PROVE_RESULT(pMesh->Draw())
+            pCamera->Update();
             
-            PROVE_RESULT(pViewport->LateDraw())
+            pViewport->Draw();
+            pMaterial->Draw();
+            // pAmbient->Draw();
+            pMesh->Draw();
+
+            pViewport->LateDraw();
         }
     }
     else
     {
-        errorType = ErrorType::RUN_VIEWPORT_FAILED;
+        errorType = MessageType::RUN_VIEWPORT_FAILED;
         ErrorHandler::LogError("Cannot run application. Viewport is null.", errorType, __FILE__, __LINE__);
         return static_cast<int>(errorType);
     }

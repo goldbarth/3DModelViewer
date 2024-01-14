@@ -13,7 +13,7 @@ std::string FileDataHandler::ReadFile(const char* pFilePath)
 
     if(!fileStream.is_open())
     {
-        errorType = ErrorType::READ_FILE_FAILED;
+        errorType = MessageType::READ_FILE_FAILED;
         ErrorHandler::LogError(errorType, "File: " + std::string(pFilePath) + " could not be opened.", __FILE__, __LINE__);
         return {};
     }
@@ -31,7 +31,7 @@ std::string FileDataHandler::ReadFile(const char* pFilePath)
 
     if (fileStream.is_open())
     {
-        errorType = ErrorType::FILESTREAM_STILL_OPEN;
+        errorType = MessageType::FILESTREAM_STILL_OPEN;
         ErrorHandler::LogError(errorType, "File: " + std::string(pFilePath) + " was not closed correctly and is still open.", __FILE__, __LINE__);
         return {};
     }
@@ -49,7 +49,7 @@ std::vector<unsigned char> FileDataHandler::LoadImage(const std::string& filePat
     std::ifstream file(filePath, std::ios::binary);
     if (!file.is_open())
     {
-        ErrorHandler::LogError(ErrorType::READ_FILE_FAILED, "File: " + filePath + " could not be opened.", __FILE__, __LINE__);
+        ErrorHandler::LogError(MessageType::READ_FILE_FAILED, "File: " + filePath + " could not be opened.", __FILE__, __LINE__);
         return { std::vector<unsigned char>() };
     }
 
@@ -74,6 +74,6 @@ std::vector<unsigned char> FileDataHandler::LoadImage(const std::string& filePat
         return result;
     }
 
-    ErrorHandler::LogError(ErrorType::FAILED_LOAD_TEXTURE, __FILE__, __LINE__);
+    ErrorHandler::LogError(MessageType::FAILED_LOAD_TEXTURE, __FILE__, __LINE__);
     return { std::vector<unsigned char>() };
 }

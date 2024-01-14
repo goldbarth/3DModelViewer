@@ -26,29 +26,29 @@ public:
 private:
     // GLFW values (versions)
 
-    const int GLFW_MAJOR_VERSION = 3;
-    const int GLFW_MINOR_VERSION = 3;
+    static const int GLFW_MAJOR_VERSION;
+    static const int GLFW_MINOR_VERSION;
 
     // Window values
 
-    const int WINDOW_WIDTH = 1920;
-    const int WINDOW_HEIGHT = 1080;
-    const int WINDOW_OFFSET_X = 0;
-    const int WINDOW_OFFSET_Y = 0;
+    static const int WINDOW_WIDTH;
+    static const int WINDOW_HEIGHT;
+    static const int WINDOW_OFFSET_X;
+    static const int WINDOW_OFFSET_Y;
 
     static const std::string WINDOW_TITLE;
 
     // Camera values
     
+    static const std::string CAMERA_UNIFORM_NAME;
+	
     static const glm::vec3 CAMERA_POSITION;
     static const glm::vec3 CAMERA_ORIENTATION;
     static const glm::vec3 CAMERA_UP;
-    
-    std::string CAMERA_UNIFORM_NAME = "cameraMatrix";
 
-    const float DEFAULT_CAMERA_FOV_DEGREE = 0.45f;
-    const float DEFAULT_CAMERA_NEAR = 0.1f;
-    const float DEFAULT_CAMERA_FAR = 1000.0f;
+    static const float DEFAULT_CAMERA_FOV_DEGREE;
+    static const float DEFAULT_CAMERA_NEAR;
+    static const float DEFAULT_CAMERA_FAR;
 
     // Input values
 
@@ -76,7 +76,7 @@ private:
 
     // Error handling
     
-    ErrorType errorType = ErrorType::SUCCESS;
+    MessageType errorType = MessageType::SUCCESS;
     
     // Shader values
 

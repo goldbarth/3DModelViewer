@@ -62,7 +62,7 @@ private:
     std::unique_ptr<unsigned int> pVertexBufferObject;
     std::unique_ptr<unsigned int> pElementBufferObject;
     
-    ErrorType errorType = ErrorType::SUCCESS;
+    MessageType errorType = MessageType::SUCCESS;
 };
 
 #endif // !MESH_H

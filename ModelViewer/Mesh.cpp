@@ -14,8 +14,8 @@ int Mesh::Initialize()
 
 void Mesh::Finalize()
 {
-    if(pElementBufferObject != nullptr) glDeleteBuffers(BUFFER_SIZE, pElementBufferObject.get());
-    if(pVertexBufferObject != nullptr) glDeleteVertexArrays(BUFFER_SIZE, pVertexBufferObject.get());
+    if(pElementBufferObject) glDeleteBuffers(BUFFER_SIZE, pElementBufferObject.get());
+    if(pVertexBufferObject) glDeleteVertexArrays(BUFFER_SIZE, pVertexBufferObject.get());
 }
 
 int Mesh::Update()
@@ -88,9 +88,9 @@ int Mesh::InitializeTextures()
     if (textures.empty()) return static_cast<int>(errorType);
 
     const int result = LoadTextures();
-    if (result != static_cast<int>(ErrorType::SUCCESS))
+    if (result != static_cast<int>(MessageType::SUCCESS))
     {
-        errorType = ErrorType::FAILED_LOAD_TEXTURE;
+        errorType = MessageType::FAILED_LOAD_TEXTURE;
         ErrorHandler::LogError("Cannot load textures. ", errorType, __FILE__, __LINE__);
         return static_cast<int>(errorType);
     }
@@ -124,7 +124,7 @@ int Mesh::LoadTextures()
         std::vector<unsigned char> imageData = FileDataHandler::LoadImage(texture.path, width, height, nrChannels);
         if (imageData.empty())
         {
-            errorType = ErrorType::FAILED_LOAD_TEXTURE;
+            errorType = MessageType::FAILED_LOAD_TEXTURE;
             ErrorHandler::LogError(errorType, __FILE__, __LINE__);
             return static_cast<int>(errorType);
         }

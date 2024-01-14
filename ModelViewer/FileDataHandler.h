@@ -21,13 +21,13 @@ public:
     const char* GetTextureFolderPath() const { return pTextureFolderPath.c_str(); }
     void SetTextureFolderPath(const char* pFolderPath) { pTextureFolderPath = pFolderPath; }
     
-    ErrorType GetErrorType() const { return errorType; }
+    MessageType GetErrorType() const { return errorType; }
 
 private:
     std::string pShaderFolderPath = "Resource Files/Shader/";
     std::string pTextureFolderPath = "Resource Files/Texture/";
     
-    ErrorType errorType = ErrorType::SUCCESS;
+    MessageType errorType = MessageType::SUCCESS;
 };
 
 #endif // !DATA_MANAGER_H

@@ -31,7 +31,7 @@ void ErrorHandler::LogError(const std::string& message, const char* file, int li
 }
 
 /// <summary>Takes an ErrorType enum member as argument. Prints an red error message to the console.</summary>
-void ErrorHandler::LogError(const ErrorType& errorType)
+void ErrorHandler::LogError(const MessageType& errorType)
 {
     auto iterator = errorTypeToString.find(errorType);
     if (iterator != errorTypeToString.end())
@@ -41,7 +41,7 @@ void ErrorHandler::LogError(const ErrorType& errorType)
 }
 
 /// <summary>Takes an ErrorType enum member and a file and line as arguments. Prints an red error message to the console.</summary>
-void ErrorHandler::LogError(const ErrorType& errorType, const char* file, int line)
+void ErrorHandler::LogError(const MessageType& errorType, const char* file, int line)
 {
     std::string fileName = ExtractFileName(file);
     
@@ -53,7 +53,7 @@ void ErrorHandler::LogError(const ErrorType& errorType, const char* file, int li
 }
 
 /// <summary>Takes an ErrorType enum member and a message as arguments. Prints an red error message to the console.</summary>
-void ErrorHandler::LogError(const std::string& message, const ErrorType& errorType)
+void ErrorHandler::LogError(const std::string& message, const MessageType& errorType)
 {
     auto iterator = errorTypeToString.find(errorType);
     if (iterator != errorTypeToString.end())
@@ -63,7 +63,7 @@ void ErrorHandler::LogError(const std::string& message, const ErrorType& errorTy
 }
 
 /// <summary>Takes an ErrorType enum member, a message and a file and line as arguments. Prints an red error message to the console.</summary>
-void ErrorHandler::LogError(const std::string& message, const ErrorType& errorType, const char* file, int line)
+void ErrorHandler::LogError(const std::string& message, const MessageType& errorType, const char* file, int line)
 {
     std::string fileName = ExtractFileName(file);
     
@@ -75,7 +75,7 @@ void ErrorHandler::LogError(const std::string& message, const ErrorType& errorTy
 }
 
 /// <summary>Takes an ErrorType enum member and a message as arguments. Prints an red error message to the console.</summary>
-void ErrorHandler::LogError(const ErrorType& errorType, const std::string& message)
+void ErrorHandler::LogError(const MessageType& errorType, const std::string& message)
 {
     auto iterator = errorTypeToString.find(errorType);
     if (iterator != errorTypeToString.end())
@@ -85,7 +85,7 @@ void ErrorHandler::LogError(const ErrorType& errorType, const std::string& messa
 }
 
 /// <summary>Takes an ErrorType enum member, a message and a file and line as arguments. Prints an red error message to the console.</summary>
-void ErrorHandler::LogError(const ErrorType& errorType, const std::string& message, const char* file, int line)
+void ErrorHandler::LogError(const MessageType& errorType, const std::string& message, const char* file, int line)
 {
     std::string fileName = ExtractFileName(file);
     

@@ -44,7 +44,7 @@ private:
     std::unique_ptr<char> pVertexShaderSource;
     std::unique_ptr<char> pFragmentShaderSource;
     
-    ErrorType errorType = ErrorType::SUCCESS;
+    MessageType errorType = MessageType::SUCCESS;
 };
 
 #ifdef _MSC_VER

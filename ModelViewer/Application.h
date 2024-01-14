@@ -9,7 +9,7 @@ class Application
 public:
     int Run();
 private:
-    ErrorType errorType = ErrorType::ENGINE_INIT_FAILED;
+    MessageType errorType = MessageType::ENGINE_INIT_FAILED;
 
     std::unique_ptr<FileDataHandler> pData = std::make_unique<FileDataHandler>();
     std::unique_ptr<Engine> pEngine = std::make_unique<Engine>(std::move(pData));

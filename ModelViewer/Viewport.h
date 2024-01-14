@@ -84,7 +84,7 @@ private:
     
     std::unique_ptr<GLFWwindow, GLFWwindowDeleter> pWindow;
     
-    ErrorType errorType = ErrorType::SUCCESS;
+    MessageType message = MessageType::SUCCESS;
 };
 
 #endif // !VIEWPORT_H

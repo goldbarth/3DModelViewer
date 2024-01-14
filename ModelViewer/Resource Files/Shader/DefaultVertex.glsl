@@ -6,10 +6,10 @@ layout (location = 3) in vec3 normal;
 
 out vec4 vertexColor;
 
-uniform mat4 cameraMatrix;
+uniform mat4 projectionViewMatrix;
 
 void main()
 {
-    gl_Position = cameraMatrix * vec4(position, 1.0);
+    gl_Position = projectionViewMatrix * vec4(position, 1.0);
     vertexColor = color;
 }

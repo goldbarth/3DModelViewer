@@ -42,13 +42,14 @@ int Material::Initialize()
     const GLchar* fragmentShaderSource = pFragmentShaderSource.get();
     glShaderSource(fragmentShader, SOURCE_COUNT, &fragmentShaderSource, nullptr);
     glCompileShader(fragmentShader);
-
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    
     if(!success)
     {
         glGetShaderInfoLog(fragmentShader, bufferSize, nullptr, infoLog);
         errorType = MessageType::FRAGMENT_SHADER_COMPILATION_FAILED;
         ErrorHandler::LogError(errorType, __FILE__, __LINE__);
-        
+    
         return static_cast<int>(errorType);
     }
 

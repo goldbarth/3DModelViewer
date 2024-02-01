@@ -8,18 +8,18 @@
 
 #include "Color.h"
 #include "Normals.h"
-#include "VertexUVs.h"
+#include "TexCoords.h"
 #include "VertPos.h"
 
 struct Vertex
 {
     VertPos position;
-    VertexUVs vertexUV;
+    TexCoords texCoords;
     Normals normals;
     Color color;
 
-    Vertex(const VertPos& pos, const VertexUVs& uv, const Normals& normals, const Color& col)
-        : position(pos), vertexUV(uv), normals(normals), color(col)
+    Vertex(const VertPos& pos, const TexCoords& uv, const Normals& normals, const Color& col)
+        : position(pos), texCoords(uv), normals(normals), color(col)
     {
     }
 };

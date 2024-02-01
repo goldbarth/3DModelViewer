@@ -31,8 +31,8 @@ int Viewport::Initialize()
         return static_cast<int>(message);
     }
 
-    // Depth buffer setup
-    glEnable(GL_DEPTH_TEST);
+    // TODO: Depth buffer setup
+    //glEnable(GL_DEPTH_TEST);
 
     return static_cast<int>(message);
 }
@@ -60,7 +60,10 @@ int Viewport::LateDraw()
 int Viewport::Draw()
 {
     glClearColor(windowColor.r, windowColor.g, windowColor.b, windowColor.a);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // TODO: Depth buffer clear
+    // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    glClear(GL_COLOR_BUFFER_BIT);
 
     LateDraw();
     

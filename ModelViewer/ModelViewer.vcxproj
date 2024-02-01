@@ -195,7 +195,7 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Normals.h" />
-    <ClInclude Include="VertexUVs.h" />
+    <ClInclude Include="TexCoords.h" />
     <ClInclude Include="CustomStructs.h" />
     <ClInclude Include="VertPos.h" />
     <ClInclude Include="Viewport.h" />
@@ -203,6 +203,8 @@
   <ItemGroup>
     <Content Include="Resource Files\Shader\AmbientFragment.glsl" />
     <Content Include="Resource Files\Shader\AmbientVertex.glsl" />
+    <Content Include="Resource Files\Shader\BlinnPhongFragment.glsl" />
+    <Content Include="Resource Files\Shader\BlinnPhongVertex.glsl" />
     <Content Include="Resource Files\Shader\DefaultFragment.glsl" />
     <Content Include="Resource Files\Shader\DefaultVertex.glsl" />
     <Content Include="Resource Files\Shader\PhongFragment.glsl" />

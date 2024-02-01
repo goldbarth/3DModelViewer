@@ -10,7 +10,7 @@ class Color
 public:
     Color(const GLfloat red, const GLfloat green, const GLfloat blue, const GLfloat alpha = 1.0f)
         : r(red), g(green), b(blue), a(alpha) {}
-    
+
     GLfloat r;
     GLfloat g;
     GLfloat b;

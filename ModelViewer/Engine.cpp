@@ -1,5 +1,4 @@
 ﻿#include "ErrorHandler.h"
-#include "Defines.h"
 #include "Engine.h"
 
 const std::string Engine::WINDOW_TITLE = "Glodbarth Engine 1.0";
@@ -20,10 +19,9 @@ const int Engine::WINDOW_OFFSET_Y = 0;
 
 const std::string Engine::AMBIENT_UNIFORM_NAME = "ambientVector";
 const std::string Engine::PHONG_LIGHT_POSITION_UNIFORM_NAME = "lightPosition";
-const std::string Engine::PHONG_LIGHT_VECTOR_UNIFORM_NAME = "lightVector";
-const std::string Engine::PHONG_OBJECT_VECTOR_UNIFORM_NAME = "objectVector";
-
-
+const std::string Engine::PHONG_LIGHT_COLOR_UNIFORM_NAME = "lightColor";
+const std::string Engine::PHONG_MATERIAL_COLOR_UNIFORM_NAME = "materialColor";
+const std::string Engine::PHONG_SPECULAR_COLOR_UNIFORM_NAME = "specularColor";
 
 const char* Engine::pAmbientVertexShaderName = "AmbientVertex.glsl";
 const char* Engine::pAmbientFragmentShaderName = "AmbientFragment.glsl";
@@ -31,6 +29,8 @@ const char* Engine::pDefaultVertexShaderName = "DefaultVertex.glsl";
 const char* Engine::pDefaultFragmentShaderName = "DefaultFragment.glsl";
 const char* Engine::pPhongVertexShaderName = "PhongVertex.glsl";
 const char* Engine::pPhongFragmentShaderName = "PhongFragment.glsl";
+const char* Engine::pBlinnPhongVertexShaderName = "BlinnPhongVertex.glsl";
+const char* Engine::pBlinnPhongFragmentShaderName = "BlinnPhongFragment.glsl";
 
 // Camera values
 
@@ -59,25 +59,20 @@ const Color Engine::TURQUOISE(0.0f, 0.5f, 0.5f, 1.0f);
 const Color Engine::DARK_GRAY(0.25f, 0.25f, 0.25f, 1.0f);
 const Color Engine::LIGHT_GRAY(0.75f, 0.75f, 0.75f, 1.0f);
 
-// Light colors
+// Uniform values
 
-const Color Engine::RED_LIGHT(1.0f, 0.0f, 0.0f);
-const Color Engine::GREEN_LIGHT(0.0f, 1.0f, 0.0f);
-const Color Engine::BLUE_LIGHT(0.0f, 0.0f, 1.0f);
-
-const Color Engine::HIGH_LIGHT(1.0f, 1.0f, 1.0f);
-const Color Engine::MID_LIGHT(0.5f, 0.5f, 0.5f);
-const Color Engine::LOW_LIGHT(0.25f, 0.25f, 0.25f);
-const Color Engine::NO_LIGHT(0.0f, 0.0f, 0.0f);
+const Color Engine::LIGHT_POSITION(0.12f, 0.1f, 0.2f);
+const Color Engine::LIGHT_COLOR(2.0f, 2.0f, 2.0f);
+const Color Engine::MATERIAL_COLOR(1.0f, 0.5f, 0.31f);
+const Color Engine::SPECULAR_COLOR(0.97f, 0.97f, 0.97f);
 
 const CameraData& Engine::GetDefaultCameraData() const
 {
     static CameraData defaultCameraData = {
         DEFAULT_CAMERA_FOV_DEGREE, 
         DEFAULT_CAMERA_NEAR,
-        DEFAULT_CAMERA_FAR, 
-        // pMaterial->GetShaderProgram(),
-        pPhongMaterial->GetShaderProgram(),
+        DEFAULT_CAMERA_FAR,
+        pBlinnPhongMaterial->GetShaderProgram(),
         CAMERA_UNIFORM_NAME.c_str()
     };
     return defaultCameraData;
@@ -93,8 +88,7 @@ bool Engine::InitializeObjects()
     {
         pCamera = std::make_unique<Camera>(WINDOW_WIDTH, WINDOW_HEIGHT, CAMERA_POSITION, CAMERA_ORIENTATION, CAMERA_UP);
         pViewport = std::make_unique<Viewport>(GLFW_MAJOR_VERSION, GLFW_MINOR_VERSION, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_OFFSET_X, WINDOW_OFFSET_Y, WINDOW_TITLE, TURQUOISE);
-        // pMaterial = std::make_unique<Material>(std::move(pData), pData->GetShaderFolderPath(), pAmbientVertexShaderName, pAmbientFragmentShaderName);
-        pPhongMaterial = std::make_unique<Material>(std::move(pData), pData->GetShaderFolderPath(), pPhongVertexShaderName, pPhongFragmentShaderName);
+        pBlinnPhongMaterial = std::make_unique<Material>(std::move(pData), pData->GetShaderFolderPath(), pBlinnPhongVertexShaderName, pBlinnPhongFragmentShaderName);
         pMesh = std::make_unique<Mesh>(vertices, indices, textures);
         
         return true;
@@ -123,12 +117,7 @@ int Engine::Initialize()
 
     // Initialize objects
     pViewport->Initialize();
-    // pMaterial->AddUniformVector3(AMBIENT_UNIFORM_NAME, MID_LIGHT);
-    // pMaterial->Initialize();
-    pPhongMaterial->AddUniformVector3(PHONG_LIGHT_POSITION_UNIFORM_NAME, Color(30.0f, 30.0f, 30.0f));
-    pPhongMaterial->AddUniformVector3(PHONG_LIGHT_VECTOR_UNIFORM_NAME, Color(0.0f, 0.0f, -1.0f));
-    pPhongMaterial->AddUniformVector3(PHONG_OBJECT_VECTOR_UNIFORM_NAME, Color(1.0f, 1.0f, 1.0f));
-    pPhongMaterial->Initialize();
+    pBlinnPhongMaterial->Initialize();
     pMesh->Initialize();
 
     return static_cast<int>(errorType);
@@ -141,8 +130,7 @@ int Engine::Run()
         while (!glfwWindowShouldClose(pViewport->GetWindow()))
         {
             pViewport->Update();
-            // pMaterial->Update();
-            pPhongMaterial->Update();
+            pBlinnPhongMaterial->Update();
             pMesh->Update();
 
             pCamera->SetCameraData(GetDefaultCameraData());
@@ -150,8 +138,13 @@ int Engine::Run()
             
             pViewport->Draw();
             pCamera->Draw();
-            // pMaterial->Draw();
-            pPhongMaterial->Draw();
+            pBlinnPhongMaterial->Draw();
+            
+            pBlinnPhongMaterial->AddUniformVector3(PHONG_LIGHT_POSITION_UNIFORM_NAME, LIGHT_POSITION);
+            pBlinnPhongMaterial->AddUniformVector3(PHONG_LIGHT_COLOR_UNIFORM_NAME, LIGHT_COLOR);
+            pBlinnPhongMaterial->AddUniformVector3(PHONG_MATERIAL_COLOR_UNIFORM_NAME, MATERIAL_COLOR);
+            pBlinnPhongMaterial->AddUniformVector3(PHONG_SPECULAR_COLOR_UNIFORM_NAME, SPECULAR_COLOR);
+            
             pMesh->Draw();
 
             pViewport->LateDraw();
@@ -165,8 +158,4 @@ int Engine::Run()
     }
 
     return static_cast<int>(errorType);
-}
-
-void Engine::Finalize()
-{
 }

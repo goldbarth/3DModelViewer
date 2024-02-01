@@ -6,7 +6,7 @@ void Material::AddUniformVector3(const std::string& name, const Color& color) co
 {
     const GLfloat r = color.r, g = color.g, b = color.b;
     
-    const GLuint lightColorLocation = glGetUniformLocation(reinterpret_cast<GLuint>(GetShaderProgram()), name.c_str());
+    const GLuint lightColorLocation = glGetUniformLocation(*GetShaderProgram(), name.c_str());
     glUniform3f(static_cast<GLint>(lightColorLocation), r, g, b);
 }
 
@@ -31,6 +31,7 @@ int Material::Initialize()
         glGetShaderInfoLog(vertexShader, bufferSize, nullptr, infoLog);
         errorType = MessageType::VERTEX_SHADER_COMPILATION_FAILED;
         ErrorHandler::LogError(errorType, __FILE__, __LINE__);
+        ErrorHandler::LogError(infoLog,  __FILE__, __LINE__);
         
         return static_cast<int>(errorType);
     }
@@ -49,6 +50,7 @@ int Material::Initialize()
         glGetShaderInfoLog(fragmentShader, bufferSize, nullptr, infoLog);
         errorType = MessageType::FRAGMENT_SHADER_COMPILATION_FAILED;
         ErrorHandler::LogError(errorType, __FILE__, __LINE__);
+        ErrorHandler::LogError(infoLog,  __FILE__, __LINE__);
     
         return static_cast<int>(errorType);
     }

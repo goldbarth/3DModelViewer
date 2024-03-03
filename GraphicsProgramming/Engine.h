@@ -1,10 +1,11 @@
 ﻿#ifndef ENGINE_H
 #define ENGINE_H
 
-#include "Material.h"
-#include "Mesh.h"
-#include "MeshData.h"
 #include "Viewport.h"
+#include "Material.h"
+#include "MeshData.h"
+#include "Textures.h"
+#include "Mesh.h"
 
 // Engine class (and all other child classes) is final, so it cannot be inherited and used as a base class.
 // This is a good practice to prevent misuse of the class and clearly define its purpose.
@@ -12,7 +13,7 @@ class Engine : public IObject
 {
 public:
 
-    Engine() : pViewport(nullptr), pMaterial(nullptr), pMesh(nullptr) { }
+    Engine() : pViewport(nullptr), pMaterial(nullptr), pMesh(nullptr), pTextures(nullptr) { }
 private:
     // GLFW values (versions)
 
@@ -49,6 +50,7 @@ private:
     std::unique_ptr<Viewport> pViewport;
     std::unique_ptr<Material> pMaterial;
     std::unique_ptr<Mesh> pMesh;
+    std::unique_ptr<Textures> pTextures;
 
     // Mesh data
 
@@ -90,6 +92,15 @@ private:
         -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.0f  // Front top left (Black)
     };
     
+    // std::vector<float> vertices =
+    // {
+    //     // positions          // colors           // texture coords
+    //     0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+    //     0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+    //    -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+    //    -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+    // };
+    
     // 2D Rectangle
     // std::vector<unsigned int> indices = std::vector<unsigned int>
     // {
@@ -98,7 +109,8 @@ private:
     // };
     
     // 3D Cube
-    std::vector<unsigned int> indices = {
+    std::vector<unsigned int> indices =
+    {
         // Back
         0, 1, 2, 0, 2, 3,
         // Front

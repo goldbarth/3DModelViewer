@@ -11,10 +11,12 @@
 class Material final : public IObject
 {
 public:
-    Material() : shaderProgram(0), pShader(std::make_unique<Shader>())
+    Material() : pShader(std::make_unique<Shader>()), shaderProgram(0)
     {} 
 private:
     const GLsizei SOURCE_COUNT = 1;
+    std::string vertexShaderFileName = "VertexShader.glsl";
+    std::string fragmentShaderFileName = "FragmentShader.glsl";
 
 public:
     int Initialize() override;

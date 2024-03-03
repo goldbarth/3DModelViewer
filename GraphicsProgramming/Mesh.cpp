@@ -1,6 +1,8 @@
 ﻿#include "ErrorHandler.h"
 #include "Mesh.h"
 
+#include <stb/stb_image.h>
+
 
 int Mesh::Initialize()
 {
@@ -35,13 +37,11 @@ int Mesh::Initialize()
     // Set the vertex color attribute
     glVertexAttribPointer(VERTEX_ATTRIBUTE_INDEX_ONE, VERTEX_ATTRIBUTE_SIZE, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTE_SPACE * sizeof(float), reinterpret_cast<void*>(VERTEX_ATTRIBUTE_SIZE * sizeof(float)));
     glEnableVertexAttribArray(VERTEX_ATTRIBUTE_INDEX_ONE);
-    
+
     if (const GLenum error = glGetError(); error != GL_NO_ERROR)
     {
         ErrorHandler::LogError("OpenGL error: " + std::to_string(error), __FILE__, __LINE__);
     }
-
-    glBindVertexArray(*pVAO);
     
     return static_cast<int>(message);
 }
@@ -53,13 +53,15 @@ int Mesh::Update()
 
 int Mesh::Draw()
 {
+    glBindVertexArray(*pVAO);
     // glDrawArrays(GL_TRIANGLES, VERTEX_ATTRIBUTE_INDEX_ZERO, 36);
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, nullptr);
+    // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     
     return static_cast<int>(message);
 }
 
-void Mesh::Finalize()
+void Mesh::Finalize() const
 {
     if (pEBO) glDeleteBuffers(BUFFER_SIZE, pEBO.get());
     if (pVBO) glDeleteBuffers(BUFFER_SIZE, pVBO.get());

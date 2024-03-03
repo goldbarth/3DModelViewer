@@ -9,10 +9,16 @@ int Material::Initialize()
 {
     glEnable(GL_DEPTH_TEST);
     
-    const std::string vertexShaderPath = file.GetResourcePath("Shader/VertexShader.glsl");
-    const std::string fragmentShaderPath = file.GetResourcePath("Shader/FragmentShader.glsl");
+    const std::string vertexShaderPath = file.GetResourcePath(std::string(file.GetShaderFolderPath()) + vertexShaderFileName);
+    const std::string fragmentShaderPath = file.GetResourcePath(std::string(file.GetShaderFolderPath()) + fragmentShaderFileName);
     auto [vertexData, fragmentData] = file.LoadShaderFiles(vertexShaderPath.c_str(), fragmentShaderPath.c_str());
     pShader->Compile(vertexData.c_str(), fragmentData.c_str());
+    
+    pShader->UseProgram();
+
+    // Set the texture uniforms
+    pShader->SetInt("texture1", 0);
+    pShader->SetInt("texture2", 1);
     
     return static_cast<int>(message);
 }

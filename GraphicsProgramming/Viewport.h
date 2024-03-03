@@ -21,9 +21,8 @@ struct GLFWwindowDeleter
 class Viewport final : public IObject
 {
 public:
-    virtual ~Viewport() = default;
 
-    Viewport(int majorVersion, int minorVersion, int width, int height, int offsetX, int offsetY, std::string title, Color color) :
+    Viewport(const int majorVersion, const int minorVersion, const int width, const int height, const int offsetX, const int offsetY, std::string title, Color color) :
         glfwMajorVersion(majorVersion), glfwMinorVersion(minorVersion), windowWidth(width), windowHeight(height), windowOffsetX(offsetX),
         windowOffsetY(offsetY), windowTitle(std::move(title)), windowColor(color)
     {
@@ -36,6 +35,8 @@ public:
         // Window Creation. Unique pointer to the GLFW window
         pWindow = std::unique_ptr<GLFWwindow, GLFWwindowDeleter>(glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), nullptr, nullptr));
     }
+    
+    virtual ~Viewport() = default;
 
     GLFWwindow* GetWindow() const { return pWindow.get(); }
     

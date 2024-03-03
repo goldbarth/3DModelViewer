@@ -175,6 +175,9 @@
     <Content Include="Resources\Shader\TextureFragmentShader.glsl" />
     <Content Include="Resources\Shader\TextureVertexShader.glsl" />
     <Content Include="Resources\Shader\VertexShader.glsl" />
+    <Content Include="Resources\Texture\Abstract_Noise_Lines.png" />
+    <Content Include="Resources\Texture\Abstract_Noise_Pixels.png" />
+    <Content Include="Resources\Texture\Abstract_Noise_Waves.png" />
     <Content Include="Resources\Texture\default_64x64_f1.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +191,7 @@
     <ClInclude Include="MeshData.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="TexCoords.h" />
+    <ClInclude Include="Textures.h" />
     <ClInclude Include="VertPos.h" />
     <ClInclude Include="Viewport.h" />
   </ItemGroup>
@@ -201,6 +205,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="stb.cpp" />
+    <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -34,7 +34,7 @@ public:
     int Initialize() override;
     int Update() override;
     int Draw() override;
-    void Finalize();
+    void Finalize() const;
     
 private:
     std::unique_ptr<unsigned int> pVBO;

@@ -171,7 +171,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Content Include="Resources\Models\Backpack\ao.jpg" />
+    <Content Include="Resources\Models\Backpack\backpack.mtl" />
+    <Content Include="Resources\Models\Backpack\backpack.obj" />
+    <Content Include="Resources\Models\Backpack\diffuse.jpg" />
+    <Content Include="Resources\Models\Backpack\normal.png" />
+    <Content Include="Resources\Models\Backpack\roughness.jpg" />
+    <Content Include="Resources\Models\Backpack\source_attribution.txt" />
+    <Content Include="Resources\Models\Backpack\specular.jpg" />
     <Content Include="Resources\Shader\FragmentShader.glsl" />
+    <Content Include="Resources\Shader\ModelFragmentShader.glsl" />
+    <Content Include="Resources\Shader\ModelVertexShader.glsl" />
     <Content Include="Resources\Shader\TextureFragmentShader.glsl" />
     <Content Include="Resources\Shader\TextureVertexShader.glsl" />
     <Content Include="Resources\Shader\VertexShader.glsl" />
@@ -187,12 +197,10 @@
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="IObject.h" />
     <ClInclude Include="Material.h" />
-    <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshData.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="TexCoords.h" />
-    <ClInclude Include="Textures.h" />
-    <ClInclude Include="VertPos.h" />
     <ClInclude Include="Viewport.h" />
   </ItemGroup>
   <ItemGroup>
@@ -203,13 +211,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="stb.cpp" />
-    <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Viewport.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Models\" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

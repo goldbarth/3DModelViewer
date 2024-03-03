@@ -5,8 +5,6 @@
 #include <windows.h>
 #include <fstream>
 #include <fstream>
-#include <sstream>
-#include <vector>
 
 namespace fs = std::filesystem;
 
@@ -34,15 +32,6 @@ std::string FileSystem::ReadData(const char* filePath)
     return data;
 }
 
-ShaderData FileSystem::LoadShaderFiles(const char* vertexFilePath, const char* fragmentFilePath)
-{
-    ShaderData shaderData;
-    shaderData.vertexData = ReadData(vertexFilePath);
-    shaderData.fragmentData = ReadData(fragmentFilePath);
-
-    return shaderData;
-}
-
 std::string FileSystem::GetExecutablePath()
 {
     char path[MAX_PATH]; // MAX_PATH is a constant defined in windows.h
@@ -50,6 +39,10 @@ std::string FileSystem::GetExecutablePath()
     return std::string{path};
 }
 
+/// <summary>
+/// QOL function to get the executable path and change it to the relative path to the resource folder.
+/// To always access the folder in the ide or exe. There you go.
+/// </summary>
 std::string FileSystem::GetResourcePath(const std::string& relativePath)
 {
     const fs::path exePath(GetExecutablePath());
@@ -59,36 +52,11 @@ std::string FileSystem::GetResourcePath(const std::string& relativePath)
     return resourcePath.string();
 }
 
-std::vector<unsigned char> FileSystem::LoadImg(const std::string& filePath, int& width, int& height, int& nrChannels)
+ShaderData FileSystem::LoadShaderFiles(const char* vertexFilePath, const char* fragmentFilePath)
 {
-    std::ifstream file(filePath, std::ios::binary);
-    if (!file.is_open())
-    {
-        ErrorHandler::LogError(MessageType::READ_FILE_FAILED, "File: " + filePath + " could not be opened.", __FILE__, __LINE__);
-        return { std::vector<unsigned char>() };
-    }
+    ShaderData shaderData;
+    shaderData.vertexData = ReadData(vertexFilePath);
+    shaderData.fragmentData = ReadData(fragmentFilePath);
 
-    // Read the file into a buffer
-    std::ostringstream buffer;
-    buffer << file.rdbuf();
-
-    
-    // Flip the image vertically and load the image data
-    stbi_set_flip_vertically_on_load(true);
-    stbi_uc* imageData = stbi_load_from_memory(reinterpret_cast<const stbi_uc*>(buffer.str().data()),
-        static_cast<int>(buffer.str().size()), &width, &height, &nrChannels, 0);
-
-    if (imageData)
-    {
-        // Convert the loaded data to a vector
-        std::vector result(imageData, imageData + (width * height * nrChannels));
-
-        // Free the original image data
-        stbi_image_free(imageData);
-
-        return result;
-    }
-
-    ErrorHandler::LogError(MessageType::FAILED_LOAD_TEXTURE, __FILE__, __LINE__);
-    return { std::vector<unsigned char>() };
+    return shaderData;
 }

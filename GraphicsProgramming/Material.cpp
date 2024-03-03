@@ -1,30 +1,20 @@
 ﻿#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/gtc/type_ptr.hpp>
+#include <stb/stb_image.h>
 
-#include "Material.h"
 #include "FileSystem.h"
+#include "Material.h"
 
 int Material::Initialize()
 {
+    stbi_set_flip_vertically_on_load(true);
     glEnable(GL_DEPTH_TEST);
     
     const std::string vertexShaderPath = file.GetResourcePath(std::string(file.GetShaderFolderPath()) + vertexShaderFileName);
     const std::string fragmentShaderPath = file.GetResourcePath(std::string(file.GetShaderFolderPath()) + fragmentShaderFileName);
     auto [vertexData, fragmentData] = file.LoadShaderFiles(vertexShaderPath.c_str(), fragmentShaderPath.c_str());
     pShader->Compile(vertexData.c_str(), fragmentData.c_str());
-    
-    pShader->UseProgram();
-
-    // Set the texture uniforms
-    pShader->SetInt("texture1", 0);
-    pShader->SetInt("texture2", 1);
-    
-    return static_cast<int>(message);
-}
-
-int Material::Update()
-{
     
     return static_cast<int>(message);
 }
@@ -34,9 +24,9 @@ int Material::Draw()
     // Every shader and rendering call after this point will use this shader program
     pShader->UseProgram();
     
-    const glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(1080) / static_cast<float>(720), 0.1f, 100.0f);
+    const glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(1920) / static_cast<float>(1080), 0.1f, 100.0f);
     pShader->SetMat4("projection", projection);
-    
+    //
     // camera/view transformation
     constexpr float radius = 10.0f;
     const float camX = static_cast<float>(sin(glfwGetTime()) * radius);
@@ -57,12 +47,4 @@ int Material::Draw()
 void Material::Finalize() const
 {
     glDeleteProgram(shaderProgram);
-}
-
-void Material::SetUniformMat4(const std::string& name, const glm::mat4& value) const
-{
-    if (pShader)
-    {
-        pShader->SetMat4(name, value);
-    }
 }

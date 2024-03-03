@@ -41,10 +41,10 @@ public:
     GLFWwindow* GetWindow() const { return pWindow.get(); }
     
     int Initialize() override;
-    int Update() override;
     int Draw() override;
+    int Update();
     int LateDraw();
-    void Finalize();
+    void Finalize() const override;
 
 private:
 

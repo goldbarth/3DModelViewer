@@ -64,7 +64,7 @@ int Viewport::LateDraw()
     return static_cast<int>(message);
 }
 
-void Viewport::Finalize()
+void Viewport::Finalize() const
 {
     glfwTerminate();
 }
@@ -76,7 +76,7 @@ void Viewport::ProcessInput() const
         glfwSetWindowShouldClose(pWindow.get(), true);
     }
 
-    // Wireframe mode
+    // Wireframe toggle mode
     if (glfwGetKey(pWindow.get(), GLFW_KEY_1) == GLFW_PRESS)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     if (glfwGetKey(pWindow.get(), GLFW_KEY_2) == GLFW_PRESS)

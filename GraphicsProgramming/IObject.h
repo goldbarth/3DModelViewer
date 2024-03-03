@@ -9,8 +9,8 @@ protected:
 public:
     // Pure virtual functions (abstract functions)
     virtual int Initialize() = 0;
-    virtual int Update() = 0;
     virtual int Draw() = 0;
+    virtual void Finalize() const = 0;
 };
 
 #endif // !OBJECT_H

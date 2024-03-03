@@ -11,8 +11,7 @@ bool Engine::InitializeObjects()
     {
         pViewport = std::make_unique<Viewport>(GLFW_MINOR_VERSION, GLFW_MAJOR_VERSION, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_OFFSET_X, WINDOW_OFFSET_Y, WINDOW_TITLE,  BLACK);
         pMaterial = std::make_unique<Material>();
-        pMesh = std::make_unique<Mesh>(vertices, indices);
-        // pTextures = std::make_unique<Textures>();
+        pModel = std::make_unique<Model>(absoluteModelPath);
         
         return true;
     }
@@ -32,16 +31,9 @@ int Engine::Initialize()
     }
     
     pViewport->Initialize();
-    
     pMaterial->Initialize();
-    pMesh->Initialize();
-    // pTextures->Initialize();
+    pModel->Initialize();
     
-    return static_cast<int>(message);
-}
-
-int Engine::Update()
-{
     return static_cast<int>(message);
 }
 
@@ -53,10 +45,9 @@ int Engine::Run()
         {
             pViewport->Update();
             pViewport->Draw();
-
-            // pTextures->Draw();
+            
             pMaterial->Draw();
-            pMesh->Draw();
+            pModel->Draw(*pMaterial->GetShader());
             
             pViewport->LateDraw();
        }
@@ -76,9 +67,8 @@ int Engine::Draw()
     return static_cast<int>(message);
 }
 
-void Engine::Finalize()
+void Engine::Finalize() const
 {
     pViewport->Finalize();
-    pMesh->Finalize();
     pMaterial->Finalize();
 }

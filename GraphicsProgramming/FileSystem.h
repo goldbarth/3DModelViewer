@@ -18,18 +18,14 @@ class FileSystem
 {
 public:
     std::string ReadData(const char* filePath);
-    ShaderData LoadShaderFiles(const char* vertexFilePath, const char* fragmentFilePath);
     std::string GetExecutablePath();
     std::string GetResourcePath(const std::string& relativePath);
-
-    static std::vector<unsigned char> LoadImg(const std::string& filePath, int& width, int& height, int& nrChannels);
+    ShaderData LoadShaderFiles(const char* vertexFilePath, const char* fragmentFilePath);
 
     const char* GetResourceFolderPath() const { return resourcesFolderPath.c_str(); }
     const char* GetShaderFolderPath() const { return shaderFolderPath.c_str(); }
     const char* GetTextureFolderPath() const { return textureFolderPath.c_str(); }
     const char* GetModelFolderPath() const { return modelFolderPath.c_str(); }
-    
-    MessageType GetErrorType() const { return message; }
 
 private:
     std::string resourcesFolderPath = "Resources/";

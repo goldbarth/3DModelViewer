@@ -6,11 +6,6 @@
 #include <glm/vec4.hpp>
 #include <string>
 
-
-#include "Color.h"
-#include "TexCoords.h"
-#include "VertPos.h"
-
 struct Vertex
 {
     glm::vec3 position;

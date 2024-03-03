@@ -8,7 +8,6 @@
 #include "ErrorHandler.h"
 #include "IObject.h"
 #include "MeshData.h"
-#include "Shader.h"
 
 class Mesh final : public IObject
 {
@@ -36,6 +35,7 @@ public:
     int Update() override;
     int Draw() override;
     void Finalize();
+    
 private:
     std::unique_ptr<unsigned int> pVBO;
     std::unique_ptr<unsigned int> pVAO;

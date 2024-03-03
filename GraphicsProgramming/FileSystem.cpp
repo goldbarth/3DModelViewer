@@ -7,65 +7,36 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+
 namespace fs = std::filesystem;
 
-std::string FileSystem::ReadFile(const char* pFilePath)
+std::string FileSystem::ReadData(const char* filePath)
 {
-    std::ifstream fileStream(pFilePath, std::ios::in);
-
-    if(!fileStream.is_open())
-    {
-        message = MessageType::READ_FILE_FAILED;
-        ErrorHandler::LogError(message, "File: " + std::string(pFilePath) + " could not be opened.", __FILE__, __LINE__);
-        return {};
-    }
-
+    std::ifstream fileStream(filePath, std::ios::in);
     std::string data;
-    std::string line;
-    
-    while(!fileStream.eof())
-    {
-        std::getline(fileStream, line);
-        data.append(line + "\n");
-    }
-
-    fileStream.close();
-
-    if (fileStream.is_open())
-    {
-        message = MessageType::FILESTREAM_STILL_OPEN;
-        ErrorHandler::LogError(message, "File: " + std::string(pFilePath) + " was not closed correctly and is still open.", __FILE__, __LINE__);
-        return {};
-    }
-    return data;
-}
-
-std::string FileSystem::ReadData(const char* shaderFilePath)
-{
-    std::ifstream fileStream(shaderFilePath, std::ios::in);
-    std::string shaderData;
     
     if(fileStream.is_open())
     {
         std::string line;
+        // Precise way to read the file.
+        // Prevents invalid reads from being carried out after the end of the file has been reached.
         while(std::getline(fileStream, line))
         {
-            shaderData += line + "\n";
+            data += line + "\n";
         }
         fileStream.close();
     }
     else
     {
         message = MessageType::READ_FILE_FAILED;
-        ErrorHandler::LogError(message, "File: " + std::string(shaderFilePath) + " could not be opened.", __FILE__, __LINE__);
+        ErrorHandler::LogError(message, "File: " + std::string(filePath) + " could not be opened.", __FILE__, __LINE__);
     }
-    return shaderData;
+    return data;
 }
 
 ShaderData FileSystem::LoadShaderFiles(const char* vertexFilePath, const char* fragmentFilePath)
 {
     ShaderData shaderData;
-    
     shaderData.vertexData = ReadData(vertexFilePath);
     shaderData.fragmentData = ReadData(fragmentFilePath);
 
@@ -74,16 +45,16 @@ ShaderData FileSystem::LoadShaderFiles(const char* vertexFilePath, const char* f
 
 std::string FileSystem::GetExecutablePath()
 {
-    char path[MAX_PATH];
-    GetModuleFileNameA(nullptr, path, MAX_PATH);
+    char path[MAX_PATH]; // MAX_PATH is a constant defined in windows.h
+    GetModuleFileNameA(nullptr, path, MAX_PATH); // Get the path of the executable
     return std::string{path};
 }
 
 std::string FileSystem::GetResourcePath(const std::string& relativePath)
 {
-    fs::path exePath(GetExecutablePath());
+    const fs::path exePath(GetExecutablePath());
     fs::path resourcePath = exePath.parent_path().parent_path().parent_path(); // Jump to the working directory
-    resourcePath /= "GraphicsProgramming/Resources/"; // Add the relative path to the resource path
+    resourcePath /= relativeResourcePath; // Add the relative path to the resource path
     resourcePath /= relativePath;
     return resourcePath.string();
 }

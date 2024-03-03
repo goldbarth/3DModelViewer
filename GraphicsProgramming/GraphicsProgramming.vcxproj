@@ -172,6 +172,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Content Include="Resources\Shader\FragmentShader.glsl" />
+    <Content Include="Resources\Shader\TextureFragmentShader.glsl" />
+    <Content Include="Resources\Shader\TextureVertexShader.glsl" />
     <Content Include="Resources\Shader\VertexShader.glsl" />
     <Content Include="Resources\Texture\default_64x64_f1.jpg" />
   </ItemGroup>
@@ -200,6 +202,9 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="stb.cpp" />
     <ClCompile Include="Viewport.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Models\" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

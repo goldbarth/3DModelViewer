@@ -1,9 +1,5 @@
 ﻿#include "ErrorHandler.h"
 #include "Viewport.h"
-
-#include <glm/fwd.hpp>
-#include <glm/ext/matrix_transform.hpp>
-
 #include "Color.h"
 
 
@@ -51,7 +47,7 @@ int Viewport::Update()
 
 int Viewport::Draw()
 {
-    // Render here (clear the screen)
+    // Clear the color buffer
     glClearColor(windowColor.r, windowColor.g, windowColor.b, windowColor.a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     

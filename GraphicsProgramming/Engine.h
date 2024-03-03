@@ -56,9 +56,7 @@ private:
     Color red = Color(1.0f, 0.0f, 0.0f, 1.0f);
     Color green = Color(0.0f, 1.0f, 0.0f, 1.0f);
     Color blue = Color(0.0f, 0.0f, 1.0f, 1.0f);
-
-    // std::vector<Vertex> vertices = {};
-    // std::vector<unsigned int> indices = {};
+    
     std::vector<Texture> textures = {};
 
     // Triangle
@@ -82,17 +80,17 @@ private:
     std::vector<float> vertices =
     {
         // // Positionen         // Farben
-        -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f, // Hinten unten links (Rot)
-         0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, // Hinten unten rechts (Grün)
-         0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f, // Hinten oben rechts (Blau)
-        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, // Hinten oben links (Gelb)
-        -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f, // Vorne unten links (Magenta)
-         0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // Vorne unten rechts (Cyan)
-         0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, // Vorne oben rechts (Weiß)
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.0f  // Vorne oben links (Schwarz)
+        -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f, // Back bottom left (Red)
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, // Back bottom right (Green)
+         0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f, // Back top right (Blue)
+        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, // Back top left (Yellow)
+        -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f, // Front bottom left (Magenta)
+         0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // Front bottom right (Cyan)
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, // Front top right (White)
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.0f  // Front top left (Black)
     };
     
-    // 2D
+    // 2D Rectangle
     // std::vector<unsigned int> indices = std::vector<unsigned int>
     // {
     //     0, 1, 3, // first triangle
@@ -101,17 +99,17 @@ private:
     
     // 3D Cube
     std::vector<unsigned int> indices = {
-        // Hinten
+        // Back
         0, 1, 2, 0, 2, 3,
-        // Vorne
+        // Front
         4, 5, 6, 4, 6, 7,
-        // Links
+        // Left
         4, 7, 3, 4, 3, 0,
-        // Rechts
+        // Right
         1, 5, 6, 1, 6, 2,
-        // Unten
+        // Bottom
         0, 1, 5, 0, 5, 4,
-        // Oben
+        // Top
         3, 2, 6, 3, 6, 7
     };
 

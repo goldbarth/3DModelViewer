@@ -1,5 +1,4 @@
-﻿// Added by me to handle errors and warnings in a more organized and convenient way.
-#ifndef ERROR_HANDLER_H
+﻿#ifndef ERROR_HANDLER_H
 #define ERROR_HANDLER_H
 
 #include <unordered_map>
@@ -27,6 +26,7 @@ enum class MessageType : char
     COUNT,
 };
 
+// Handle errors and warnings in a more organized and convenient way.
 class ErrorHandler
 {
 public:

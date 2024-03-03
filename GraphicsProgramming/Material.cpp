@@ -27,15 +27,15 @@ int Material::Draw()
 {
     // Every shader and rendering call after this point will use this shader program
     pShader->UseProgram();
-
+    
     const glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(1080) / static_cast<float>(720), 0.1f, 100.0f);
     pShader->SetMat4("projection", projection);
+    
     // camera/view transformation
-    auto view = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
     constexpr float radius = 10.0f;
     const float camX = static_cast<float>(sin(glfwGetTime()) * radius);
     const float camZ = static_cast<float>(cos(glfwGetTime()) * radius);
-    view = lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    const auto view = lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     pShader->SetMat4("view", view);
     
     // calculate the model matrix for each object and pass it to shader before drawing
@@ -48,7 +48,7 @@ int Material::Draw()
     return static_cast<int>(message);
 }
 
-void Material::Finalize()
+void Material::Finalize() const
 {
     glDeleteProgram(shaderProgram);
 }

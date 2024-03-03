@@ -1,9 +1,5 @@
-﻿#include "Mesh.h"
-
-#include <stb/stb_image.h>
-
-#include "ErrorHandler.h"
-#include "Shader.h"
+﻿#include "ErrorHandler.h"
+#include "Mesh.h"
 
 
 int Mesh::Initialize()

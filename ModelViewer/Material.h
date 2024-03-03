@@ -1,57 +1,38 @@
 ﻿#ifndef MATERIAL_H
 #define MATERIAL_H
 
-// Map strdup to _strdup in Windows with a macro.
-// Just for fun and in case of cross-platform in the future.
-// strdup to _strdup: returns a pointer to the storage location for the copied string.
-#ifdef _MSC_VER 
-#define strdup _strdup
-#endif
+#include <glad/glad.h>
 
-#include "Color.h"
-#include "FileDataHandler.h"
 #include "ErrorHandler.h"
+#include "FileSystem.h"
 #include "IObject.h"
+#include "Shader.h"
 
-class Material : public IObject
+class Material final : public IObject
 {
 public:
-    Material(std::unique_ptr<FileDataHandler> pDataHandler, const char* pFolderPath, const char* pVertexShaderName, const char* pFragmentShaderName)
-            : pData(std::move(pDataHandler)), pShaderProgram(new unsigned int(EMPTY))
+    Material() : shaderProgram(0), pShader(std::make_unique<Shader>())
     {
-        if (!pData) return;
+    } 
+private:
+    const GLsizei SOURCE_COUNT = 1;
 
-        const std::string vertexShaderPath = std::string(pFolderPath) + std::string(pVertexShaderName);
-        const std::string fragmentShaderPath = std::string(pFolderPath) + std::string(pFragmentShaderName);
-
-        pVertexShaderSource.reset(strdup(pData->ReadFile(vertexShaderPath.c_str()).c_str()));
-        pFragmentShaderSource.reset(strdup(pData->ReadFile(fragmentShaderPath.c_str()).c_str()));
-    }
-    
+public:
     int Initialize() override;
-    void Finalize() override;
     int Update() override;
     int Draw() override;
+    void Finalize();
 
-    void AddUniformVector3(const std::string& name, const Color& color) const;
-    
-    GLuint* GetShaderProgram() const { return pShaderProgram.get(); }
+void SetUniformMat4(const std::string& name, const glm::mat4& value) const;
 
 private:
-    const int SOURCE_COUNT = 1;
-    const int EMPTY = 0;
-    
-    std::unique_ptr<FileDataHandler> pData;
-    std::unique_ptr<GLuint> pShaderProgram;
-    
-    std::unique_ptr<char> pVertexShaderSource;
-    std::unique_ptr<char> pFragmentShaderSource;
-    
-    MessageType errorType = MessageType::SUCCESS;
-};
+    unsigned int shaderProgram;
 
-#ifdef _MSC_VER
-#undef strdup
-#endif
+    std::unique_ptr<Shader> pShader;
+
+    FileSystem file;
+    
+    MessageType message = MessageType::SUCCESS;
+};
 
 #endif // !MATERIAL_H

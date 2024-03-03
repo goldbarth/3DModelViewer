@@ -1,96 +1,62 @@
 ﻿#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "Material.h"
-
-void Material::AddUniformVector3(const std::string& name, const Color& color) const
-{
-    const GLfloat r = color.r, g = color.g, b = color.b;
-    
-    const GLuint lightColorLocation = glGetUniformLocation(*GetShaderProgram(), name.c_str());
-    glUniform3f(static_cast<GLint>(lightColorLocation), r, g, b);
-}
+#include "FileSystem.h"
 
 int Material::Initialize()
 {
-    // Build and compile vertex shader
+    glEnable(GL_DEPTH_TEST);
     
-    const unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-
-    const GLchar* vertexShaderSource = pVertexShaderSource.get();
-    glShaderSource(vertexShader, SOURCE_COUNT, &vertexShaderSource, nullptr);
-    glCompileShader(vertexShader);
-
-    constexpr int bufferSize = 512;
-    char infoLog[bufferSize];
-    int success = 0;
-
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-
-    if(!success)
-    {
-        glGetShaderInfoLog(vertexShader, bufferSize, nullptr, infoLog);
-        errorType = MessageType::VERTEX_SHADER_COMPILATION_FAILED;
-        ErrorHandler::LogError(errorType, __FILE__, __LINE__);
-        ErrorHandler::LogError(infoLog,  __FILE__, __LINE__);
-        
-        return static_cast<int>(errorType);
-    }
-
-    // Build and compile fragment shader
+    const std::string vertexShaderPath = file.GetResourcePath("Shader/VertexShader.glsl");
+    const std::string fragmentShaderPath = file.GetResourcePath("Shader/FragmentShader.glsl");
+    auto [vertexData, fragmentData] = file.LoadShaderFiles(vertexShaderPath.c_str(), fragmentShaderPath.c_str());
+    pShader->Compile(vertexData.c_str(), fragmentData.c_str());
     
-    const unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-
-    const GLchar* fragmentShaderSource = pFragmentShaderSource.get();
-    glShaderSource(fragmentShader, SOURCE_COUNT, &fragmentShaderSource, nullptr);
-    glCompileShader(fragmentShader);
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    
-    if(!success)
-    {
-        glGetShaderInfoLog(fragmentShader, bufferSize, nullptr, infoLog);
-        errorType = MessageType::FRAGMENT_SHADER_COMPILATION_FAILED;
-        ErrorHandler::LogError(errorType, __FILE__, __LINE__);
-        ErrorHandler::LogError(infoLog,  __FILE__, __LINE__);
-    
-        return static_cast<int>(errorType);
-    }
-
-    // Link shaders
-
-    *pShaderProgram = glCreateProgram();
-    glAttachShader(*pShaderProgram, vertexShader);
-    glAttachShader(*pShaderProgram, fragmentShader);
-    glLinkProgram(*pShaderProgram);
-    
-    glGetProgramiv(*pShaderProgram, GL_LINK_STATUS, &success);
-
-    if(!success)
-    {
-        glGetProgramInfoLog(*pShaderProgram, bufferSize, nullptr, infoLog);
-        errorType = MessageType::SHADER_PROGRAM_LINK_FAILED;
-        ErrorHandler::LogError(errorType, infoLog,__FILE__, __LINE__);
-        
-        return static_cast<int>(errorType);
-    }
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-
-    return static_cast<int>(errorType);
+    return static_cast<int>(message);
 }
 
 int Material::Update()
 {
-    return static_cast<int>(MessageType::SUCCESS);
+    
+    return static_cast<int>(message);
 }
 
 int Material::Draw()
 {
-    glUseProgram(*pShaderProgram);
-    return static_cast<int>(MessageType::SUCCESS);
+    // Every shader and rendering call after this point will use this shader program
+    pShader->UseProgram();
+
+    const glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(1080) / static_cast<float>(720), 0.1f, 100.0f);
+    pShader->SetMat4("projection", projection);
+    // camera/view transformation
+    auto view = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+    constexpr float radius = 10.0f;
+    const float camX = static_cast<float>(sin(glfwGetTime()) * radius);
+    const float camZ = static_cast<float>(cos(glfwGetTime()) * radius);
+    view = lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    pShader->SetMat4("view", view);
+    
+    // calculate the model matrix for each object and pass it to shader before drawing
+    auto model = glm::mat4(1.0f);
+    model = translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+    const float angle = 20.0f * static_cast<float>(glfwGetTime());
+    model = rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+    pShader->SetMat4("model", model);
+    
+    return static_cast<int>(message);
 }
 
 void Material::Finalize()
 {
-    glDeleteProgram(*pShaderProgram);
+    glDeleteProgram(shaderProgram);
+}
+
+void Material::SetUniformMat4(const std::string& name, const glm::mat4& value) const
+{
+    if (pShader)
+    {
+        pShader->SetMat4(name, value);
+    }
 }

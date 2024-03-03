@@ -1,5 +1,4 @@
 ﻿// Added by me to handle errors and warnings in a more organized and convenient way.
-
 #ifndef ERROR_HANDLER_H
 #define ERROR_HANDLER_H
 
@@ -17,7 +16,10 @@ enum class MessageType : char
     GLFW_WINDOW_INIT_FAILED,
     VERTEX_SHADER_COMPILATION_FAILED,
     FRAGMENT_SHADER_COMPILATION_FAILED,
+    ASSIMP_IMPORT_FAILED,
+    ASSIMP_MESH_READ_FAILED,
     SHADER_PROGRAM_LINK_FAILED,
+    SHADER_COMPILATION_FAILED,
     DATA_MANAGER_INIT_FAILED,
     FILESTREAM_STILL_OPEN,
     FAILED_LOAD_TEXTURE,
@@ -59,6 +61,10 @@ private:
         { MessageType::DATA_MANAGER_INIT_FAILED, "Data manager is null." },
         { MessageType::DRAW_AMBIENT_FAILED, "Failed to draw ambient. The uniform variable could not be found." },
         { MessageType::FAILED_LOAD_TEXTURE, "Failed to load the texture." },
+        { MessageType::ASSIMP_MESH_READ_FAILED, "Failed to read mesh at Model-Loader." },
+        { MessageType::SHADER_COMPILATION_FAILED, "Failed to compile shader." },
+        { MessageType::FRAGMENT_SHADER_COMPILATION_FAILED, "Failed to compile fragment shader." },
+        { MessageType::ASSIMP_IMPORT_FAILED, "Failed to import model at Model-Loader." },
     };
 };
 
@@ -69,4 +75,4 @@ void ErrorHandler::Log(const T& message)
     std::cout << message << "\n";
 }
 
-#endif // !ERROR_HANDLER_H
+#endif // ERROR_HANDLER_H

@@ -1,6 +1,4 @@
-﻿// Added by me to store color values
-
-#ifndef COLOR_H
+﻿#ifndef COLOR_H
 #define COLOR_H
 
 #include <glad/glad.h>
@@ -8,8 +6,8 @@
 class Color
 {
 public:
-    Color(const GLfloat red, const GLfloat green, const GLfloat blue, const GLfloat alpha = 1.0f)
-        : r(red), g(green), b(blue), a(alpha) {}
+    Color(GLfloat r, GLfloat g, GLfloat b, GLfloat a = 1.0f)
+        : r(r), g(g), b(b), a(a) {}
 
     GLfloat r;
     GLfloat g;

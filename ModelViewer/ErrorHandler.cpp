@@ -3,6 +3,7 @@
 
 #include "ErrorHandler.h"
 
+
 /// <summary>Prints a yellow warning message to the console.</summary>
 void ErrorHandler::LogWarning(const std::string& message)
 {
@@ -10,7 +11,7 @@ void ErrorHandler::LogWarning(const std::string& message)
 }
 
 // Print a yellow warning message to the console with file and line information
-void ErrorHandler::LogWarning(const std::string& message, const char* file, int line)
+void ErrorHandler::LogWarning(const std::string& message, const char* file, const int line)
 {
     std::string fileName = ExtractFileName(file);
     
@@ -62,7 +63,7 @@ void ErrorHandler::LogError(const std::string& message, const MessageType& error
         std::cerr << "\x1b[31mError: Unknown error type.\x1b[0m\n";
 }
 
-/// <summary>Takes an ErrorType enum member, a message and a file and line as arguments. Prints an red error message to the console.</summary>
+/// <summary>Takes an ErrorType enum member, a message, a file and line as arguments. Prints an red error message to the console.</summary>
 void ErrorHandler::LogError(const std::string& message, const MessageType& errorType, const char* file, int line)
 {
     std::string fileName = ExtractFileName(file);
@@ -84,12 +85,12 @@ void ErrorHandler::LogError(const MessageType& errorType, const std::string& mes
         std::cerr << "\x1b[31mError: Unknown error type.\x1b[0m\n";
 }
 
-/// <summary>Takes an ErrorType enum member, a message and a file and line as arguments. Prints an red error message to the console.</summary>
+/// <summary>Takes an ErrorType enum member, a message, a file and line as arguments. Prints an red error message to the console.</summary>
 void ErrorHandler::LogError(const MessageType& errorType, const std::string& message, const char* file, int line)
 {
-    std::string fileName = ExtractFileName(file);
-    
-    auto iterator = errorTypeToString.find(errorType);
+    const std::string fileName = ExtractFileName(file);
+
+    const auto iterator = errorTypeToString.find(errorType);
     if (iterator != errorTypeToString.end())
         std::cerr << "\x1b[31mError in file:\x1b[32m " << fileName << "(" << line << "): \x1b[31m"<< message << "" << iterator->second << "\x1b[0m\n";
     else

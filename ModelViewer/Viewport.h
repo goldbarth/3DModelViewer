@@ -3,20 +3,13 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <functional>
 #include <string>
 
 #include "ErrorHandler.h"
 #include "IObject.h"
 #include "Color.h"
 
-// Global variables (for now)
-
-inline std::function<void()> forwardInput = nullptr;
-inline std::function<void()> backwardInput = nullptr;
-inline std::function<void()> leftInput = nullptr;
-inline std::function<void()> rightInput = nullptr;
-
+// Deleter for the unique pointer to the GLFW window
 struct GLFWwindowDeleter
 {
     void operator()(GLFWwindow* ptr) const
@@ -25,43 +18,37 @@ struct GLFWwindowDeleter
     }
 };
 
-class Viewport : public IObject
+class Viewport final : public IObject
 {
 public:
-    Viewport(const int majorVersion, const int minorVersion, const int width, const int height, const int offsetX, const int offsetY, std::string title, const Color color) :
+    virtual ~Viewport() = default;
+
+    Viewport(int majorVersion, int minorVersion, int width, int height, int offsetX, int offsetY, std::string title, Color color) :
         glfwMajorVersion(majorVersion), glfwMinorVersion(minorVersion), windowWidth(width), windowHeight(height), windowOffsetX(offsetX),
         windowOffsetY(offsetY), windowTitle(std::move(title)), windowColor(color)
     {
-        // Config
-        
+        // Config 
         glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, glfwMajorVersion);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, glfwMinorVersion);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-        // Window
-        
-        pWindow.reset(glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), nullptr, nullptr));
+        // Window Creation. Unique pointer to the GLFW window
+        pWindow = std::unique_ptr<GLFWwindow, GLFWwindowDeleter>(glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), nullptr, nullptr));
     }
-private:
-    void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
-    void ProcessInput() const;
 
-public:
     GLFWwindow* GetWindow() const { return pWindow.get(); }
-
-    void SetForwardInput(std::function<void()> input) { forwardInput = std::move(input); }
-    void SetBackwardInput(std::function<void()> input) { backwardInput = std::move(input); }
-    void SetLeftInput(std::function<void()> input) { leftInput = std::move(input); }
-    void SetRightInput(std::function<void()> input) { rightInput = std::move(input); }
     
     int Initialize() override;
-    void Finalize() override;
     int Update() override;
     int Draw() override;
     int LateDraw();
+    void Finalize();
 
 private:
+
+    std::unique_ptr<GLFWwindow, GLFWwindowDeleter> pWindow;
+    MessageType message = MessageType::SUCCESS;
     
     // GLFW values (versions)
 
@@ -78,13 +65,12 @@ private:
 
     // Color
     
-    Color windowColor;
+    Color windowColor = Color(0.2f, 0.3f, 0.3f, 1.0f);
+    
+    // Helper functions
 
-    // -----------
-    
-    std::unique_ptr<GLFWwindow, GLFWwindowDeleter> pWindow;
-    
-    MessageType message = MessageType::SUCCESS;
+    void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
+    void ProcessInput() const;
 };
 
 #endif // !VIEWPORT_H

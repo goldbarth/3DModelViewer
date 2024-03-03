@@ -1,186 +1,121 @@
 ﻿#ifndef ENGINE_H
 #define ENGINE_H
 
-#include <vector>
-
-#include "FileDataHandler.h"
-#include "Viewport.h"
-#include "Camera.h"
 #include "Material.h"
 #include "Mesh.h"
-#include "TexCoords.h"
-#include "VertPos.h"
+#include "MeshData.h"
+#include "Viewport.h"
 
-class Engine
+// Engine class (and all other child classes) is final, so it cannot be inherited and used as a base class.
+// This is a good practice to prevent misuse of the class and clearly define its purpose.
+class Engine : public IObject
 {
 public:
-    explicit Engine(std::unique_ptr<FileDataHandler> pData) : pData(std::move(pData)) {  }
-	
-    const CameraData& GetDefaultCameraData() const;
-    bool InitializeObjects();
-    int Initialize();
-    int Run();
 
+    Engine() : pViewport(nullptr), pMaterial(nullptr), pMesh(nullptr) { }
 private:
     // GLFW values (versions)
 
-    static const int GLFW_MAJOR_VERSION;
-    static const int GLFW_MINOR_VERSION;
+    const int GLFW_MAJOR_VERSION = 3;
+    const int GLFW_MINOR_VERSION = 3;
 
     // Window values
 
-    static const int WINDOW_WIDTH;
-    static const int WINDOW_HEIGHT;
-    static const int WINDOW_OFFSET_X;
-    static const int WINDOW_OFFSET_Y;
+    const int WINDOW_WIDTH = 1080;
+    const int WINDOW_HEIGHT = 720;
+    const int WINDOW_OFFSET_X = 0;
+    const int WINDOW_OFFSET_Y = 0;
 
-    static const std::string WINDOW_TITLE;
-
-    // Camera values
-    
-    static const std::string CAMERA_UNIFORM_NAME;
-	
-    static const glm::vec3 CAMERA_POSITION;
-    static const glm::vec3 CAMERA_ORIENTATION;
-    static const glm::vec3 CAMERA_UP;
-
-    static const float DEFAULT_CAMERA_FOV_DEGREE;
-    static const float DEFAULT_CAMERA_NEAR;
-    static const float DEFAULT_CAMERA_FAR;
-
-    // Input values
-
-    static const glm::vec3 FORWARD_INPUT;
-    static const glm::vec3 BACKWARD_INPUT;
-    static const glm::vec3 LEFT_INPUT;
-    static const glm::vec3 RIGHT_INPUT;
+    const std::string WINDOW_TITLE = "Glodbarth Engine 1.0";
 
     // Colors
+
+    const Color BLACK = Color(0.0f, 0.0f, 0.0f, 1.0f);
+    const Color TURQUOISE = Color(0.0f, 0.5f, 0.5f, 1.0f);
+    const Color DARK_GRAY = Color(0.25f, 0.25f, 0.25f, 1.0f);
+    const Color LIGHT_GRAY = Color(0.75f, 0.75f, 0.75f, 1.0f);
     
-    static const Color GOLD;
-    static const Color BLACK;
-    static const Color TURQUOISE; 
-    static const Color DARK_GRAY;
-    static const Color LIGHT_GRAY;
+public:
+    bool InitializeObjects();
+    
+    int Initialize() override;
+    int Update() override;
+    int Draw() override;
+    
+    int Run();
+    void Finalize();
 
-	// Uniform values
-
-	static const Color LIGHT_POSITION;
-	static const Color LIGHT_COLOR;
-	static const Color MATERIAL_COLOR;
-	static const Color SPECULAR_COLOR;
-
-    // Pointers
-	
-	std::unique_ptr<FileDataHandler> pData;
-    std::unique_ptr<Camera> pCamera;
+private:
     std::unique_ptr<Viewport> pViewport;
-    // std::unique_ptr<Material> pPhongMaterial;
-	std::unique_ptr<Material> pBlinnPhongMaterial;
-	
+    std::unique_ptr<Material> pMaterial;
     std::unique_ptr<Mesh> pMesh;
 
-    // Error handling
-    
-    MessageType errorType = MessageType::SUCCESS;
-    
-    // Shader values
+    // Mesh data
 
-	static const std::string AMBIENT_UNIFORM_NAME;
-	static const std::string PHONG_LIGHT_POSITION_UNIFORM_NAME;
-	static const std::string PHONG_LIGHT_COLOR_UNIFORM_NAME;
-	static const std::string PHONG_MATERIAL_COLOR_UNIFORM_NAME;
-	static const std::string PHONG_SPECULAR_COLOR_UNIFORM_NAME;
-
-    static const char* pAmbientVertexShaderName;
-    static const char* pAmbientFragmentShaderName;
-    static const char* pDefaultVertexShaderName;
-    static const char* pDefaultFragmentShaderName;
-	static const char* pPhongVertexShaderName;
-	static const char* pPhongFragmentShaderName;
-	static const char* pBlinnPhongVertexShaderName;
-	static const char* pBlinnPhongFragmentShaderName;
-
-	// Mesh values
-	
-	// Vertices
-    
     Color white = Color(1.0f, 1.0f, 1.0f, 1.0f);
     Color red = Color(1.0f, 0.0f, 0.0f, 1.0f);
     Color green = Color(0.0f, 1.0f, 0.0f, 1.0f);
     Color blue = Color(0.0f, 0.0f, 1.0f, 1.0f);
+
+    // std::vector<Vertex> vertices = {};
+    // std::vector<unsigned int> indices = {};
+    std::vector<Texture> textures = {};
+
+    // Triangle
+    // std::vector<float> vertices = std::vector
+    // {
+    //     0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
+    //     -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
+    //      0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
+    // };
+
+    // Rectangle
+    // std::vector<float> vertices = {
+    //     // Positionen       // Farben
+    //     0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   // oben rechts
+    //     0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   // unten rechts
+    //    -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   // unten links
+    //    -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f    // oben links
+    // };
+
+    // Cube
+    std::vector<float> vertices =
+    {
+        // // Positionen         // Farben
+        -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f, // Hinten unten links (Rot)
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, // Hinten unten rechts (Grün)
+         0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f, // Hinten oben rechts (Blau)
+        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, // Hinten oben links (Gelb)
+        -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f, // Vorne unten links (Magenta)
+         0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // Vorne unten rechts (Cyan)
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, // Vorne oben rechts (Weiß)
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.0f  // Vorne oben links (Schwarz)
+    };
     
-    std::vector<Vertex> vertices = std::vector
-    {
-    	// Rectangle:
-    	
-        // Vertex{VertPos(-0.5f, -0.5f, 0.0f), TexCoords(0.0f, 0.0f), Color(white)}, // left-bottom
-        // Vertex{VertPos( 0.5f, -0.5f, 0.0f), TexCoords(1.0f, 0.0f), Color(red)}, // right-bottom
-        // Vertex{VertPos(-0.5f, 0.5f, 0.0f), TexCoords(0.0f, 0.1f),Color(green)}, // top-left
-        // Vertex{VertPos(0.5f, 0.5f, 0.0f), TexCoords(1.0f, 1.0f),Color(blue)}, // top-right
-    	
-    	// Cube:
-        		// x     y     z						            u     v					nx    ny    nz				r      g     b    a
-			Vertex{VertPos(-0.5f, -0.5f, -0.5f), TexCoords(0.0f, 0.0f), Normals(0.0f, 0.0f, -1.0f),Color(white)},
-			Vertex{VertPos( 0.5f, -0.5f, -0.5f), TexCoords(1.0f, 0.0f), Normals(0.0f, 0.0f, -1.0f),Color(red)},
-			Vertex{VertPos( 0.5f,  0.5f, -0.5f), TexCoords(1.0f, 1.0f), Normals(0.0f, 0.0f, -1.0f),Color(green)},
-			Vertex{VertPos( 0.5f,  0.5f, -0.5f), TexCoords(1.0f, 1.0f), Normals(0.0f, 0.0f, -1.0f),Color(blue)},
-			Vertex{VertPos(-0.5f,  0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(0.0f, 0.0f, -1.0f),Color(white)},
-			Vertex{VertPos(-0.5f, -0.5f, -0.5f), TexCoords(0.0f, 0.0f), Normals(0.0f, 0.0f, -1.0f),Color(white)}, //
-    	
-			Vertex{VertPos(-0.5f, -0.5f,  0.5f), TexCoords(0.0f, 0.0f), Normals(0.0f, 0.0f, 1.0f),Color(white)},
-			Vertex{VertPos( 0.5f, -0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(0.0f, 0.0f, 1.0f),Color(red)},
-			Vertex{VertPos( 0.5f,  0.5f,  0.5f), TexCoords(1.0f, 1.0f), Normals(0.0f, 0.0f, 1.0f),Color(green)},
-			Vertex{VertPos( 0.5f,  0.5f,  0.5f), TexCoords(1.0f, 1.0f), Normals(0.0f, 0.0f, 1.0f),Color(blue)},
-			Vertex{VertPos(-0.5f,  0.5f,  0.5f), TexCoords(0.0f, 1.0f), Normals(0.0f, 0.0f, 1.0f),Color(white)},
-			Vertex{VertPos(-0.5f, -0.5f,  0.5f), TexCoords(0.0f, 0.0f), Normals(0.0f, 0.0f, 1.0f),Color(white)}, //
-    	
-			Vertex{VertPos(-0.5f,  0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(-1.0f, 0.0f, 0.0f),Color(white)},
-			Vertex{VertPos(-0.5f,  0.5f, -0.5f), TexCoords(1.0f, 1.0f), Normals(-1.0f, 0.0f, 0.0f),Color(red)},
-			Vertex{VertPos(-0.5f, -0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(-1.0f, 0.0f, 0.0f),Color(green)},
-			Vertex{VertPos(-0.5f, -0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(-1.0f, 0.0f, 0.0f),Color(blue)},
-			Vertex{VertPos(-0.5f, -0.5f,  0.5f), TexCoords(0.0f, 0.0f), Normals(-1.0f, 0.0f, 0.0f),Color(white)},
-			Vertex{VertPos(-0.5f,  0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(-1.0f, 0.0f, 0.0f),Color(white)}, //
-    	
-			Vertex{VertPos( 0.5f,  0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(1.0f, 0.0f, 0.0f),Color(white)},
-			Vertex{VertPos( 0.5f,  0.5f, -0.5f), TexCoords(1.0f, 1.0f), Normals(1.0f, 0.0f, 0.0f),Color(red)},
-			Vertex{VertPos( 0.5f, -0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(1.0f, 0.0f, 0.0f),Color(green)},
-			Vertex{VertPos( 0.5f, -0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(1.0f, 0.0f, 0.0f),Color(blue)},
-			Vertex{VertPos( 0.5f, -0.5f,  0.5f), TexCoords(0.0f, 0.0f), Normals(1.0f, 0.0f, 0.0f),Color(white)},
-			Vertex{VertPos( 0.5f,  0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(1.0f, 0.0f, 0.0f),Color(white)}, //
-    	
-			Vertex{VertPos(-0.5f, -0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(0.0f, -1.0f, 0.0f),Color(white)},
-			Vertex{VertPos( 0.5f, -0.5f, -0.5f), TexCoords(1.0f, 1.0f), Normals(0.0f, -1.0f, 0.0f),Color(red)},
-			Vertex{VertPos( 0.5f, -0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(0.0f, -1.0f, 0.0f),Color(green)},
-			Vertex{VertPos( 0.5f, -0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(0.0f, -1.0f, 0.0f),Color(blue)},
-			Vertex{VertPos(-0.5f, -0.5f,  0.5f), TexCoords(0.0f, 0.0f), Normals(0.0f, -1.0f, 0.0f),Color(white)},
-			Vertex{VertPos(-0.5f, -0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(0.0f, -1.0f, 0.0f),Color(white)}, //
-    	
-			Vertex{VertPos(-0.5f,  0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(0.0f, 1.0f, 0.0f),Color(white)},
-			Vertex{VertPos( 0.5f,  0.5f, -0.5f), TexCoords(1.0f, 1.0f), Normals(0.0f, 1.0f, 0.0f),Color(red)},
-			Vertex{VertPos( 0.5f,  0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(0.0f, 1.0f, 0.0f),Color(green)},
-			Vertex{VertPos( 0.5f,  0.5f,  0.5f), TexCoords(1.0f, 0.0f), Normals(0.0f, 1.0f, 0.0f),Color(blue)},
-			Vertex{VertPos(-0.5f,  0.5f,  0.5f), TexCoords(0.0f, 0.0f), Normals(0.0f, 1.0f, 0.0f),Color(white)},
-			Vertex{VertPos(-0.5f,  0.5f, -0.5f), TexCoords(0.0f, 1.0f), Normals(0.0f, 1.0f, 0.0f),Color(white)}
+    // 2D
+    // std::vector<unsigned int> indices = std::vector<unsigned int>
+    // {
+    //     0, 1, 3, // first triangle
+    //     1, 2, 3 // second triangle
+    // };
+    
+    // 3D Cube
+    std::vector<unsigned int> indices = {
+        // Hinten
+        0, 1, 2, 0, 2, 3,
+        // Vorne
+        4, 5, 6, 4, 6, 7,
+        // Links
+        4, 7, 3, 4, 3, 0,
+        // Rechts
+        1, 5, 6, 1, 6, 2,
+        // Unten
+        0, 1, 5, 0, 5, 4,
+        // Oben
+        3, 2, 6, 3, 6, 7
     };
 
-    std::vector<unsigned int> indices = std::vector<unsigned int>
-    {
-        0, 1, 2, // first face
-        2, 1, 3 // second face
-    };
-
-    // Textures
-
-    //TODO: Make this a parameter later
-    unsigned int textureID = 0;
-    std::string textureName = "default_64x64_f1.jpg";
-    std::string texturePath = std::string(pData->GetTextureFolderPath()) + textureName;
-
-    std::vector<Texture> textures = std::vector
-    {
-        Texture{textureID, texturePath},
-    };
+    MessageType message = MessageType::SUCCESS;
 };
 
 #endif // !ENGINE_H

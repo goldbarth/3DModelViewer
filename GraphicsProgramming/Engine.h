@@ -1,9 +1,11 @@
 ﻿#ifndef ENGINE_H
 #define ENGINE_H
 
+#include "Camera.h"
+#include "DataHandler.h"
 #include "Viewport.h"
 #include "Material.h"
-#include "Mesh.h"
+#include "Model.h"
 
 // Engine class (and all other child classes) is final, so it cannot be inherited and used as a base class.
 // This is a good practice to prevent misuse of the class and clearly define its purpose.
@@ -11,7 +13,7 @@ class Engine : public IObject
 {
 public:
 
-    Engine() : pViewport(nullptr), pMaterial(nullptr), pModel(nullptr) { }
+    Engine() : pViewport(nullptr), pMaterial(nullptr), pCamera(nullptr), pModel(nullptr) { }
 private:
     // GLFW values
 
@@ -39,22 +41,23 @@ public:
     
     int Initialize() override;
     int Draw() override;
-    
+    void Finalize() const override;
+
     int Run();
-    void Finalize() const;
 
 private:
     std::unique_ptr<Viewport> pViewport;
     std::unique_ptr<Material> pMaterial;
+    std:: unique_ptr<Camera> pCamera;
     std::unique_ptr<Model> pModel;
 
-    FileSystem fileSystem;
-
+    DataHandler data;
+    
     std::string vertexShaderFileName = "ModelVertexShader.glsl";
     std::string fragmentShaderFileName = "ModelFragmentShader.glsl";
     std::string modelPathAndFileName = "Backpack/backpack.obj";
 
-    std::string absoluteModelPath = fileSystem.GetResourcePath(std::string(fileSystem.GetModelFolderPath()) + modelPathAndFileName);
+    std::string absoluteModelPath = data.GetResourcePath(std::string(data.GetModelFolderPath()) + modelPathAndFileName);
 
     MessageType message = MessageType::SUCCESS;
 };

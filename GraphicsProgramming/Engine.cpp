@@ -11,6 +11,7 @@ bool Engine::InitializeObjects()
     {
         pViewport = std::make_unique<Viewport>(GLFW_MINOR_VERSION, GLFW_MAJOR_VERSION, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_OFFSET_X, WINDOW_OFFSET_Y, WINDOW_TITLE,  BLACK);
         pMaterial = std::make_unique<Material>();
+        pCamera = std::make_unique<Camera>();
         pModel = std::make_unique<Model>(absoluteModelPath);
         
         return true;
@@ -33,6 +34,9 @@ int Engine::Initialize()
     pViewport->Initialize();
     pMaterial->Initialize();
     pModel->Initialize();
+
+    pViewport->SetCamera(pCamera.get());
+    pViewport->SetMaterial(pMaterial.get());
     
     return static_cast<int>(message);
 }
@@ -44,10 +48,12 @@ int Engine::Run()
         while (!glfwWindowShouldClose(pViewport->GetWindow()))
         {
             pViewport->Update();
-            pViewport->Draw();
+            pMaterial->Update(pCamera.get());
             
+            pViewport->Draw();
             pMaterial->Draw();
-            pModel->Draw(*pMaterial->GetShader());
+            
+            pModel->Draw(*pMaterial->GetModelShader());
             
             pViewport->LateDraw();
        }

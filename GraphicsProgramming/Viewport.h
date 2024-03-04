@@ -3,10 +3,13 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/vec3.hpp>
 #include <string>
 
 #include "ErrorHandler.h"
+#include "Material.h"
 #include "IObject.h"
+#include "Camera.h"
 #include "Color.h"
 
 // Deleter for the unique pointer to the GLFW window
@@ -21,9 +24,8 @@ struct GLFWwindowDeleter
 class Viewport final : public IObject
 {
 public:
-
-    Viewport(const int majorVersion, const int minorVersion, const int width, const int height, const int offsetX, const int offsetY, std::string title, Color color) :
-        glfwMajorVersion(majorVersion), glfwMinorVersion(minorVersion), windowWidth(width), windowHeight(height), windowOffsetX(offsetX),
+    Viewport(const int majorVersion, const int minorVersion, const int width, const int height, const int offsetX, const int offsetY, std::string title, Color color)
+    : glfwMajorVersion(majorVersion), glfwMinorVersion(minorVersion), windowWidth(width), windowHeight(height), windowOffsetX(offsetX),
         windowOffsetY(offsetY), windowTitle(std::move(title)), windowColor(color)
     {
         // Config 
@@ -35,8 +37,6 @@ public:
         // Window Creation. Unique pointer to the GLFW window
         pWindow = std::unique_ptr<GLFWwindow, GLFWwindowDeleter>(glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), nullptr, nullptr));
     }
-    
-    virtual ~Viewport() = default;
 
     GLFWwindow* GetWindow() const { return pWindow.get(); }
     
@@ -46,9 +46,14 @@ public:
     int LateDraw();
     void Finalize() const override;
 
-private:
+    void SetMaterial(Material* material) { this->pMaterial = material; }
+    void SetCamera(Camera* camera) { this->pCamera = camera; }
 
+private:
     std::unique_ptr<GLFWwindow, GLFWwindowDeleter> pWindow;
+    Material* pMaterial;
+    Camera* pCamera;
+    
     MessageType message = MessageType::SUCCESS;
     
     // GLFW values (versions)
@@ -56,21 +61,36 @@ private:
     int glfwMajorVersion;
     int glfwMinorVersion;
 
-    // Window values
+    // Window
 
     int windowWidth;
     int windowHeight;
     int windowOffsetX;
     int windowOffsetY;
     std::string windowTitle;
+    
+    Color windowColor;
 
-    // Color
-    
-    Color windowColor = Color(0.2f, 0.3f, 0.3f, 1.0f);
-    
-    // Helper functions
+    // Input
+    float rotationSpeed = 0.25f;
+
+    // Camera
+    float mouseSensitivity = 0.1f;
+
+    float deltaTime = 0.0f;	// time between current frame and last frame
+    float lastFrame = 0.0f;
+
+    bool firstMouse;
+    glm::vec3 cameraFront;
+    float lastX;
+    float lastY;
+    float yaw;
+    float pitch;
+    float fov;
 
     void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
+    void MouseCallback(GLFWwindow* window, double xPos, double yPos);
+    void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset);
     void ProcessInput() const;
 };
 

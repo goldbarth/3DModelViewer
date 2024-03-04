@@ -10,8 +10,8 @@ int Material::Initialize()
     stbi_set_flip_vertically_on_load(true);
     glEnable(GL_DEPTH_TEST);
     
-    const std::string vertexShaderPath = data.GetResourcePath(std::string(data.GetShaderFolderPath()) + vertexLightFileName);
-    const std::string fragmentShaderPath = data.GetResourcePath(std::string(data.GetShaderFolderPath()) + fragmentLightFileName);
+    const std::string vertexShaderPath = data.GetResourcePath(std::string(data.GetShaderFolderPath()) + vertexShaderFileName);
+    const std::string fragmentShaderPath = data.GetResourcePath(std::string(data.GetShaderFolderPath()) + fragmentShaderFileName);
     auto [vertexData, fragmentData] = data.LoadShaderFiles(vertexShaderPath.c_str(), fragmentShaderPath.c_str());
     pModelShader->Compile(vertexData.c_str(), fragmentData.c_str());
     
@@ -31,23 +31,29 @@ void Material::Finalize() const
 
 int Material::Update(const Camera *camera)
 {
+    // Dynamic showcase light
     lightPos.x = 1.0f + sin(glfwGetTime()) * 2.0f;
     lightPos.y = sin(glfwGetTime() / 2.0f) * 1.0f;
+
+    // Set the uniform values
     pModelShader->SetVec3("objectColor", objectColor);
     pModelShader->SetVec3("lightColor", lightColor);
     pModelShader->SetVec3("lightPos", lightPos);
     pModelShader->SetVec3("viewPos", viewPos);
+    pModelShader->SetBool("useTexture", pModel->HasTextures());
 
+    // Set the projection matrix
     const glm::mat4 projection = glm::perspective(glm::radians(camera->zoom), static_cast<float>(1920) / static_cast<float>(1080), 0.1f, 100.0f);
     pModelShader->SetMat4("projection", projection);
-    
+
+    // Set the view matrix
     const auto view = camera->GetViewMatrix();
     pModelShader->SetMat4("view", view);
-    
-    glm::mat4 model = glm::mat4(1.0f);
+
     
     // Model position (Pivot point)
-    model = translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+    auto model = glm::mat4(1.0f);
+    model = translate(model, pivotPos);
     
     // Rotate yaw and pitch
     model = rotate(model, glm::radians(yAngle), glm::vec3(0.0f, 1.0f, 0.0f));

@@ -72,13 +72,11 @@ private:
     Color windowColor;
 
     // Input
+    
     float rotationSpeed = 0.25f;
-
-    // Camera
     float mouseSensitivity = 0.1f;
 
-    float deltaTime = 0.0f;	// time between current frame and last frame
-    float lastFrame = 0.0f;
+    // Camera
 
     bool firstMouse;
     glm::vec3 cameraFront;
@@ -87,6 +85,11 @@ private:
     float yaw;
     float pitch;
     float fov;
+
+    // Time between current frame and last frame
+    
+    float deltaTime = 0.0f;	
+    float lastFrame = 0.0f;
 
     void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
     void MouseCallback(GLFWwindow* window, double xPos, double yPos);

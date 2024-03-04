@@ -103,6 +103,22 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
         std::vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     }
+
+    // If the mesh does not contain any textures,
+    // add a white texture to make sure the mesh gets drawn
+    if (mesh->mMaterialIndex >= 0)
+    {
+        aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+        
+        // Check if the mesh contains diffuse textures, if so, load them
+        if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
+        {
+            std::vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+            textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+        }
+    }
+
+    hasTextures = !textures.empty();
     
     return Mesh{vertices, indices, textures};
 }

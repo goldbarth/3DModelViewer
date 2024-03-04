@@ -10,7 +10,7 @@ bool Engine::InitializeObjects()
     try
     {
         pViewport = std::make_unique<Viewport>(GLFW_MINOR_VERSION, GLFW_MAJOR_VERSION, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_OFFSET_X, WINDOW_OFFSET_Y, WINDOW_TITLE,  BLACK);
-        pMaterial = std::make_unique<Material>();
+        pMaterial = std::make_unique<Material>(vertexShaderFileName, fragmentShaderFileName);
         pCamera = std::make_unique<Camera>();
         pModel = std::make_unique<Model>(absoluteModelPath);
         
@@ -35,6 +35,7 @@ int Engine::Initialize()
     pMaterial->Initialize();
     pModel->Initialize();
 
+    pMaterial->SetModel(pModel.get());
     pViewport->SetCamera(pCamera.get());
     pViewport->SetMaterial(pMaterial.get());
     

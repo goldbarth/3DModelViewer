@@ -12,32 +12,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5b03ece-ab5a-49e3-8a33-dccb51eff7d4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/GraphicsProgramming/Resources/Shader/LightCastFragment.glsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GraphicsProgramming/Resources/Shader/LightCastVertex.glsl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphicsProgramming/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphicsProgramming/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Camera.h" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Camera.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/DataHandler.h" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/DataHandler.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Engine.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Engine.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Engine.h" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Engine.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/FileSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/DataHandler.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/FileSystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/DataHandler.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/GraphicsProgramming.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/GraphicsProgramming.vcxproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Material.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Material.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Material.h" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Material.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Mesh.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Mesh.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Mesh.h" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Mesh.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/MeshData.h" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/MeshData.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Model.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Model.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Model.h" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Model.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Shader/TextureFragmentShader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Resources/Shader/LightModelFragment.glsl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Shader/TextureVertexShader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Resources/Shader/LightModelVertex.glsl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Shader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Shader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Models/ChessPawn/12931_WoodenChessPawnSideA_diffuse.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Models/ChessPawn/12931_WoodenChessPawnSideA_v1_l3.mtl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Models/Cyborg/LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Models/Cyborg/cyborg.blend" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Models/Cyborg/cyborg.blend1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Models/Cyborg/cyborg.mtl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Models/Cyborg/cyborg_diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Models/Cyborg/cyborg_normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Models/Cyborg/cyborg_specular.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Shader/FragmentShader.glsl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Shader/LightCastFragment.glsl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Shader/LightCastVertex.glsl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Shader/LightModelFragment.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Resources/Shader/LightModelFragment.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Shader/VertexShader.glsl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Texture/Abstract_Noise_Lines.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Texture/Abstract_Noise_Pixels.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Texture/Abstract_Noise_Waves.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Resources/Texture/default_64x64_f1.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Shader.h" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Shader.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Viewport.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Viewport.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Viewport.h" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Viewport.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/CL.command.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/CL.command.1.tlog" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/CL.read.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/CL.read.1.tlog" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/CL.write.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/CL.write.1.tlog" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/Cl.items.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/Cl.items.tlog" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/link.command.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/link.command.1.tlog" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/link.read.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/link.read.1.tlog" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/link.write.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/link.write.1.tlog" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/GraphicsProgramming.Build.CppClean.log" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/GraphicsProgramming.Build.CppClean.log" afterDir="false" />
@@ -491,6 +500,8 @@
       <workItem from="1709515130931" duration="4382000" />
       <workItem from="1709547500683" duration="11694000" />
       <workItem from="1709559344251" duration="4278000" />
+      <workItem from="1709567684582" duration="3222000" />
+      <workItem from="1709570976690" duration="1235000" />
     </task>
     <servers />
   </component>

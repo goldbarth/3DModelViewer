@@ -26,6 +26,9 @@ public:
     const char* GetModelFolderPath() const { return modelFolderPath.c_str(); }
 
 private:
+
+    // Paths
+    
     std::string resourcesFolderPath = "Resources/";
     std::string shaderFolderPath = "Shader/";
     std::string textureFolderPath = "Texture/";

@@ -179,17 +179,6 @@
     <Content Include="Resources\Models\Backpack\roughness.jpg" />
     <Content Include="Resources\Models\Backpack\source_attribution.txt" />
     <Content Include="Resources\Models\Backpack\specular.jpg" />
-    <Content Include="Resources\Models\ChessPawn\12931_WoodenChessPawnSideA_diffuse.jpg" />
-    <Content Include="Resources\Models\ChessPawn\12931_WoodenChessPawnSideA_v1_l3.mtl" />
-    <Content Include="Resources\Models\ChessPawn\12931_WoodenChessPawnSideA_v1_l3.obj" />
-    <Content Include="Resources\Models\Cyborg\cyborg.blend" />
-    <Content Include="Resources\Models\Cyborg\cyborg.blend1" />
-    <Content Include="Resources\Models\Cyborg\cyborg.mtl" />
-    <Content Include="Resources\Models\Cyborg\cyborg.obj" />
-    <Content Include="Resources\Models\Cyborg\cyborg_diffuse.png" />
-    <Content Include="Resources\Models\Cyborg\cyborg_normal.png" />
-    <Content Include="Resources\Models\Cyborg\cyborg_specular.png" />
-    <Content Include="Resources\Models\Cyborg\LICENSE.txt" />
     <Content Include="Resources\Models\Nanosuit\arm_dif.png" />
     <Content Include="Resources\Models\Nanosuit\arm_showroom_ddn.png" />
     <Content Include="Resources\Models\Nanosuit\arm_showroom_refl.png" />
@@ -227,23 +216,12 @@
     <Content Include="Resources\Models\Planet\planet.mtl" />
     <Content Include="Resources\Models\Planet\planet.obj" />
     <Content Include="Resources\Models\Planet\source.txt" />
-    <Content Include="Resources\Models\Rock\rock.mtl" />
-    <Content Include="Resources\Models\Rock\rock.obj" />
-    <Content Include="Resources\Models\Rock\rock.png" />
     <Content Include="Resources\Shader\LightColorFragment.glsl" />
     <Content Include="Resources\Shader\LightColorVertex.glsl" />
-    <Content Include="Resources\Shader\FragmentShader.glsl" />
-    <Content Include="Resources\Shader\LightCastFragment.glsl" />
-    <Content Include="Resources\Shader\LightCastVertex.glsl" />
     <Content Include="Resources\Shader\ModelFragmentShader.glsl" />
     <Content Include="Resources\Shader\ModelVertexShader.glsl" />
     <Content Include="Resources\Shader\LightModelFragment.glsl" />
     <Content Include="Resources\Shader\LightModelVertex.glsl" />
-    <Content Include="Resources\Shader\VertexShader.glsl" />
-    <Content Include="Resources\Texture\Abstract_Noise_Lines.png" />
-    <Content Include="Resources\Texture\Abstract_Noise_Pixels.png" />
-    <Content Include="Resources\Texture\Abstract_Noise_Waves.png" />
-    <Content Include="Resources\Texture\default_64x64_f1.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />

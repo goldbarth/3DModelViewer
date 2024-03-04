@@ -29,7 +29,7 @@ private:
 
     const std::string WINDOW_TITLE = "Glodbarth Engine 1.0";
 
-    // Colors
+    // Background colors
 
     const Color BLACK = Color(0.0f, 0.0f, 0.0f, 1.0f);
     const Color TURQUOISE = Color(0.0f, 0.5f, 0.5f, 1.0f);
@@ -52,11 +52,13 @@ private:
     std::unique_ptr<Model> pModel;
 
     DataHandler data;
-    
-    std::string vertexShaderFileName = "ModelVertexShader.glsl";
-    std::string fragmentShaderFileName = "ModelFragmentShader.glsl";
-    std::string modelPathAndFileName = "Backpack/backpack.obj";
 
+    // File names
+    
+    std::string vertexShaderFileName = "LightModelVertex.glsl";
+    std::string fragmentShaderFileName = "LightModelFragment.glsl";
+    std::string modelPathAndFileName = "Backpack/backpack.obj";
+    
     std::string absoluteModelPath = data.GetResourcePath(std::string(data.GetModelFolderPath()) + modelPathAndFileName);
 
     MessageType message = MessageType::SUCCESS;

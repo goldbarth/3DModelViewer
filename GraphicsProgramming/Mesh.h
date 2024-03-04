@@ -20,13 +20,18 @@ public:
     
     int Initialize();
     int Draw(const Shader &shader) const;
+
+    // Vertex array object
     
     unsigned int VAO;
 
 private:
-    // render data 
+    // Vertex buffer object and element buffer object
+    
     unsigned int VBO;
     unsigned int EBO;
+
+    // Mesh data
 
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;

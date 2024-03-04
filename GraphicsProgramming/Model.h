@@ -6,8 +6,8 @@
 #include <string>
 #include <vector>
 
-#include "Mesh.h"
 #include "Shader.h"
+#include "Mesh.h"
 
 
 
@@ -19,13 +19,17 @@ public:
 
     void Initialize();
     void Draw(const Shader &shader) const;
+    
+    bool HasTextures() const { return hasTextures; }
 
 private:
     std::vector<Texture> texturesLoaded;
     std::vector<Mesh> meshes;
     std::string directory;
     std::string path;
+    
     bool gammaCorrection;
+    bool hasTextures;
 
     void ProcessNode(const aiNode* node, const aiScene* scene);
     Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);

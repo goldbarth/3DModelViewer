@@ -14,6 +14,7 @@ enum CameraMovement
 };
 
 // Default camera values
+
 constexpr float YAW         = -90.0f;
 constexpr float PITCH       =  0.0f;
 constexpr float SPEED       =  2.5f;
@@ -43,6 +44,7 @@ public:
     }
 
     // Camera attributes
+    
     glm::vec3 position;
     glm::vec3 front;
     glm::vec3 up;
@@ -50,10 +52,12 @@ public:
     glm::vec3 worldUp;
     
     // Euler angles
+    
     float yaw;
     float pitch;
     
-    // Camera options
+    // Camera input options
+    
     float movementSpeed;
     float mouseSensitivity;
     float zoom;

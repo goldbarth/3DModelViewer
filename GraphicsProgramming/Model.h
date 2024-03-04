@@ -14,7 +14,7 @@
 class Model
 {
 public:
-    explicit Model(const std::string &path, const bool gamma = false) : gammaCorrection(gamma), path(path)
+    explicit Model(std::string path, const bool gamma = false) : path(std::move(path)), gammaCorrection(gamma)
     {}
 
     void Initialize();
@@ -29,7 +29,7 @@ private:
 
     void ProcessNode(const aiNode* node, const aiScene* scene);
     Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
-    std::vector<Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, const std::string& typeName);
+    std::vector<Texture> LoadMaterialTextures(const aiMaterial* material, aiTextureType type, const std::string& typeName);
     unsigned TextureFromFile(const char* path, const std::string& directory, bool gamma);
 
     MessageType message = MessageType::SUCCESS;

@@ -81,7 +81,9 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
             vertex.texCoords = vec;
         }
         else
+        {
             vertex.texCoords = glm::vec2(0.0f, 0.0f);
+        }
 
         vertices.push_back(vertex);
     }
@@ -105,32 +107,31 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
     return Mesh{vertices, indices, textures};
 }
 
-std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, const std::string& typeName)
+std::vector<Texture> Model::LoadMaterialTextures(const aiMaterial* material, const aiTextureType type, const std::string& typeName)
 {
     std::vector<Texture> textures;
-    for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
+    for (unsigned int i = 0; i < material->GetTextureCount(type); i++)
     {
         aiString str;
-        mat->GetTexture(type, i, &str);
-        // Check if texture was loaded before and if so, continue to next iteration: skip loading a new texture
+        material->GetTexture(type, i, &str);
         bool skip = false;
         for (auto& j : texturesLoaded)
         {
             if (std::strcmp(j.path.data(), str.C_Str()) == 0)
             {
                 textures.push_back(j);
-                skip = true; // a texture with the same filepath has already been loaded, continue to next one. (optimization)
+                skip = true; 
                 break;
             }
         }
         if (!skip)
-        {   // If texture hasn't been loaded already, load it
+        {  
             Texture texture;
             texture.ID = TextureFromFile(str.C_Str(), directory, gammaCorrection);
             texture.type = typeName;
             texture.path = str.C_Str();
             textures.push_back(texture);
-            texturesLoaded.push_back(texture);  // Store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
+            texturesLoaded.push_back(texture); 
         }
     }
     return textures;

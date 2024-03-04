@@ -1,4 +1,4 @@
-﻿#include "FileSystem.h"
+﻿#include "DataHandler.h"
 
 #include <stb/stb_image.h>
 #include <filesystem>
@@ -6,9 +6,7 @@
 #include <fstream>
 #include <fstream>
 
-namespace fs = std::filesystem;
-
-std::string FileSystem::ReadData(const char* filePath)
+std::string DataHandler::ReadData(const char* filePath)
 {
     std::ifstream fileStream(filePath, std::ios::in);
     std::string data;
@@ -32,7 +30,7 @@ std::string FileSystem::ReadData(const char* filePath)
     return data;
 }
 
-std::string FileSystem::GetExecutablePath()
+std::string DataHandler::GetExecutablePath()
 {
     char path[MAX_PATH]; // MAX_PATH is a constant defined in windows.h
     GetModuleFileNameA(nullptr, path, MAX_PATH); // Get the path of the executable
@@ -43,16 +41,16 @@ std::string FileSystem::GetExecutablePath()
 /// QOL function to get the executable path and change it to the relative path to the resource folder.
 /// To always access the folder in the ide or exe. There you go.
 /// </summary>
-std::string FileSystem::GetResourcePath(const std::string& relativePath)
+std::string DataHandler::GetResourcePath(const std::string& relativePath)
 {
-    const fs::path exePath(GetExecutablePath());
-    fs::path resourcePath = exePath.parent_path().parent_path().parent_path(); // Jump to the working directory
+    const std::filesystem::path exePath(GetExecutablePath());
+    std::filesystem::path resourcePath = exePath.parent_path().parent_path().parent_path(); // Jump to the working directory
     resourcePath /= relativeResourcePath; // Add the relative path to the resource path
     resourcePath /= relativePath;
     return resourcePath.string();
 }
 
-ShaderData FileSystem::LoadShaderFiles(const char* vertexFilePath, const char* fragmentFilePath)
+ShaderData DataHandler::LoadShaderFiles(const char* vertexFilePath, const char* fragmentFilePath)
 {
     ShaderData shaderData;
     shaderData.vertexData = ReadData(vertexFilePath);

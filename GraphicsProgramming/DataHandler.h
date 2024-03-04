@@ -1,7 +1,5 @@
-﻿// Added a file loader function to load images.
-
-#ifndef FILE_SYSTEM_H
-#define FILE_SYSTEM_H
+﻿#ifndef DATA_HANDLER_H
+#define DATA_HANDLER_H
 
 #include <filesystem>
 #include <string>
@@ -14,7 +12,7 @@ struct ShaderData
     std::string fragmentData;
 };
 
-class FileSystem
+class DataHandler
 {
 public:
     std::string ReadData(const char* filePath);
@@ -38,4 +36,4 @@ private:
     MessageType message = MessageType::SUCCESS;
 };
 
-#endif // !FILE_SYSTEM_H
+#endif // !DATA_HANDLER_H

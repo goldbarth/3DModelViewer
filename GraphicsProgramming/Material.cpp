@@ -3,7 +3,6 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <stb/stb_image.h>
 
-#include "FileSystem.h"
 #include "Material.h"
 
 int Material::Initialize()
@@ -11,40 +10,50 @@ int Material::Initialize()
     stbi_set_flip_vertically_on_load(true);
     glEnable(GL_DEPTH_TEST);
     
-    const std::string vertexShaderPath = file.GetResourcePath(std::string(file.GetShaderFolderPath()) + vertexShaderFileName);
-    const std::string fragmentShaderPath = file.GetResourcePath(std::string(file.GetShaderFolderPath()) + fragmentShaderFileName);
-    auto [vertexData, fragmentData] = file.LoadShaderFiles(vertexShaderPath.c_str(), fragmentShaderPath.c_str());
-    pShader->Compile(vertexData.c_str(), fragmentData.c_str());
+    const std::string vertexShaderPath = data.GetResourcePath(std::string(data.GetShaderFolderPath()) + vertexLightFileName);
+    const std::string fragmentShaderPath = data.GetResourcePath(std::string(data.GetShaderFolderPath()) + fragmentLightFileName);
+    auto [vertexData, fragmentData] = data.LoadShaderFiles(vertexShaderPath.c_str(), fragmentShaderPath.c_str());
+    pModelShader->Compile(vertexData.c_str(), fragmentData.c_str());
     
     return static_cast<int>(message);
 }
 
 int Material::Draw()
 {
-    // Every shader and rendering call after this point will use this shader program
-    pShader->UseProgram();
-    
-    const glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(1920) / static_cast<float>(1080), 0.1f, 100.0f);
-    pShader->SetMat4("projection", projection);
-    //
-    // camera/view transformation
-    constexpr float radius = 10.0f;
-    const float camX = static_cast<float>(sin(glfwGetTime()) * radius);
-    const float camZ = static_cast<float>(cos(glfwGetTime()) * radius);
-    const auto view = lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    pShader->SetMat4("view", view);
-    
-    // calculate the model matrix for each object and pass it to shader before drawing
-    auto model = glm::mat4(1.0f);
-    model = translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-    const float angle = 20.0f * static_cast<float>(glfwGetTime());
-    model = rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-    pShader->SetMat4("model", model);
+    pModelShader->UseProgram();
     
     return static_cast<int>(message);
 }
 
 void Material::Finalize() const
 {
-    glDeleteProgram(shaderProgram);
 }
+
+int Material::Update(const Camera *camera)
+{
+    lightPos.x = 1.0f + sin(glfwGetTime()) * 2.0f;
+    lightPos.y = sin(glfwGetTime() / 2.0f) * 1.0f;
+    pModelShader->SetVec3("objectColor", objectColor);
+    pModelShader->SetVec3("lightColor", lightColor);
+    pModelShader->SetVec3("lightPos", lightPos);
+    pModelShader->SetVec3("viewPos", viewPos);
+
+    const glm::mat4 projection = glm::perspective(glm::radians(camera->zoom), static_cast<float>(1920) / static_cast<float>(1080), 0.1f, 100.0f);
+    pModelShader->SetMat4("projection", projection);
+    
+    const auto view = camera->GetViewMatrix();
+    pModelShader->SetMat4("view", view);
+    
+    glm::mat4 model = glm::mat4(1.0f);
+    
+    // Model position (Pivot point)
+    model = translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+    
+    // Rotate yaw and pitch
+    model = rotate(model, glm::radians(yAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = rotate(model, glm::radians(xAngle), glm::vec3(1.0f, 0.0f, 0.0f));
+    pModelShader->SetMat4("model", model);
+    
+    return static_cast<int>(message);
+}
+

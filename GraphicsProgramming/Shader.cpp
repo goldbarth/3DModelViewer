@@ -1,10 +1,9 @@
-﻿#include "Shader.h"
-
-#include <glad/glad.h>
+﻿#include <glad/glad.h>
 #include <glm/fwd.hpp>
 #include <glm/matrix.hpp>
 
 #include "ErrorHandler.h"
+#include "Shader.h"
 
 void Shader::Compile(const char* vShaderSource, const char* fShaderSource)
 {
@@ -50,6 +49,26 @@ void Shader::SetInt(const std::string& name, const int value) const
 void Shader::SetFloat(const std::string& name, const float value) const
 {
     glUniform1f(glGetUniformLocation(ID, name.c_str()), value); 
+}
+
+void Shader::SetVec2(const std::string &name, const glm::vec2 &value) const
+{ 
+    glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]); 
+}
+
+void Shader::SetVec2(const std::string &name, float x, float y) const
+{ 
+    glUniform2f(glGetUniformLocation(ID, name.c_str()), x, y); 
+}
+
+void Shader::SetVec3(const std::string& name, const glm::vec3& value) const
+{
+    glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]); 
+}
+
+void Shader::SetVec3(const std::string& name, const float x, const float y, const float z) const
+{
+    glUniform3f(glGetUniformLocation(ID, name.c_str()), x, y, z);
 }
 
 void Shader::SetMat4(const std::string& name, const glm::mat4& material) const

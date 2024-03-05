@@ -13,22 +13,25 @@ void Shader::CreateShader(const char* shaderSource, unsigned& shader, const char
     CheckCompileErrors(shader, str);
 }
 
-void Shader::Compile(const std::pair<const char*, const char*> shaderSources)
+void Shader::CreateShaderProgram(unsigned vertex, unsigned fragment)
 {
-    // Create and compile the shader
-    unsigned int vertex;
-    unsigned int fragment;
-    CreateShader(shaderSources.first, vertex, "VERTEX");
-    CreateShader(shaderSources.second, fragment, "FRAGMENT");
-    
-    // Create the shader program
     ID = glCreateProgram();
     glAttachShader(ID, vertex);
     glAttachShader(ID, fragment);
     glLinkProgram(ID);
     CheckCompileErrors(ID, "PROGRAM");
+}
+
+void Shader::Compile(const std::pair<const char*, const char*> shaderSources)
+{
+    unsigned int vertex;
+    unsigned int fragment;
     
-    // Delete the shaders as they're linked into our program now and no longer necessary
+    CreateShader(shaderSources.first, vertex, "VERTEX");
+    CreateShader(shaderSources.second, fragment, "FRAGMENT");
+    
+    CreateShaderProgram(vertex, fragment);
+    
     glDeleteShader(vertex);
     glDeleteShader(fragment);
 }

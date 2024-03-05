@@ -9,8 +9,6 @@
 #include "Shader.h"
 #include "Mesh.h"
 
-
-
 class Model
 {
 public:

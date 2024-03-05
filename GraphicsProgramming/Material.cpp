@@ -13,7 +13,7 @@ int Material::Initialize()
     const std::string vertexShaderPath = data.GetResourcePath(std::string(data.GetShaderFolderPath()) + vertexShaderFileName);
     const std::string fragmentShaderPath = data.GetResourcePath(std::string(data.GetShaderFolderPath()) + fragmentShaderFileName);
     auto [vertexData, fragmentData] = data.LoadShaderFiles(vertexShaderPath.c_str(), fragmentShaderPath.c_str());
-    pModelShader->Compile(vertexData.c_str(), fragmentData.c_str());
+    pModelShader->Compile({vertexData.c_str(), fragmentData.c_str()});
     
     return static_cast<int>(message);
 }

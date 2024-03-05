@@ -12,15 +12,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5b03ece-ab5a-49e3-8a33-dccb51eff7d4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/CL.command.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/CL.command.1.tlog" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/CL.read.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/CL.read.1.tlog" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/CL.write.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/CL.write.1.tlog" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/link.read.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/link.read.1.tlog" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/link.write.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/Graphics.B3E45962.tlog/link.write.1.tlog" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/GraphicsProgramming.ilk" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/GraphicsProgramming.ilk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/vc143.idb" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/vc143.idb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/vc143.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/x64/Debug/vc143.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/x64/Debug/GraphicsProgramming.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/x64/Debug/GraphicsProgramming.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphicsProgramming/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphicsProgramming/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Engine.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Engine.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Material.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Material.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Shader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Shader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Shader.h" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Shader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphicsProgramming/Viewport.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GraphicsProgramming/Viewport.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -470,6 +467,8 @@
       <workItem from="1709567684582" duration="3222000" />
       <workItem from="1709570976690" duration="1235000" />
       <workItem from="1709573567622" duration="32000" />
+      <workItem from="1709573986318" duration="984000" />
+      <workItem from="1709604504140" duration="2537000" />
     </task>
     <servers />
   </component>

@@ -9,8 +9,10 @@ class Shader
 {
 public:
     unsigned int ID;
-
+    
+    void Compile(std::pair<const char*, const char*> shaderSources);
     void Compile(const char* vShaderSource, const char* fShaderSource);
+    void CreateShader(const char* shaderSource, unsigned& shader, const char* str);
     void UseProgram() const;
     
     // Utility uniform functions

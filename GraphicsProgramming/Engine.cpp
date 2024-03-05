@@ -2,8 +2,8 @@
 #include "Engine.h"
 
 /// <summary>
-/// Initialize with std::unique_ptr instead of raw pointers. This ensures automatic memory management and reduces the risk of memory leaks.
-/// Also, reducing of repetitive nullpointer checks in the run loop -> better performance.
+/// Initialize with std::unique_ptr instead of raw pointers.
+/// This ensures automatic memory management and reduces the risk of memory leaks.
 /// </summary>
 bool Engine::InitializeObjects()
 {
@@ -29,15 +29,16 @@ int Engine::Initialize()
     {
         message = MessageType::ENGINE_INIT_FAILED;
         ErrorHandler::LogError(message, __FILE__, __LINE__);
+        return static_cast<int>(message);
     }
     
     pViewport->Initialize();
     pMaterial->Initialize();
     pModel->Initialize();
 
-    pMaterial->SetModel(pModel.get());
-    pViewport->SetCamera(pCamera.get());
     pViewport->SetMaterial(pMaterial.get());
+    pViewport->SetCamera(pCamera.get());
+    pMaterial->SetModel(pModel.get());
     
     return static_cast<int>(message);
 }

@@ -49,7 +49,6 @@ int Material::Update(const Camera *camera)
     // Set the view matrix
     const auto view = camera->GetViewMatrix();
     pModelShader->SetMat4("view", view);
-
     
     // Model position (Pivot point)
     auto model = glm::mat4(1.0f);

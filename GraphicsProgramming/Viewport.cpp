@@ -57,6 +57,7 @@ int Viewport::Initialize()
 
 int Viewport::Update()
 {
+    // Calculate the time between the current frame and the last frame
     const float currentFrame = static_cast<float>(glfwGetTime());
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;

@@ -38,13 +38,19 @@ public:
         pWindow = std::unique_ptr<GLFWwindow, GLFWwindowDeleter>(glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), nullptr, nullptr));
     }
 
-    GLFWwindow* GetWindow() const { return pWindow.get(); }
+    [[nodiscard]] GLFWwindow* GetWindow() const { return pWindow.get(); }
     
     int Initialize() override;
     int Draw() override;
     int Update();
     int LateDraw();
     void Finalize() const override;
+    
+    void SetCallbacks();
+    void ObjectRotation() const;
+    void CameraMovement() const;
+    void WireframeToggle() const;
+    void CloseWindow() const;
 
     void SetMaterial(Material* material) { this->pMaterial = material; }
     void SetCamera(Camera* camera) { this->pCamera = camera; }
@@ -79,12 +85,8 @@ private:
     // Camera
 
     bool firstMouse;
-    glm::vec3 cameraFront;
     float lastX;
     float lastY;
-    float yaw;
-    float pitch;
-    float fov;
 
     // Time between current frame and last frame
     
@@ -93,7 +95,7 @@ private:
 
     void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
     void MouseCallback(GLFWwindow* window, double xPos, double yPos);
-    void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset);
+    void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset) const;
     void ProcessInput() const;
 };
 

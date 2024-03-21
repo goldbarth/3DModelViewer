@@ -24,6 +24,8 @@ int Mesh::Initialize()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
 
     // Set the vertex attribute pointers (not all are used, for now):
+
+    // Set the vertex attribute pointers
     
     // Vertex positions
     glEnableVertexAttribArray(0);	
@@ -47,6 +49,7 @@ int Mesh::Initialize()
     // Weights
     glEnableVertexAttribArray(6);
     glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, weights)));
+    
     glBindVertexArray(0);
     
     return static_cast<int>(message);
@@ -56,33 +59,20 @@ int Mesh::Draw(const Shader &shader) const
 {
     if (!textures.empty())
     {
-        // bind appropriate textures
-        unsigned int diffuseNr  = 1;
-        unsigned int specularNr = 1;
-        unsigned int normalNr   = 1;
-        unsigned int heightNr   = 1;
-    
+        unsigned int textureCounters[4] = {1, 1, 1, 1};
+        const std::string textureTypes[4] = {"texture_diffuse", "texture_specular", "texture_normal", "texture_height"};
+
         for(unsigned int i = 0; i < textures.size(); i++)
         {
-            // Active texture unit before binding
-            glActiveTexture(GL_TEXTURE0 + i); 
-        
-            // Retrieve the number of the texture's type and increment it
-            std::string number;
-            std::string name = textures[i].type;
-            if(name == "texture_diffuse")
-                number = std::to_string(diffuseNr++);
-            else if(name == "texture_specular")
-                number = std::to_string(specularNr++); 
-            else if(name == "texture_normal")
-                number = std::to_string(normalNr++);
-            else if(name == "texture_height")
-                number = std::to_string(heightNr++);
-
-            // Set the sampler to the correct texture unit
-            glUniform1i(glGetUniformLocation(shader.ID, (name + number).c_str()), i);
-        
-            // Finally bind the texture
+            glActiveTexture(GL_TEXTURE0 + i);
+            for (int j = 0; j < 4; ++j)
+            {
+                if (textures[i].type == textureTypes[j])
+                {
+                    glUniform1i(glGetUniformLocation(shader.ID, (textures[i].type + std::to_string(textureCounters[j]++)).c_str()), i);
+                    break;
+                }
+            }
             glBindTexture(GL_TEXTURE_2D, textures[i].ID);
         }
     }

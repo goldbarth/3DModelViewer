@@ -1,11 +1,9 @@
-#include "Engine.h"
+#include "Application.h"
 
 int main(int argc, char* argv[])
 {
-    const auto pEngine = std::make_unique<Engine>();
-    pEngine->Initialize();
-    pEngine->Run();
-    pEngine->Finalize();
+    const auto pApplication = std::make_unique<Application>();
+    pApplication->Run();
     
     return static_cast<int>(MessageType::SUCCESS);
 }

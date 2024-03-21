@@ -14,23 +14,21 @@ class Material final : public IObject
 {
 public:
     Material(std::string vertexShaderName, std::string fragmentShaderName)
-                : pModelShader(std::make_unique<Shader>()), vertexShaderFileName(std::move(vertexShaderName)),
-                    fragmentShaderFileName(std::move(fragmentShaderName))
-    {} 
-    
+        : pModelShader(std::make_unique<Shader>()), pModel(nullptr), vertexShaderFileName(std::move(vertexShaderName)),
+          fragmentShaderFileName(std::move(fragmentShaderName))
+    {
+    }
+
     int Initialize() override;
     int Draw() override;
-    void Finalize() const override;
     int Update(const Camera* camera);
-    
-    Shader* GetModelShader() const { return pModelShader.get(); }
+
+    [[nodiscard]] Shader* GetModelShader() const { return pModelShader.get(); }
     
     Model* SetModel(Model* aModel) { return pModel = aModel; }
 
-    float GetObjectAngle() const { return yAngle; }
-    void SetObjectYaw(const float aAngle) { this->yAngle = aAngle; }
-    float GetObjectPitch() const { return xAngle; }
-    void SetObjectPitch(const float aAngle) { this->xAngle = aAngle; }
+    void AdjustObjectYaw(const float& rotationSpeed);
+    void AdjustObjectPitch(const float& rotationSpeed);
 
 
 private:
@@ -49,6 +47,7 @@ private:
     glm::vec3 lightPos = glm::vec3(1.2f, 1.0f, 2.0f); // Light position
     glm::vec3 viewPos = glm::vec3(0.0f, 0.0f, 3.0f); // Camera position
     glm::vec3 pivotPos = glm::vec3(0.0f, 0.0f, 0.0f);
+    
      // Angles
     
     float yAngle = 15.0f; // Yaw

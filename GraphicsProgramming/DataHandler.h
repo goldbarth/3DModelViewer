@@ -20,10 +20,10 @@ public:
     std::string GetResourcePath(const std::string& relativePath);
     ShaderData LoadShaderFiles(const char* vertexFilePath, const char* fragmentFilePath);
 
-    const char* GetResourceFolderPath() const { return resourcesFolderPath.c_str(); }
-    const char* GetShaderFolderPath() const { return shaderFolderPath.c_str(); }
-    const char* GetTextureFolderPath() const { return textureFolderPath.c_str(); }
-    const char* GetModelFolderPath() const { return modelFolderPath.c_str(); }
+    [[nodiscard]] const char* GetResourceFolderPath() const { return resourcesFolderPath.c_str(); }
+    [[nodiscard]] const char* GetShaderFolderPath() const { return shaderFolderPath.c_str(); }
+    [[nodiscard]] const char* GetTextureFolderPath() const { return textureFolderPath.c_str(); }
+    [[nodiscard]] const char* GetModelFolderPath() const { return modelFolderPath.c_str(); }
 
 private:
 

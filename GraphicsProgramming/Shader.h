@@ -5,15 +5,18 @@
 #include <sstream>
 #include <string>
 
+enum ErrorTypes
+{
+    PROGRAM,
+    VERTEX,
+    FRAGMENT
+};
 class Shader
 {
 public:
     unsigned int ID;
     
     void Compile(std::pair<const char*, const char*> shaderSources);
-    void Compile(const char* vShaderSource, const char* fShaderSource);
-    void CreateShader(const char* shaderSource, unsigned& shader, const char* str);
-    void CreateShaderProgram(unsigned vertex, unsigned fragment);
     void UseProgram() const;
     
     // Utility uniform functions
@@ -28,7 +31,10 @@ public:
     void SetMat4(const std::string &name, const glm::mat4 &material) const;
 
 private:
-    static void CheckCompileErrors(unsigned int shader, const std::string& type);
+    static unsigned CreateShader(const char* shaderSource, int shaderType, const ErrorTypes& type);
+    void CreateShaderProgram(unsigned int vertex, unsigned int fragment);
+    
+    static void CheckCompileErrors(unsigned int shader, const ErrorTypes& type);
 };
 
 #endif // !SHADER_H

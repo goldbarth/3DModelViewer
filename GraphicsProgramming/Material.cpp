@@ -9,9 +9,8 @@ int Material::Initialize()
 {
     stbi_set_flip_vertically_on_load(true);
     glEnable(GL_DEPTH_TEST);
-    
-    const std::string vertexShaderPath = data.GetResourcePath(std::string(data.GetShaderFolderPath()) + vertexShaderFileName);
-    const std::string fragmentShaderPath = data.GetResourcePath(std::string(data.GetShaderFolderPath()) + fragmentShaderFileName);
+    const std::string vertexShaderPath = data.GetResourcePath(data.GetShaderFolderPath() + vertexShaderFileName);
+    const std::string fragmentShaderPath = data.GetResourcePath(data.GetShaderFolderPath() + fragmentShaderFileName);
     auto [vertexData, fragmentData] = data.LoadShaderFiles(vertexShaderPath.c_str(), fragmentShaderPath.c_str());
     pModelShader->Compile({vertexData.c_str(), fragmentData.c_str()});
     
@@ -23,10 +22,6 @@ int Material::Draw()
     pModelShader->UseProgram();
     
     return static_cast<int>(message);
-}
-
-void Material::Finalize() const
-{
 }
 
 int Material::Update(const Camera *camera)
@@ -60,5 +55,17 @@ int Material::Update(const Camera *camera)
     pModelShader->SetMat4("model", model);
     
     return static_cast<int>(message);
+}
+
+void Material::AdjustObjectYaw(const float& rotationSpeed)
+{
+    yAngle += rotationSpeed;
+    if (yAngle > 360.0f) yAngle = 0.0f;
+}
+
+void Material::AdjustObjectPitch(const float& rotationSpeed)
+{
+    xAngle += rotationSpeed;
+    if (xAngle > 360.0f) xAngle = 0.0f;
 }
 

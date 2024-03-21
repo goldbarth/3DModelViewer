@@ -12,13 +12,15 @@
 class Model
 {
 public:
-    explicit Model(std::string path, const bool gamma = false) : path(std::move(path)), gammaCorrection(gamma)
-    {}
+    explicit Model(std::string path, const bool gamma = false) : path(std::move(path)), gammaCorrection(gamma),
+                                                                 hasTextures(false)
+    {
+    }
 
     void Initialize();
     void Draw(const Shader &shader) const;
-    
-    bool HasTextures() const { return hasTextures; }
+
+    [[nodiscard]] bool HasTextures() const { return hasTextures; }
 
 private:
     std::vector<Texture> texturesLoaded;
@@ -30,9 +32,9 @@ private:
     bool hasTextures;
 
     void ProcessNode(const aiNode* node, const aiScene* scene);
-    Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
+    Mesh ProcessMesh(const aiMesh* mesh, const aiScene* scene);
     std::vector<Texture> LoadMaterialTextures(const aiMaterial* material, aiTextureType type, const std::string& typeName);
-    unsigned TextureFromFile(const char* path, const std::string& directory, bool gamma);
+    static unsigned TextureFromFile(const char* aPath, const std::string& aDirectory, bool gamma);
 
     MessageType message = MessageType::SUCCESS;
 };

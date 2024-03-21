@@ -6,7 +6,7 @@
 #include <glm/vec4.hpp>
 #include <string>
 
-#define MAX_BONE_INFLUENCE 4
+enum Skeleton { MAX_BONE_INFLUENCE = 4 };
 
 struct Vertex
 {

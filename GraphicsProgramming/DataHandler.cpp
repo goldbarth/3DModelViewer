@@ -43,8 +43,8 @@ std::string DataHandler::GetExecutablePath()
 /// </summary>
 std::string DataHandler::GetResourcePath(const std::string& relativePath)
 {
-    const std::filesystem::path exePath(GetExecutablePath());
-    std::filesystem::path resourcePath = exePath.parent_path().parent_path().parent_path(); // Jump to the working directory
+    // Jump to the working directory
+    std::filesystem::path resourcePath = std::filesystem::path(GetExecutablePath()).parent_path().parent_path().parent_path(); 
     resourcePath /= relativeResourcePath; // Add the relative path to the resource path
     resourcePath /= relativePath;
     return resourcePath.string();
@@ -52,9 +52,5 @@ std::string DataHandler::GetResourcePath(const std::string& relativePath)
 
 ShaderData DataHandler::LoadShaderFiles(const char* vertexFilePath, const char* fragmentFilePath)
 {
-    ShaderData shaderData;
-    shaderData.vertexData = ReadData(vertexFilePath);
-    shaderData.fragmentData = ReadData(fragmentFilePath);
-
-    return shaderData;
+    return ShaderData{ReadData(vertexFilePath), ReadData(fragmentFilePath)};
 }

@@ -216,14 +216,13 @@
     <Content Include="Resources\Models\Planet\planet.mtl" />
     <Content Include="Resources\Models\Planet\planet.obj" />
     <Content Include="Resources\Models\Planet\source.txt" />
-    <Content Include="Resources\Shader\LightColorFragment.glsl" />
-    <Content Include="Resources\Shader\LightColorVertex.glsl" />
     <Content Include="Resources\Shader\ModelFragmentShader.glsl" />
     <Content Include="Resources\Shader\ModelVertexShader.glsl" />
     <Content Include="Resources\Shader\LightModelFragment.glsl" />
     <Content Include="Resources\Shader\LightModelVertex.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Engine.h" />
@@ -238,6 +237,7 @@
     <ClInclude Include="Viewport.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="ErrorHandler.cpp" />

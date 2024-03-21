@@ -18,26 +18,8 @@ int Viewport::Initialize()
 
     // This is necessary for any OpenGL calls to work.
     glfwMakeContextCurrent(pWindow.get());
-
-    // Set the viewport size and position
-    glfwSetWindowUserPointer(pWindow.get(), this);
-    glfwSetFramebufferSizeCallback(pWindow.get(), [](GLFWwindow* window, const int width, const int height)
-    {
-        auto* viewport = static_cast<Viewport*>(glfwGetWindowUserPointer(window));
-        viewport->FramebufferSizeCallback(window, width, height);
-    });
-
-    glfwSetCursorPosCallback(pWindow.get(), [](GLFWwindow* window, double xPos, double yPos)
-    {
-        auto* viewport = static_cast<Viewport*>(glfwGetWindowUserPointer(window));
-        viewport->MouseCallback(window, xPos, yPos);
-    });
     
-    glfwSetScrollCallback(pWindow.get(), [](GLFWwindow* window, double xOffset, double yOffset)
-    {
-        auto* viewport = static_cast<Viewport*>(glfwGetWindowUserPointer(window));
-        viewport->ScrollCallback(window, xOffset, yOffset);
-    });
+    SetCallbacks();
 
     // tell GLFW to capture our mouse
     glfwSetInputMode(pWindow.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -91,49 +73,54 @@ void Viewport::Finalize() const
     glfwTerminate();
 }
 
+void Viewport::SetCallbacks()
+{
+    // Set the viewport object as the user pointer for the window
+    glfwSetWindowUserPointer(pWindow.get(), this);
+    
+    glfwSetFramebufferSizeCallback(pWindow.get(), [](GLFWwindow* window, const int width, const int height)
+    {
+        auto* viewport = static_cast<Viewport*>(glfwGetWindowUserPointer(window));
+        viewport->FramebufferSizeCallback(window, width, height);
+    });
+
+    glfwSetCursorPosCallback(pWindow.get(), [](GLFWwindow* window, double xPos, double yPos)
+    {
+        auto* viewport = static_cast<Viewport*>(glfwGetWindowUserPointer(window));
+        viewport->MouseCallback(window, xPos, yPos);
+    });
+    
+    glfwSetScrollCallback(pWindow.get(), [](GLFWwindow* window, double xOffset, double yOffset)
+    {
+        const auto* viewport = static_cast<Viewport*>(glfwGetWindowUserPointer(window));
+        viewport->ScrollCallback(window, xOffset, yOffset);
+    });
+}
+
+
+
 void Viewport::ProcessInput() const
 {
-    // Close the window
-    if (glfwGetKey(pWindow.get(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(pWindow.get(), true);
+    CloseWindow();
+    WireframeToggle();
+    ObjectRotation();
+    CameraMovement();
+}
 
-    // Wireframe toggle mode
-    if (glfwGetKey(pWindow.get(), GLFW_KEY_1) == GLFW_PRESS)
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    if (glfwGetKey(pWindow.get(), GLFW_KEY_2) == GLFW_PRESS)
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-    // Object rotation
+void Viewport::ObjectRotation() const
+{
     if (glfwGetKey(pWindow.get(), GLFW_KEY_RIGHT) == GLFW_PRESS)
-    {
-        float objectAngle = pMaterial->GetObjectAngle();
-        pMaterial->SetObjectYaw(objectAngle += rotationSpeed);
-        if (objectAngle > 360.0f)
-            pMaterial->SetObjectYaw(objectAngle -= 360.0f);
-    }
+        pMaterial->AdjustObjectYaw(rotationSpeed);
     if (glfwGetKey(pWindow.get(), GLFW_KEY_LEFT) == GLFW_PRESS)
-    {
-        float objectAngle = pMaterial->GetObjectAngle();
-        pMaterial->SetObjectYaw(objectAngle -= rotationSpeed);
-        if (objectAngle < 0.0f)
-            pMaterial->SetObjectYaw(objectAngle += 360.0f);
-    }
+        pMaterial->AdjustObjectYaw(-rotationSpeed);
     if (glfwGetKey(pWindow.get(), GLFW_KEY_UP) == GLFW_PRESS)
-    {
-        float objectPitch = pMaterial->GetObjectPitch();
-        pMaterial->SetObjectPitch(objectPitch += rotationSpeed);
-        if (objectPitch > 360.0f)
-            pMaterial->SetObjectPitch(objectPitch -= 360.0f);
-    }
+        pMaterial->AdjustObjectPitch(rotationSpeed);
     if (glfwGetKey(pWindow.get(), GLFW_KEY_DOWN) == GLFW_PRESS)
-    {
-        float objectPitch = pMaterial->GetObjectPitch();
-        pMaterial->SetObjectPitch(objectPitch -= rotationSpeed);
-        if (objectPitch < 0.0f)
-            pMaterial->SetObjectPitch(objectPitch += 360.0f);
-    }
+        pMaterial->AdjustObjectPitch(-rotationSpeed);
+}
 
-    // Camera movement
+void Viewport::CameraMovement() const
+{
     if (glfwGetKey(pWindow.get(), GLFW_KEY_W) == GLFW_PRESS)
         pCamera->ProcessKeyboard(FORWARD, deltaTime);
     if (glfwGetKey(pWindow.get(), GLFW_KEY_S) == GLFW_PRESS)
@@ -142,6 +129,20 @@ void Viewport::ProcessInput() const
         pCamera->ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(pWindow.get(), GLFW_KEY_D) == GLFW_PRESS)
         pCamera->ProcessKeyboard(RIGHT, deltaTime);
+}
+
+void Viewport::WireframeToggle() const
+{
+    if (glfwGetKey(pWindow.get(), GLFW_KEY_1) == GLFW_PRESS)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    if (glfwGetKey(pWindow.get(), GLFW_KEY_2) == GLFW_PRESS)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
+void Viewport::CloseWindow() const
+{
+    if (glfwGetKey(pWindow.get(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(pWindow.get(), true);
 }
 
 // Callbacks
@@ -155,10 +156,10 @@ void Viewport::FramebufferSizeCallback(GLFWwindow* window, const int width, cons
     glViewport(viewport->windowOffsetX, viewport->windowOffsetY, width, height);
 }
 
-void Viewport::MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
+void Viewport::MouseCallback(GLFWwindow* window, const double xPosIn, const double yPosIn)
 {
-    const float xPos = static_cast<float>(xposIn);
-    const float yPos = static_cast<float>(yposIn);
+    const float xPos = static_cast<float>(xPosIn);
+    const float yPos = static_cast<float>(yPosIn);
 
     if (firstMouse)
     {
@@ -168,41 +169,19 @@ void Viewport::MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
     }
 
     float xOffset = xPos - lastX;
-    float yOffset = lastY - yPos; // Reversed since y-coordinates go from bottom to top
+    float yOffset = lastY - yPos;
     
     lastX = xPos;
     lastY = yPos;
     
     xOffset *= mouseSensitivity;
     yOffset *= mouseSensitivity;
-    
-    yaw += xOffset;
-    pitch += yOffset;
-    
-    // Make sure that when pitch is out of bounds, screen doesn't get flipped
-    if (pitch > 89.0f)
-        pitch = 89.0f;
-    if (pitch < -89.0f)
-        pitch = -89.0f;
-
-    // Update Front, Right and Up Vectors using the updated Euler angles
-    glm::vec3 front;
-    front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    front.y = sin(glm::radians(pitch));
-    front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    cameraFront = normalize(front);
 
     pCamera->ProcessMouseMovement(xOffset, yOffset);
 }
 
-void Viewport::ScrollCallback(GLFWwindow* window, const double xOffset, const double yOffset)
+void Viewport::ScrollCallback(GLFWwindow* window, const double xOffset, const double yOffset) const
 {
-    fov -= static_cast<float>(yOffset);
-    if (fov < 1.0f)
-        fov = 1.0f;
-    if (fov > 45.0f)
-        fov = 45.0f;
-
     pCamera->ProcessMouseScroll(static_cast<float>(yOffset));
 }
 

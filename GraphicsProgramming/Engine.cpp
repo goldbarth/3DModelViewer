@@ -2,8 +2,9 @@
 #include "Engine.h"
 
 /// <summary>
-/// Initialize with std::unique_ptr instead of raw pointers.
+/// @brief Initialize with std::unique_ptr instead of raw pointers.
 /// This ensures automatic memory management and reduces the risk of memory leaks.
+/// @return bool indicating whether the initialization was successful
 /// </summary>
 bool Engine::InitializeObjects()
 {
@@ -67,11 +68,6 @@ int Engine::Run()
         return static_cast<int>(message);
     }
     
-    return static_cast<int>(message);
-}
-
-int Engine::Draw()
-{
     return static_cast<int>(message);
 }
 

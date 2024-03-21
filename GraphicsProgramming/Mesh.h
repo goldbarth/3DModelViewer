@@ -19,7 +19,7 @@ public:
     }
     
     int Initialize();
-    int Draw(const Shader &shader) const;
+    [[nodiscard]] int Draw(const Shader &shader) const;
 
     // Vertex array object
     

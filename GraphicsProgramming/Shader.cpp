@@ -5,53 +5,32 @@
 #include "ErrorHandler.h"
 #include "Shader.h"
 
-void Shader::CreateShader(const char* shaderSource, unsigned& shader, const char* str)
+unsigned Shader::CreateShader(const char* shaderSource, const int shaderType, const ErrorTypes& type)
 {
-    shader = glCreateShader(GL_VERTEX_SHADER);
+    const unsigned int shader = glCreateShader(shaderType);
     glShaderSource(shader, 1, &shaderSource, nullptr);
     glCompileShader(shader);
-    CheckCompileErrors(shader, str);
+    CheckCompileErrors(shader, type);
+    
+    return shader;
 }
 
-void Shader::CreateShaderProgram(unsigned vertex, unsigned fragment)
+
+void Shader::CreateShaderProgram(const unsigned int vertex, const unsigned int fragment)
 {
     ID = glCreateProgram();
     glAttachShader(ID, vertex);
     glAttachShader(ID, fragment);
     glLinkProgram(ID);
-    CheckCompileErrors(ID, "PROGRAM");
+    CheckCompileErrors(ID, PROGRAM);
 }
 
 void Shader::Compile(const std::pair<const char*, const char*> shaderSources)
 {
-    unsigned int vertex;
-    unsigned int fragment;
-    
-    CreateShader(shaderSources.first, vertex, "VERTEX");
-    CreateShader(shaderSources.second, fragment, "FRAGMENT");
-    
+    const unsigned int vertex = CreateShader(shaderSources.first, GL_VERTEX_SHADER, VERTEX);
+    const unsigned int fragment = CreateShader(shaderSources.second, GL_FRAGMENT_SHADER, FRAGMENT);
     CreateShaderProgram(vertex, fragment);
     
-    glDeleteShader(vertex);
-    glDeleteShader(fragment);
-}
-
-void Shader::Compile(const char* vShaderSource, const char* fShaderSource)
-{
-    // Create and compile the shader
-    unsigned int vertex;
-    unsigned int fragment;
-    CreateShader(vShaderSource, vertex, "VERTEX");
-    CreateShader(fShaderSource, fragment, "FRAGMENT");
-    
-    // Create the shader program
-    ID = glCreateProgram();
-    glAttachShader(ID, vertex);
-    glAttachShader(ID, fragment);
-    glLinkProgram(ID);
-    CheckCompileErrors(ID, "PROGRAM");
-    
-    // Delete the shaders as they're linked into our program now and no longer necessary
     glDeleteShader(vertex);
     glDeleteShader(fragment);
 }
@@ -101,17 +80,19 @@ void Shader::SetMat4(const std::string& name, const glm::mat4& material) const
     glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &material[0][0]);
 }
 
-void Shader::CheckCompileErrors(const unsigned shader, const std::string& type)
+void Shader::CheckCompileErrors(const unsigned int shader, const ErrorTypes& type)
 {
+    constexpr int bufferSize = 1024;
+    
     int success;
-    char infoLog[1024];
-    if (type != "PROGRAM")
+    char infoLog[bufferSize];
+    if (type != PROGRAM)
     {
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
         if (!success)
         {
-            glGetShaderInfoLog(shader, 1024, nullptr, infoLog);
-            ErrorHandler::LogError(MessageType::SHADER_COMPILATION_FAILED, "Error of type: " + type + "\n" + infoLog + "\n -- --------------------------------------------------- -- ", __FILE__, __LINE__);
+            glGetShaderInfoLog(shader, bufferSize, nullptr, infoLog);
+            ErrorHandler::LogError(MessageType::SHADER_COMPILATION_FAILED, "Error of type: " + std::to_string(type) + "\n" + infoLog + "\n -- --------------------------------------------------- -- ", __FILE__, __LINE__);
         }
     }
     else
@@ -119,8 +100,8 @@ void Shader::CheckCompileErrors(const unsigned shader, const std::string& type)
         glGetProgramiv(shader, GL_LINK_STATUS, &success);
         if (!success)
         {
-            glGetProgramInfoLog(shader, 1024, nullptr, infoLog);
-            ErrorHandler::LogError(MessageType::SHADER_PROGRAM_LINK_FAILED, "Error of type: " + type + "\n" + infoLog + "\n -- --------------------------------------------------- -- ", __FILE__, __LINE__);
+            glGetProgramInfoLog(shader, bufferSize, nullptr, infoLog);
+            ErrorHandler::LogError(MessageType::SHADER_PROGRAM_LINK_FAILED, "Error of type: " + std::to_string(type) + "\n" + infoLog + "\n -- --------------------------------------------------- -- ", __FILE__, __LINE__);
         }
     }
 }

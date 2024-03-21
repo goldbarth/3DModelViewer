@@ -9,7 +9,7 @@
 
 // Engine class (and all other child classes) is final, so it cannot be inherited and used as a base class.
 // This is a good practice to prevent misuse of the class and clearly define its purpose.
-class Engine : public IObject
+class Engine final : public IObject
 {
 public:
 
@@ -40,7 +40,6 @@ public:
     bool InitializeObjects();
     
     int Initialize() override;
-    int Draw() override;
     void Finalize() const override;
 
     int Run();
@@ -48,7 +47,7 @@ public:
 private:
     std::unique_ptr<Viewport> pViewport;
     std::unique_ptr<Material> pMaterial;
-    std:: unique_ptr<Camera> pCamera;
+    std::unique_ptr<Camera> pCamera;
     std::unique_ptr<Model> pModel;
 
     DataHandler data;

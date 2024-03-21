@@ -24,20 +24,10 @@ constexpr float ZOOM        =  45.0f;
 class Camera
 {
 public:
-    // Constructor with vectors
     explicit Camera(glm::vec3 aPosition = glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3 aWorldUp = glm::vec3(0.0f, 1.0f, 0.0f), float aYaw = YAW, float aPitch = PITCH) : front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSensitivity(SENSITIVITY), zoom(ZOOM)
     {
         position = aPosition;
         worldUp = aWorldUp;
-        yaw = aYaw;
-        pitch = aPitch;
-        UpdateCameraVectors();
-    }
-    // Constructor with scalar values
-    Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float aYaw, float aPitch) : front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSensitivity(SENSITIVITY), zoom(ZOOM)
-    {
-        position = glm::vec3(posX, posY, posZ);
-        worldUp = glm::vec3(upX, upY, upZ);
         yaw = aYaw;
         pitch = aPitch;
         UpdateCameraVectors();
@@ -61,8 +51,8 @@ public:
     float movementSpeed;
     float mouseSensitivity;
     float zoom;
-    
-    glm::mat4 GetViewMatrix() const;
+
+    [[nodiscard]] glm::mat4 GetViewMatrix() const;
     void ProcessKeyboard(const CameraMovement direction, const float deltaTime);
     void ProcessMouseMovement(float xOffset, float yOffset, GLboolean constrainPitch = true);
     void ProcessMouseScroll(float yOffset);

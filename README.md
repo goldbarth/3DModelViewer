@@ -4,7 +4,7 @@ Model loading is done using the [Assimp](https://github.com/assimp/assimp/releas
 
 ## Showcase
 
-![Showcase](showcase.gif)
+![Showcase](https://github.com/goldbarth/3DModelViewer/blob/main/Media/BackpackShowcase.gif "Showcase")
 
 ## Features
 - Load and display 3D models in the OBJ file format

@@ -97,14 +97,13 @@ void Viewport::SetCallbacks()
     });
 }
 
-
-
-void Viewport::ProcessInput() const
+void Viewport::ProcessInput()
 {
     CloseWindow();
     WireframeToggle();
     ObjectRotation();
     CameraMovement();
+    ResetCameraPosition();
 }
 
 void Viewport::ObjectRotation() const
@@ -131,12 +130,32 @@ void Viewport::CameraMovement() const
         pCamera->ProcessKeyboard(RIGHT, deltaTime);
 }
 
-void Viewport::WireframeToggle() const
+void Viewport::WireframeToggle()
 {
     if (glfwGetKey(pWindow.get(), GLFW_KEY_1) == GLFW_PRESS)
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    if (glfwGetKey(pWindow.get(), GLFW_KEY_2) == GLFW_PRESS)
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    {
+        if (keyWasReleased)
+        {
+            isWireframe = !isWireframe;
+
+            if (isWireframe)
+                glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            else
+                glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+            keyWasReleased = false; 
+        }
+    }
+    else
+    {
+        keyWasReleased = true;
+    }
+}
+
+void Viewport::ResetCameraPosition() const
+{
+    if (glfwGetKey(pWindow.get(), GLFW_KEY_R) == GLFW_PRESS)
+        pCamera->position = glm::vec3(0.0f, 0.0f, 10.0f);
 }
 
 void Viewport::CloseWindow() const

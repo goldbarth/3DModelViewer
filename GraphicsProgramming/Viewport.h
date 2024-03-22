@@ -47,9 +47,10 @@ public:
     void Finalize() const override;
     
     void SetCallbacks();
+    void ResetCameraPosition() const;
     void ObjectRotation() const;
     void CameraMovement() const;
-    void WireframeToggle() const;
+    void WireframeToggle();
     void CloseWindow() const;
 
     void SetMaterial(Material* material) { this->pMaterial = material; }
@@ -61,6 +62,11 @@ private:
     Camera* pCamera;
     
     MessageType message = MessageType::SUCCESS;
+
+    // Key press values
+    
+    bool keyWasReleased;
+    bool isWireframe;
     
     // GLFW values (versions)
 
@@ -96,7 +102,7 @@ private:
     void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
     void MouseCallback(GLFWwindow* window, double xPos, double yPos);
     void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset) const;
-    void ProcessInput() const;
+    void ProcessInput();
 };
 
 #endif // !VIEWPORT_H

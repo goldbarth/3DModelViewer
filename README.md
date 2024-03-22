@@ -4,7 +4,8 @@ Model loading is done using the [Assimp](https://github.com/assimp/assimp/releas
 
 ## Showcase
 
-![Showcase](https://github.com/goldbarth/3DModelViewer/blob/main/Media/BackpackShowcase.gif "Showcase")
+![Showcase](https://github.com/goldbarth/3DModelViewer/blob/main/Media/BackpackShowcase2.gif "Showcase")
+Backpack model by [Gert Gedik](https://sketchfab.com/3d-models/survival-guitar-backpack-799f8c4511f84fab8c3f12887f7e6b36) on Sketchfab
 
 ## Features
 - Load and display 3D models in the OBJ file format
